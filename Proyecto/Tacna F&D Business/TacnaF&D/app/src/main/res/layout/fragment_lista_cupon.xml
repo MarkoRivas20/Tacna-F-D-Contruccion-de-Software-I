@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ListaCupon">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EEEEEE">
+
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F2F2F2"
+            android:orientation="vertical"
+            android:layout_marginBottom="66dp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+                    <ImageView
+                        android:id="@+id/imglogo"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="left"
+                        tools:src="@tools:sample/avatars" />
+
+
+                    <TextView
+                        android:id="@+id/lblnombre"
+                        android:layout_width="269dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:text="Nombre"
+                        android:textSize="20sp"
+                        android:translationX="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+                    <Button
+                        android:id="@+id/btndescripcion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        android:drawableTop="@drawable/ic_description_black_24dp"
+                        android:text="Descripcion"
+                        android:textColor="#D9D9D9" />
+
+                    <ImageView
+                        android:id="@+id/imgseparacion"
+                        android:layout_width="1dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="left"
+                        android:background="#D9D9D9" />
+
+
+                    <Button
+                        android:id="@+id/btnreseñas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        android:drawableTop="@drawable/ic_comment"
+                        android:text="Reseñas"
+                        android:textColor="#DBDBDB" />
+
+                    <ImageView
+                        android:id="@+id/imgseparacion5"
+                        android:layout_width="1dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="left"
+                        android:background="#D9D9D9" />
+
+                    <Button
+                        android:id="@+id/btnmenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        android:drawableTop="@drawable/ic_restaurant_menu"
+                        android:text="Menu"
+                        android:textColor="#DBDBDB" />
+
+
+
+
+                    <ImageView
+                        android:id="@+id/imgseparacion3"
+                        android:layout_width="1dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="left"
+                        android:background="#D9D9D9" />
+
+                    <Button
+                        android:id="@+id/btncupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        android:drawableTop="@drawable/ic_local_offer_select"
+                        android:text="Cupones"
+                        android:textColor="#E96D54" />
+
+
+                    <ImageView
+                        android:id="@+id/imgseparacion2"
+                        android:layout_width="1dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="left"
+                        android:background="#D9D9D9" />
+
+                    <Button
+                        android:id="@+id/btnimagenes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        android:drawableTop="@drawable/ic_photo"
+                        android:text="Fotos"
+                        android:textColor="#D9D9D9" />
+
+
+
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp"
+
+                    android:layout_marginBottom="10dp"
+                    android:paddingRight="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+
+                    <ImageView
+                        android:id="@+id/imageViewseparador"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_gravity="left"
+                        android:background="#DDDDDD" />
+                    <Button
+                        android:id="@+id/btnanadircupon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/shape_botonazulclaro"
+                        android:shadowColor="@android:color/transparent"
+                        android:text="Añadir Cupon"
+                        android:textColor="#FFFFFF"
+                        app:layout_constraintBottom_toBottomOf="@+id/btncerrar"
+                        app:layout_constraintEnd_toEndOf="@+id/txtruc" />
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/Recycler_ListaCupon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:background="#CCCCCC"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/btnestablecimientos"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#FFFFFF"
+                android:drawableTop="@drawable/ic_store"
+                android:text="Establecimientos"
+                android:textColor="#E96D54" />
+
+            <ImageView
+                android:id="@+id/imgseparacionrutadetalle21"
+                android:layout_width="1dp"
+                android:layout_height="60dp"
+                android:layout_gravity="left"
+                android:background="#D9D9D9" />
+
+            <Button
+                android:id="@+id/btnperfil"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#FFFFFF"
+                android:drawableTop="@drawable/ic_person"
+                android:text="Perfil"
+                android:textColor="#DBDBDB" />
+
+
+
+
+        </LinearLayout>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "101362682824",
+    "firebase_url": "https://tacnafyd.firebaseio.com",
+    "project_id": "tacnafyd",
+    "storage_bucket": "tacnafyd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101362682824:android:7705071da7bc9b0a7d4efd",
+        "android_client_info": {
+          "package_name": "com.example.tacnafdbusiness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "101362682824-ga9sqtjuua7eji51goroercc0rn0s2gq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tacnafdbusiness",
+            "certificate_hash": "5faeec238470c323358b2bd494a5b1c942f239bb"
+          }
+        },
+        {
+          "client_id": "101362682824-cm0g7a54dedh7ouuin58tpal2iami7fa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxDExF326cAaEQIC14qtrb6UP1slKrR18"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "101362682824-cm0g7a54dedh7ouuin58tpal2iami7fa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

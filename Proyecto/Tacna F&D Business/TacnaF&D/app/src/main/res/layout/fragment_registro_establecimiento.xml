@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".RegistroEstablecimiento">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1470dp"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <Button
+            android:id="@+id/btnatras"
+            android:layout_width="35dp"
+            android:layout_height="27dp"
+            android:background="#FFFFFF"
+            android:drawableTop="@drawable/ic_arrow_back" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registrar Establecimiento"
+            android:textColor="#000000"
+            android:textSize="32sp"
+            android:layout_gravity="top|center"
+            android:translationY="20dp"/>
+
+
+        <ImageView
+            android:id="@+id/imagenlogo"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:src="@drawable/ic_image"
+            android:layout_gravity="top|center"
+            android:translationY="60dp"/>
+
+        <Button
+            android:id="@+id/btnseleccionar"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_botonazul"
+            android:shadowColor="@android:color/transparent"
+            android:text="Seleccionar Foto"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="top|center"
+            android:translationY="75dp"/>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Datos Generales"
+            android:textColor="#000000"
+            android:layout_gravity="top|center"
+            android:translationY="100dp"/>
+
+        <EditText
+            android:id="@+id/txtnombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/shape_textboxregistro"
+            android:drawableLeft="@drawable/ic_store_black"
+            android:drawablePadding="10dp"
+            android:hint="@string/registro_txt1"
+            android:padding="15dp"
+            android:textColor="#003152"
+            android:textColorHighlight="#0F77F6"
+            android:textColorHint="#DDDEE0"
+            android:singleLine="true"
+            android:layout_gravity="top|center"
+            android:translationY="110dp"/>
+
+
+        <Spinner
+            android:id="@+id/spinnercategoria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center"
+            android:translationY="120dp"
+            android:padding="4dp"
+            android:background="@drawable/gradient_spinner"
+            />
+
+        <Spinner
+            android:id="@+id/spinnerdistrito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center"
+            android:translationY="130dp"
+            android:padding="4dp"
+
+            android:background="@drawable/gradient_spinner"
+            />
+
+        <EditText
+            android:id="@+id/txtdireccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/shape_textboxregistro"
+            android:drawableLeft="@drawable/ic_map"
+            android:drawablePadding="10dp"
+            android:hint="Direccion"
+            android:padding="15dp"
+            android:textColor="#003152"
+            android:textColorHighlight="#0F77F6"
+            android:textColorHint="#DDDEE0"
+            android:singleLine="true"
+            android:layout_gravity="top|center"
+            android:translationY="140dp"/>
+
+        <EditText
+            android:id="@+id/txttelefono"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/shape_textboxregistro"
+            android:drawableLeft="@drawable/ic_call"
+            android:drawablePadding="10dp"
+            android:hint="Telefono"
+            android:padding="15dp"
+            android:textColor="#003152"
+            android:textColorHighlight="#0F77F6"
+            android:textColorHint="#DDDEE0"
+            android:singleLine="true"
+            android:layout_gravity="top|center"
+            android:translationY="150dp"/>
+
+        <EditText
+            android:id="@+id/txtcapacidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:background="@drawable/shape_textboxregistro"
+            android:drawableLeft="@drawable/ic_group"
+            android:drawablePadding="10dp"
+            android:hint="Capacidad"
+            android:padding="15dp"
+            android:textColor="#003152"
+            android:textColorHighlight="#0F77F6"
+            android:textColorHint="#DDDEE0"
+            android:singleLine="true"
+            android:layout_gravity="top|center"
+            android:translationY="160dp"/>
+
+        <EditText
+            android:id="@+id/txtdescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="top|center"
+            android:background="@drawable/shape_textboxregistro"
+            android:drawableLeft="@drawable/ic_assignment"
+            android:drawablePadding="10dp"
+            android:hint="Descripcion"
+            android:padding="15dp"
+            android:textColor="#003152"
+            android:textColorHighlight="#0F77F6"
+            android:textColorHint="#DDDEE0"
+            android:translationY="170dp"
+            android:maxLength="250"/>
+
+        <com.example.tacnafdbusiness.CustomMapView
+
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="top|center"
+            android:translationY="180dp"
+            />
+
+        <EditText
+            android:id="@+id/txtdocumento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:background="@drawable/shape_textboxregistro"
+            android:drawableLeft="@drawable/ic_document"
+            android:drawablePadding="10dp"
+            android:hint="Documento"
+            android:padding="15dp"
+            android:textColor="#003152"
+            android:textColorHighlight="#0F77F6"
+            android:textColorHint="#DDDEE0"
+            android:singleLine="true"
+            android:layout_gravity="top|center"
+            android:translationY="190dp"/>
+
+
+
+        <Button
+            android:id="@+id/btnregistrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/shape_botonnaranja"
+            android:padding="15dp"
+            android:shadowColor="@android:color/transparent"
+            android:text="Registrar Establecimiento"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="top|center"
+            android:translationY="230dp"/>
+
+
+
+
+    </LinearLayout>
+
+
+
+</FrameLayout>
+
+</ScrollView>

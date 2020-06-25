@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="2dp"
+    android:layout_marginBottom="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="#FFFFFF"
+        android:padding="10dp">
+
+
+
+        <ImageView
+            android:id="@+id/imageViewseparador"
+            android:layout_width="230dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:adjustViewBounds="true"
+            android:background="#DDDDDD"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txttitulo_Recycler_cupon" />
+
+
+
+        <ImageView
+            android:id="@+id/Imagen_Recycler_cupon"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_map"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        <TextView
+            android:id="@+id/txttitulo_Recycler_cupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Subtitle goes here"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/Imagen_Recycler_cupon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtfechainicio_Recycler_cupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Subtitle goes here"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/txtdescripcion_recycler_cupon"
+            app:layout_constraintTop_toBottomOf="@+id/txtdescripcion_recycler_cupon" />
+
+        <TextView
+            android:id="@+id/txtdescripcion_recycler_cupon"
+            android:layout_width="231dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:justificationMode="inter_word"
+            android:text="Description goes here"
+            android:textColor="#000000"
+            app:layout_constraintStart_toEndOf="@+id/Imagen_Recycler_cupon"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewseparador" />
+
+        <TextView
+            android:id="@+id/txtfechafinal_Recycler_cupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="TextView"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/txtfechainicio_Recycler_cupon"
+            app:layout_constraintTop_toBottomOf="@+id/txtfechainicio_Recycler_cupon" />
+
+        <TextView
+            android:id="@+id/txtestado_Recycler_cupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="TextView"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/txtfechafinal_Recycler_cupon"
+            app:layout_constraintTop_toBottomOf="@+id/txtfechafinal_Recycler_cupon" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

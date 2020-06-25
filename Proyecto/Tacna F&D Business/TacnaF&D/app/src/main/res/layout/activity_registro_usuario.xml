@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistroUsuario" android:padding="25dp"
+    android:orientation="vertical"
+
+    android:background="@drawable/fondologin">
+
+
+
+
+    <EditText
+        android:id="@+id/txtnombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="60dp"
+        android:background="@drawable/shape_textboxregistro"
+        android:drawableLeft="@drawable/ic_name"
+        android:drawablePadding="10dp"
+        android:hint="@string/registro_txt1"
+        android:padding="15dp"
+        android:textColor="#003152"
+        android:textColorHighlight="#0F77F6"
+        android:textColorHint="#DDDEE0"
+        android:singleLine="true"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:layout_editor_absoluteX="25dp" />
+
+    <EditText
+        android:id="@+id/txtapellido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_textboxregistro"
+        android:drawableLeft="@drawable/ic_lastname"
+        android:drawablePadding="10dp"
+        android:hint="@string/registro_txt2"
+        android:padding="15dp"
+        android:textColor="#003152"
+        android:textColorHighlight="#0F77F6"
+        android:textColorHint="#DDDEE0"
+        android:singleLine="true"
+        app:layout_constraintTop_toBottomOf="@+id/txtnombre"
+        tools:layout_editor_absoluteX="25dp" />
+
+    <EditText
+        android:id="@+id/txtemail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_textboxregistro"
+        android:drawableLeft="@drawable/ic_email"
+        android:drawablePadding="10dp"
+        android:hint="@string/main_email"
+        android:padding="15dp"
+        android:textColor="#003152"
+        android:textColorHighlight="#0F77F6"
+        android:textColorHint="#DDDEE0"
+        android:singleLine="true"
+        app:layout_constraintTop_toBottomOf="@+id/txtapellido"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <EditText
+        android:id="@+id/txtclave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/shape_textboxregistro"
+        android:drawableLeft="@drawable/ic_padlock"
+        android:drawablePadding="10dp"
+        android:hint="@string/main_clave"
+        android:padding="15dp"
+        android:textColor="#003152"
+        android:textColorHighlight="#0F77F6"
+        android:textColorHint="#DDDEE0"
+        android:inputType="textPassword"
+        android:singleLine="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtemail"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="25dp" />
+    <EditText
+        android:id="@+id/txtcelular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_textboxregistro"
+        android:drawableLeft="@drawable/ic_call"
+        android:drawablePadding="10dp"
+        android:hint="@string/registro_txt5"
+        android:padding="15dp"
+        android:textColor="#003152"
+        android:textColorHighlight="#0F77F6"
+        android:textColorHint="#DDDEE0"
+        android:singleLine="true"
+        app:layout_constraintTop_toBottomOf="@+id/txtclave"
+        tools:layout_editor_absoluteX="16dp" />
+    <EditText
+        android:id="@+id/txtruc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_textboxregistro"
+        android:drawableLeft="@drawable/ic_ruc"
+        android:drawablePadding="10dp"
+        android:hint="@string/registro_txt6"
+        android:padding="15dp"
+        android:textColor="#003152"
+        android:textColorHighlight="#0F77F6"
+        android:textColorHint="#DDDEE0"
+        android:singleLine="true"
+        app:layout_constraintTop_toBottomOf="@+id/txtcelular"
+        tools:layout_editor_absoluteX="16dp" />
+    <EditText
+        android:id="@+id/txtcodigopaypal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_textboxregistro"
+        android:drawableLeft="@drawable/ic_paypal"
+        android:drawablePadding="10dp"
+        android:hint="@string/registro_txt7"
+        android:padding="15dp"
+        android:textColor="#003152"
+        android:textColorHighlight="#0F77F6"
+        android:textColorHint="#DDDEE0"
+        android:singleLine="true"
+        app:layout_constraintTop_toBottomOf="@+id/txtruc"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/registro_txt3"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/registro_txt4"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/btncrear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_botonazulclaro"
+        android:padding="15dp"
+        android:shadowColor="@android:color/transparent"
+        android:text="@string/registro_enviar"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtruc"
+        app:layout_constraintVertical_bias="0.762" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
