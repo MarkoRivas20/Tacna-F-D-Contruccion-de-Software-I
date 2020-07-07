@@ -65,7 +65,8 @@ public class ListaEstablecimientos extends Fragment {
 
     EditText Txtbuscar;
 
-    int bandera = 0;
+
+    boolean Booleano = false;
 
     String ID_Establecimiento = "";
     String nombre = "";
@@ -164,7 +165,7 @@ public class ListaEstablecimientos extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (bandera == 0)
+                if (!Booleano)
                 {
                     Toast.makeText(getActivity(),"ID: " + Items.get(Recycler_View.getChildAdapterPosition(v)).getID_Establecimiento(),Toast.LENGTH_SHORT).show();
                     ID_Establecimiento = String.valueOf(Items.get(Recycler_View.getChildAdapterPosition(v)).getID_Establecimiento());
@@ -264,7 +265,7 @@ public class ListaEstablecimientos extends Fragment {
             if(item.getNombre().toLowerCase().contains(text.toLowerCase()))
             {
                 Lista_Filtrada.add(item);
-                bandera = 1;
+                Booleano = true;
             }
             else
             {
@@ -299,53 +300,7 @@ public class ListaEstablecimientos extends Fragment {
         SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("login_usuario", Context.MODE_PRIVATE);
         return sharedPref.getString(Key,"");
     }
-/*
-    public class myasynctask extends AsyncTask<String, Integer, Boolean> {
 
-
-        private Context mContext = null;
-
-        myasynctask(Context context){
-            mContext=context;
-        }
-
-        @Override
-        protected Boolean doInBackground(String... strings) {
-
-
-
-
-            try {
-
-                Statement stm2=connectionDB().createStatement();
-                rs=stm2.executeQuery("Select * from Establecimiento where ID_Usuario_Propietario="+ID_Usuario);
-
-            }catch (Exception e){
-                Log.e("Error",e.toString());
-            }
-
-            return true;
-        }
-
-        @Override
-        protected  void onPreExecute(){
-
-            mDialog.show();
-
-        }
-
-        @Override
-        protected  void onPostExecute(Boolean result){
-
-
-
-            mDialog.dismiss();
-
-
-        }
-
-
-    }*/
     public void RellenarLista(){
 
 

@@ -36,7 +36,8 @@ public class RegistroUsuario extends AppCompatActivity {
 
     ResultSet Result_Set;
     AlertDialog Alert_Dialog;
-    int Contador = 0;
+
+    boolean Booleano = false;
 
 
     @Override
@@ -69,7 +70,7 @@ public class RegistroUsuario extends AppCompatActivity {
         Btncrear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Contador = 0;
+                Booleano = false;
 
                 if (Txtemail.length() == 0 || Txtclave.length() == 0 || Txtnombre.length() == 0
                         || Txtapellido.length() == 0 || Txtcelular.length() == 0 || Txtruc.length() == 0 || Txtcodigo_Paypal.length() == 0)
@@ -202,7 +203,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
                 if (Result_Set.next())
                 {
-                    Contador=1;
+                    Booleano = true;
                 }
                 else
                 {
@@ -213,7 +214,7 @@ public class RegistroUsuario extends AppCompatActivity {
 
             }
 
-            if (Contador != 0)
+            if (Booleano)
             {
                 Txtemail.setError("Este correo ya esta siendo usado");
                 Alert_Dialog.dismiss();

@@ -75,7 +75,8 @@ public class RegistroItemMenu extends Fragment {
     FirebaseStorage Firebase_Storage;
 
     String Foto = "";
-    int bandera = 0;
+
+    boolean Booleano = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -178,7 +179,7 @@ public class RegistroItemMenu extends Fragment {
         Btnregistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Txtnombre.length() == 0 || Txtdescripcion.length() == 0 || Txtprecio.length() == 0 || bandera == 0)
+                if (Txtnombre.length() == 0 || Txtdescripcion.length() == 0 || Txtprecio.length() == 0 || !Booleano)
                 {
                     if (Txtnombre.length() == 0)
                     {
@@ -204,7 +205,7 @@ public class RegistroItemMenu extends Fragment {
                     {
 
                     }
-                    if (bandera == 0)
+                    if (!Booleano)
                     {
                         Toast.makeText(getActivity(),"Debe seleccionar una foto", Toast.LENGTH_SHORT).show();
                     }
@@ -250,7 +251,7 @@ public class RegistroItemMenu extends Fragment {
         {
             Image_Uri = data.getData();
             Foto_Gallery.setImageURI(Image_Uri);
-            bandera = 1;
+            Booleano = true;
         }
         else
         {

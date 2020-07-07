@@ -9,8 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -67,6 +70,7 @@ public class ListaItemsMenu extends Fragment {
     ImageView Img_Logo;
 
     TextView Txtnombre;
+    TextView Btnopciones;
 
     ResultSet Result_Set;
 
@@ -81,6 +85,8 @@ public class ListaItemsMenu extends Fragment {
     DatabaseReference Database_Reference;
     StorageReference Storage_Reference;
     FirebaseStorage Firebase_Storage;
+
+    final Bundle bundle2 = new Bundle();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -122,6 +128,9 @@ public class ListaItemsMenu extends Fragment {
             }
         });
 
+        Btnopciones = (TextView) v.findViewById(R.id.Btnopciones);
+        registerForContextMenu(Btnopciones);
+
         Bundle bundle = getArguments();
 
         bid_establecimiento = bundle.getString("id_establecimiento");
@@ -148,7 +157,7 @@ public class ListaItemsMenu extends Fragment {
         Txtnombre = (TextView) v.findViewById(R.id.lblnombre);
         Txtnombre.setText(bnombre);
 
-        final Bundle bundle2 = new Bundle();
+
 
         bundle2.putString("id_establecimiento", bid_establecimiento);
         bundle2.putString("nombre", bnombre);
@@ -301,6 +310,44 @@ public class ListaItemsMenu extends Fragment {
 
 
         return v;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Opciones");
+        menu.add(Menu.NONE, 1, 1, "Visualizar Documento");
+        menu.add(Menu.NONE, 2, 2, "Gestionar Repartidores");
+        menu.add(Menu.NONE, 3, 3, "Visualizar Pedidos");
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        Toast.makeText(getActivity().getApplicationContext(), "Selected Item: " +item.getItemId(), Toast.LENGTH_SHORT).show();
+
+        switch (item.getItemId()){
+            case 1:
+                VisualizarDocumento visualizarDocumento = new VisualizarDocumento();
+                visualizarDocumento.setArguments(bundle2);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.contenedorfragment, visualizarDocumento);
+                transaction.commit();
+                break;
+            case 2:
+                ListaRepartidores listaRepartidores = new ListaRepartidores();
+                listaRepartidores.setArguments(bundle2);
+                FragmentTransaction transaction2 = getFragmentManager().beginTransaction();
+                transaction2.replace(R.id.contenedorfragment, listaRepartidores);
+                transaction2.commit();
+                break;
+            case 3:
+                ListaPedidos listaPedidos = new ListaPedidos();
+                listaPedidos.setArguments(bundle2);
+                FragmentTransaction transaction3 = getFragmentManager().beginTransaction();
+                transaction3.replace(R.id.contenedorfragment, listaPedidos);
+                transaction3.commit();
+                break;
+        }
+        return true;
     }
 
     private void InicializarFirebase(){

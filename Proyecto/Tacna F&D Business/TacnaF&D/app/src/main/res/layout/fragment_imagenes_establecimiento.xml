@@ -34,35 +34,46 @@
 
 
 
-            <LinearLayout
-                android:id="@+id/linearLayout4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:orientation="horizontal"
-                android:padding="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
-
-                <ImageView
-                    android:id="@+id/imglogo"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="left"
-                    tools:src="@tools:sample/avatars" />
-
-
-                <TextView
-                    android:id="@+id/lblnombre"
-                    android:layout_width="269dp"
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    android:text="Nombre"
-                    android:textSize="20sp"
-                    android:translationX="20dp" />
+                    android:background="#FFFFFF"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/imglogo"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="left"
+                        tools:src="@tools:sample/avatars" />
+
+
+                    <TextView
+                        android:id="@+id/lblnombre"
+                        android:layout_width="290dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:text="Nombre"
+                        android:textSize="20sp"
+                        android:translationX="20dp" />
+
+                    <TextView
+                        android:id="@+id/Btnopciones"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center"
+
+                        android:translationX="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:drawableStart="@drawable/ic_more"
+                        android:background="#FFFFFF"/>
+
+                </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linearLayout5"

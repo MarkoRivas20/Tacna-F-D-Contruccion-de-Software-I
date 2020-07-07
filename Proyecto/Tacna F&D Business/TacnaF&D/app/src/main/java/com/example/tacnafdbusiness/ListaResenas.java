@@ -12,8 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tacnafdbusiness.Adaptador.ReseñasAdapter;
 import com.example.tacnafdbusiness.Model.ImagenEstablecimiento;
@@ -67,6 +71,7 @@ public class ListaResenas extends Fragment {
     TextView Txtnombre;
     TextView Lbltotal;
     TextView Lblpuntuacion;
+    TextView Btnopciones;
 
     RatingBar Ratingbar_Calificacion;
 
@@ -94,6 +99,7 @@ public class ListaResenas extends Fragment {
     int Contador_4 = 0;
     int Contador_5 = 0;
 
+    final Bundle bundle2 = new Bundle();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -141,6 +147,9 @@ public class ListaResenas extends Fragment {
             }
         });
 
+        Btnopciones = (TextView) v.findViewById(R.id.Btnopciones);
+        registerForContextMenu(Btnopciones);
+
         Alert_Dialog = new SpotsDialog.Builder()
                 .setContext(getActivity())
                 .setMessage("Espere")
@@ -176,7 +185,7 @@ public class ListaResenas extends Fragment {
         Lblpuntuacion.setText(bpuntuacion);
         Ratingbar_Calificacion.setRating(Float.parseFloat(bpuntuacion));
 
-        final Bundle bundle2 = new Bundle();
+
 
         bundle2.putString("id_establecimiento", bid_establecimiento);
         bundle2.putString("nombre", bnombre);
@@ -262,6 +271,43 @@ public class ListaResenas extends Fragment {
 
 
         return v;
+    }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Opciones");
+        menu.add(Menu.NONE, 1, 1, "Visualizar Documento");
+        menu.add(Menu.NONE, 2, 2, "Gestionar Repartidores");
+        menu.add(Menu.NONE, 3, 3, "Visualizar Pedidos");
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        Toast.makeText(getActivity().getApplicationContext(), "Selected Item: " +item.getItemId(), Toast.LENGTH_SHORT).show();
+
+        switch (item.getItemId()){
+            case 1:
+                VisualizarDocumento visualizarDocumento = new VisualizarDocumento();
+                visualizarDocumento.setArguments(bundle2);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.contenedorfragment, visualizarDocumento);
+                transaction.commit();
+                break;
+            case 2:
+                ListaRepartidores listaRepartidores = new ListaRepartidores();
+                listaRepartidores.setArguments(bundle2);
+                FragmentTransaction transaction2 = getFragmentManager().beginTransaction();
+                transaction2.replace(R.id.contenedorfragment, listaRepartidores);
+                transaction2.commit();
+                break;
+            case 3:
+                ListaPedidos listaPedidos = new ListaPedidos();
+                listaPedidos.setArguments(bundle2);
+                FragmentTransaction transaction3 = getFragmentManager().beginTransaction();
+                transaction3.replace(R.id.contenedorfragment, listaPedidos);
+                transaction3.commit();
+                break;
+        }
+        return true;
     }
     public Connection ConectarDB(){
 

@@ -32,6 +32,7 @@ import com.google.firebase.storage.StorageReference;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +85,8 @@ public class ListaRepartidores extends Fragment {
     AlertDialog Alert_Dialog;
 
     AlertDialog.Builder Mensaje;
+
+    boolean Booleano = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -174,8 +177,27 @@ public class ListaRepartidores extends Fragment {
         Btnanadir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BuscarRepartidor buscarRepartidor= new BuscarRepartidor(getActivity().getApplicationContext());
-                buscarRepartidor.execute(Txtid_Repartidor.getText().toString());
+
+
+
+                    for (int i=0; i<Items.size(); i++){
+
+                        if(Txtid_Repartidor.getText().toString().equals(String.valueOf(Items.get(i).getID_Usuario_Repartidor()))){
+                            Toast.makeText(getActivity().getApplicationContext(),"Este repartidor ya fue agregado",Toast.LENGTH_SHORT).show();
+                            Booleano = true;
+                            break;
+                        }
+                        else
+                        {
+                            Booleano = false;
+                        }
+                    }
+                    if(!Booleano){
+                        BuscarRepartidor buscarRepartidor= new BuscarRepartidor(getActivity().getApplicationContext());
+                        buscarRepartidor.execute(Txtid_Repartidor.getText().toString());
+                    }
+
+
             }
         });
 

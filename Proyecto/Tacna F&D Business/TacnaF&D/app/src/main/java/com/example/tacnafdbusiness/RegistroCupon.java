@@ -88,7 +88,8 @@ public class RegistroCupon extends Fragment {
     Button Btnregistrar;
 
     String Foto = "";
-    int bandera = 0;
+
+    boolean Booleano = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,7 +99,7 @@ public class RegistroCupon extends Fragment {
         Txtdescripcion = (EditText) v.findViewById(R.id.txtdescripcion);
 
         InicializarFirebase();
-        bandera = 0;
+        Booleano = false;
 
 
         Alert_Dialog = new SpotsDialog.Builder()
@@ -247,7 +248,7 @@ public class RegistroCupon extends Fragment {
             public void onClick(View v) {
 
                 if (Txttitulo.length() == 0 || Txtdescripcion.length() == 0 || Txtfecha_Final.length() == 0
-                        || Txtfecha_Inicio.length() == 0 || Spinner_Estado.getSelectedItemPosition()==0 || bandera == 0)
+                        || Txtfecha_Inicio.length() == 0 || Spinner_Estado.getSelectedItemPosition()==0 || !Booleano)
                 {
 
                     if (Txttitulo.length() == 0)
@@ -290,7 +291,7 @@ public class RegistroCupon extends Fragment {
                     {
 
                     }
-                    if (bandera == 0){
+                    if (!Booleano){
                         Toast.makeText(getActivity(),"Seleccione una imagen", Toast.LENGTH_SHORT).show();
                     }
                     else
@@ -326,7 +327,7 @@ public class RegistroCupon extends Fragment {
         {
             Image_Uri = data.getData();
             Foto_Gallery.setImageURI(Image_Uri);
-            bandera = 1;
+            Booleano = true;
         }
         else
         {

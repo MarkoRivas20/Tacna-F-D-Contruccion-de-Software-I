@@ -89,8 +89,8 @@ public class RegistroEstablecimiento extends Fragment implements OnMapReadyCallb
     Button Btnregistrar;
     Button Btnatras;
 
-    int bandera = 0;
-    int bandera2 = 0;
+    boolean Booleano = false;
+    boolean Booleano2= false;
 
 
     @Override
@@ -128,7 +128,7 @@ public class RegistroEstablecimiento extends Fragment implements OnMapReadyCallb
             }
         });
 
-        bandera = 0;
+        Booleano = false;
         InicializarFirebase();
         Id_Usuario = GetFromSharedPreferences("ID");
 
@@ -186,7 +186,7 @@ public class RegistroEstablecimiento extends Fragment implements OnMapReadyCallb
             @Override
             public void onClick(View v) {
                 if (Txtnombre.length() == 0 || Txtdireccion.length() == 0 || Txttelefono.length() == 0 || Txtdescripcion.length() == 0 || Txtcapacidad.length() == 0
-                        || Spinner_Categoria.getSelectedItemPosition() == 0 || Spinner_Distrito.getSelectedItemPosition() == 0 || bandera == 0 || bandera2 == 0
+                        || Spinner_Categoria.getSelectedItemPosition() == 0 || Spinner_Distrito.getSelectedItemPosition() == 0 || !Booleano || !Booleano2
                         || Punto_Geografico.equals(""))
                 {
                     if (Txtnombre.length() == 0)
@@ -245,7 +245,7 @@ public class RegistroEstablecimiento extends Fragment implements OnMapReadyCallb
                     {
 
                     }
-                    if (bandera == 0)
+                    if (!Booleano)
                     {
                         Toast.makeText(getActivity(),"Seleccione una Imagen", Toast.LENGTH_SHORT).show();
                     }
@@ -253,7 +253,7 @@ public class RegistroEstablecimiento extends Fragment implements OnMapReadyCallb
                     {
 
                     }
-                    if (bandera2 == 0)
+                    if (!Booleano2)
                     {
                         Toast.makeText(getActivity(),"Seleccione el documento", Toast.LENGTH_SHORT).show();
                     }
@@ -302,13 +302,21 @@ public class RegistroEstablecimiento extends Fragment implements OnMapReadyCallb
         {
             Image_Uri = data.getData();
             Foto_Gallery.setImageURI(Image_Uri);
-            bandera = 1;
+            Booleano = true;
+        }
+        else
+        {
+
         }
         if (resultCode == getActivity().RESULT_OK && requestCode == PICK_IMAGE_DOCUMENT)
         {
             Image_Document_Uri = data.getData();
             Txtdocumento.setText(Image_Document_Uri.getLastPathSegment());
-            bandera2 = 1;
+            Booleano2 = true;
+        }
+        else
+        {
+
         }
     }
 

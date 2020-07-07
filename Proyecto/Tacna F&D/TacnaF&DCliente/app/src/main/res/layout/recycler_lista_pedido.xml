@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="2dp"
+    android:layout_marginBottom="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="#FFFFFF"
+        android:padding="10dp">
+
+
+        <ImageView
+            android:id="@+id/imageViewseparador"
+            android:layout_width="230dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="36dp"
+            android:adjustViewBounds="true"
+            android:background="#DDDDDD"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtnombre_Recycler_Pedido" />
+
+        <ImageView
+            android:id="@+id/Imagen_Recycler_Pedido"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_restaurant_menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgborrar_Recycler_Pedido"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewseparador" />
+
+        <TextView
+            android:id="@+id/txtnombre_Recycler_Pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Nombre"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/Imagen_Recycler_Pedido"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtpreciototal_Recycler_Pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_botonnaranja"
+            android:text="Precio"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/txtpreciounit_recycler_Pedido"
+            app:layout_constraintTop_toBottomOf="@+id/txtpreciounit_recycler_Pedido"
+            app:layout_constraintVertical_bias="0.7" />
+
+        <TextView
+            android:id="@+id/txtcantidad_recycler_Pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:justificationMode="inter_word"
+            android:text="Cantidad"
+            android:textColor="#000000"
+            app:layout_constraintStart_toEndOf="@+id/Imagen_Recycler_Pedido"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewseparador" />
+
+        <TextView
+            android:id="@+id/txtpreciounit_recycler_Pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginTop="8dp"
+            android:justificationMode="inter_word"
+            android:text="Precio unitario"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/txtcantidad_recycler_Pedido"
+            app:layout_constraintTop_toBottomOf="@+id/txtcantidad_recycler_Pedido" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

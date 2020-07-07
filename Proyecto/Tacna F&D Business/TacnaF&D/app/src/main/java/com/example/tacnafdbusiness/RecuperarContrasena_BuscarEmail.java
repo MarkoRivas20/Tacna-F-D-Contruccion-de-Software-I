@@ -46,8 +46,8 @@ public class RecuperarContrasena_BuscarEmail extends AppCompatActivity {
 
     ResultSet Result_Set;
 
+    boolean Booleano = false;
 
-    int Contador = 0;
     String Id_Usuario = "";
 
     @Override
@@ -152,11 +152,11 @@ public class RecuperarContrasena_BuscarEmail extends AppCompatActivity {
                 if (Result_Set.next())
                 {
                     Id_Usuario = Result_Set.getString(1);
-                    Contador = 1;
+                    Booleano = true;
                 }
                 else
                 {
-                    Contador = 0;
+                    Booleano = false;
                 }
 
             }catch (Exception e){
@@ -189,7 +189,7 @@ public class RecuperarContrasena_BuscarEmail extends AppCompatActivity {
 
             try {
 
-                if (Contador == 1)
+                if (Booleano)
                 {
 
                     int Numero = (int) (Math.random() * 999998) + 1;
@@ -270,7 +270,7 @@ public class RecuperarContrasena_BuscarEmail extends AppCompatActivity {
         @Override
         protected  void onPostExecute (Boolean result){
 
-            if (Contador == 1)
+            if (Booleano)
             {
                 Intent intent = new Intent(getApplicationContext(), RecuperarContrasena_IngresarCodigo.class);
                 intent.putExtra("claverecover", Clave_Recover);

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".DatosPedido">
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:padding="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <Button
+            android:id="@+id/btnatras"
+            android:layout_width="35dp"
+            android:layout_height="27dp"
+            android:background="#FFFFFF"
+            android:drawableTop="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/txtnombrecliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="60dp"
+            android:background="@drawable/shape_textboxregistro"
+            android:drawableLeft="@drawable/ic_person_black"
+            android:drawablePadding="10dp"
+            android:hint="Nombre del Cliente"
+            android:padding="15dp"
+            android:textColor="#003152"
+            android:textColorHighlight="#0F77F6"
+            android:textColorHint="#DDDEE0"
+            android:singleLine="true"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            tools:layout_editor_absoluteX="25dp" />
+
+        <EditText
+            android:id="@+id/txtnombreestablecimiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="12dp"
+            android:background="@drawable/shape_textboxregistro"
+            android:drawableLeft="@drawable/ic_store_black"
+            android:drawablePadding="10dp"
+            android:hint="Nombre del Establecimiento"
+            android:padding="15dp"
+            android:textColor="#003152"
+            android:textColorHighlight="#0F77F6"
+            android:textColorHint="#DDDEE0"
+            android:singleLine="true"
+            app:layout_constraintTop_toBottomOf="@+id/txtnombrecliente"
+            tools:layout_editor_absoluteX="25dp" />
+
+        <EditText
+            android:id="@+id/txtdireccion_pedido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="12dp"
+            android:background="@drawable/shape_textboxregistro"
+            android:drawableLeft="@drawable/ic_place_black"
+            android:drawablePadding="10dp"
+            android:hint="Direccion de entrega"
+            android:padding="15dp"
+            android:textColor="#003152"
+            android:textColorHighlight="#0F77F6"
+            android:textColorHint="#DDDEE0"
+            android:singleLine="true"
+            app:layout_constraintTop_toBottomOf="@+id/txtnombreestablecimiento"
+            tools:layout_editor_absoluteX="16dp" />
+
+
+
+
+        <TextView
+            android:id="@+id/lblbienvenida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="8dp"
+            android:text="Pedido"
+            android:textColor="#000000"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="Datos Generales"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblbienvenida" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Seleccione el punto de entrega"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/txtdireccion_pedido"
+            app:layout_constraintTop_toBottomOf="@+id/txtdireccion_pedido" />
+
+        <com.example.tacnafdcliente.CustomMapView
+
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            tools:layout_editor_absoluteX="25dp" />
+
+        <Button
+            android:id="@+id/btnsiguiente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/shape_botonazul"
+            android:shadowColor="@android:color/transparent"
+            android:text="Siguiente"
+            android:textColor="#FFFFFF"
+            app:layout_constraintTop_toBottomOf="@+id/map"
+            tools:layout_editor_absoluteX="25dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>
