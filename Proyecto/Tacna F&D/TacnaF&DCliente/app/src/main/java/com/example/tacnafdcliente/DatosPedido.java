@@ -1,12 +1,16 @@
 package com.example.tacnafdcliente;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +25,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import dmax.dialog.SpotsDialog;
 
 
 public class DatosPedido extends Fragment implements OnMapReadyCallback {
@@ -65,13 +76,23 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
     private CustomMapView Map_View;
     String Punto_Geografico = "-18.007667/-70.239441";
 
+    ResultSet Result_Set;
 
+    AlertDialog Alert_Dialog;
+
+    final Bundle bundle2 = new Bundle();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_datos_pedido, container, false);
+
+        Alert_Dialog = new SpotsDialog.Builder()
+                .setContext(getActivity())
+                .setMessage("Espere")
+                .setCancelable(false)
+                .build();
 
         Map_View = (CustomMapView) v.findViewById(R.id.map);
         Map_View.onCreate(savedInstanceState);
@@ -103,7 +124,7 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
         Mi_Comentario = bundle.getString("micomentario");
         Mi_Puntuacion = bundle.getFloat("mipuntuacion");
 
-        final Bundle bundle2 = new Bundle();
+
 
         bundle2.putString("id_establecimiento",bid_establecimiento);
         bundle2.putString("nombre",bnombre);
@@ -199,15 +220,9 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
                 }
                 else
                 {
-                    bundle2.putString("direcciondestino",TxtDireccion.getText().toString());
-                    bundle2.putString("puntogeograficodestino",Punto_Geografico);
 
-                    RealizarPedido realizarPedido = new RealizarPedido();
-                    realizarPedido.setArguments(bundle2);
-
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.contenedorfragment, realizarPedido);
-                    transaction.commit();
+                    BuscarCodigoPaypal task = new BuscarCodigoPaypal(getActivity().getApplicationContext());
+                    task.execute();
                 }
             }
         });
@@ -242,5 +257,95 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
                 Punto_Geografico = latitud + "/" + longitud;
             }
         });
+    }
+
+    public Connection ConnectionDB(){
+
+        Connection cnn = null;
+        try {
+
+            StrictMode.ThreadPolicy politica = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(politica);
+
+            Class.forName("net.sourceforge.jtds.jdbc.Driver");
+            cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
+
+
+        }catch (Exception e){
+
+        }
+
+        return cnn;
+    }
+
+    public class BuscarCodigoPaypal extends AsyncTask<Void, Void, Boolean> {
+
+
+        private Context mContext = null;
+
+        BuscarCodigoPaypal (Context context){
+            mContext = context;
+        }
+
+        @Override
+        protected Boolean doInBackground (Void... voids) {
+
+
+
+            try {
+
+                Statement stm2 = ConnectionDB().createStatement();
+                Result_Set = stm2.executeQuery("select up.Codigo_PayPal from Establecimiento e inner join Usuario_Propietario up \n" +
+                        "on e.ID_Usuario_Propietario=up.ID_Usuario_Propietario where e.ID_Establecimiento=" + bid_establecimiento);
+
+            }catch (Exception e){
+                Log.e("Error", e.toString());
+            }
+
+            return true;
+        }
+
+        @Override
+        protected  void onPreExecute(){
+
+            Alert_Dialog.show();
+
+        }
+
+        @Override
+        protected  void onPostExecute (Boolean result){
+
+            Alert_Dialog.dismiss();
+            try {
+
+                if(Result_Set.next())
+                {
+
+                    bundle2.putString("direcciondestino",TxtDireccion.getText().toString());
+                    bundle2.putString("puntogeograficodestino",Punto_Geografico);
+                    bundle2.putString("codigopaypal",Result_Set.getString(1));
+
+                    RealizarPedido realizarPedido = new RealizarPedido();
+                    realizarPedido.setArguments(bundle2);
+
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.contenedorfragment, realizarPedido);
+                    transaction.commit();
+                }
+                else
+                {
+
+                }
+
+            }catch (Exception e){
+                Log.e("Error", e.toString());
+            }
+
+
+
+
+        }
+
+
     }
 }

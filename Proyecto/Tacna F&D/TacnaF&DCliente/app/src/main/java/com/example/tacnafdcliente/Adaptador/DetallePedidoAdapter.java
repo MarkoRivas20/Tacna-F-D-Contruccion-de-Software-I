@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,8 +21,16 @@ import java.util.List;
 
 public class DetallePedidoAdapter extends RecyclerView.Adapter<DetallePedidoAdapter.DetallePedidoViewHolder>{
     private List<DetallePedido> Items;
-
     private Context Contexto;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
 
     public class DetallePedidoViewHolder extends RecyclerView.ViewHolder{
         // Campos respectivos de un item
@@ -32,7 +41,7 @@ public class DetallePedidoAdapter extends RecyclerView.Adapter<DetallePedidoAdap
         public TextView Txtprecio_Unitario;
         public TextView Txtprecio_Total;
 
-        public DetallePedidoViewHolder (View v) {
+        public DetallePedidoViewHolder (View v, final OnItemClickListener listener) {
             super(v);
             Imagen_Item = (ImageView) v.findViewById(R.id.Imagen_Recycler_Pedido);
             Imagen_Borrar = (ImageView) v.findViewById(R.id.imgborrar_Recycler_Pedido);
@@ -40,6 +49,28 @@ public class DetallePedidoAdapter extends RecyclerView.Adapter<DetallePedidoAdap
             Txtcantidad = (TextView)v.findViewById(R.id.txtcantidad_recycler_Pedido);
             Txtprecio_Unitario = (TextView)v.findViewById(R.id.txtpreciounit_recycler_Pedido);
             Txtprecio_Total = (TextView)v.findViewById(R.id.txtpreciototal_Recycler_Pedido);
+
+            Imagen_Borrar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null)
+                    {
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION)
+                        {
+                           listener.onItemClick(position);
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
+            });
         }
 
         public void bindData (DetallePedido dataModel, Context context) {
@@ -63,7 +94,8 @@ public class DetallePedidoAdapter extends RecyclerView.Adapter<DetallePedidoAdap
     @Override
     public DetallePedidoViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_lista_pedido, parent, false);
-        return new DetallePedidoViewHolder(v);
+        DetallePedidoViewHolder detallePedidoViewHolder = new DetallePedidoViewHolder(v,mListener);
+        return detallePedidoViewHolder;
     }
 
     @Override
