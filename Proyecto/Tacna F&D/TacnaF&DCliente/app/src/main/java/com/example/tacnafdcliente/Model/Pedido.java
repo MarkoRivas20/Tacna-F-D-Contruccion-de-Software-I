@@ -8,6 +8,7 @@ public class Pedido {
     private int ID_Establecimiento;
     private int ID_Usuario_Repartidor;
     private String Usuario_Cliente;
+    private String Nombre_Establecimiento;
     private String Descripcion;
     private String Fecha;
     private String Estado;
@@ -33,6 +34,14 @@ public class Pedido {
 
     public void setUsuario_Cliente(String ID_Usuario_Cliente) {
         this.Usuario_Cliente = ID_Usuario_Cliente;
+    }
+
+    public String getNombre_Establecimiento() {
+        return Nombre_Establecimiento;
+    }
+
+    public void setNombre_Establecimiento(String nombre_Establecimiento) {
+        Nombre_Establecimiento = nombre_Establecimiento;
     }
 
     public int getID_Establecimiento() {

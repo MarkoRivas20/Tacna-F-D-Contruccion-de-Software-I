@@ -1,5 +1,7 @@
 package com.example.tacnafdbusiness;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -46,19 +48,7 @@ public class ListaItemsMenu extends Fragment {
     }
 
     String bid_establecimiento = "";
-    String bnombre = "";
-    String bdistrito = "";
-    String bcategoria = "";
-    String bdireccion = "";
-    String btelefono = "";
-    String bdescripcion = "";
-    String bcapacidad = "";
-    String btotalresenas = "";
-    String bpuntuacion = "";
     String burl_imagen_logo = "";
-    String burl_imagen_documento = "";
-    String bpuntogeografico = "";
-    String bestado = "";
 
     Button Btndescripcion;
     Button Btnperfil;
@@ -85,8 +75,6 @@ public class ListaItemsMenu extends Fragment {
     DatabaseReference Database_Reference;
     StorageReference Storage_Reference;
     FirebaseStorage Firebase_Storage;
-
-    final Bundle bundle2 = new Bundle();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -131,22 +119,10 @@ public class ListaItemsMenu extends Fragment {
         Btnopciones = (TextView) v.findViewById(R.id.Btnopciones);
         registerForContextMenu(Btnopciones);
 
-        Bundle bundle = getArguments();
 
-        bid_establecimiento = bundle.getString("id_establecimiento");
-        bnombre = bundle.getString("nombre");
-        bdistrito = bundle.getString("distrito");
-        bcategoria = bundle.getString("categoria");
-        bdireccion = bundle.getString("direccion");
-        btelefono = bundle.getString("telefono");
-        bdescripcion = bundle.getString("descripcion");
-        bcapacidad = bundle.getString("capacidad");
-        btotalresenas = bundle.getString("totalresenas");
-        bpuntuacion = bundle.getString("puntuacion");
-        burl_imagen_logo = bundle.getString("url_imagen_logo");
-        burl_imagen_documento = bundle.getString("url_imagen_documento");
-        bpuntogeografico = bundle.getString("puntogeografico");
-        bestado = bundle.getString("estado");
+
+        bid_establecimiento = GetInfoFromSharedPreferences("ID");
+        burl_imagen_logo = GetInfoFromSharedPreferences("Url_Imagen_Logo");
 
 
         Img_Logo = (ImageView) v.findViewById(R.id.imglogo);
@@ -155,32 +131,14 @@ public class ListaItemsMenu extends Fragment {
 
 
         Txtnombre = (TextView) v.findViewById(R.id.lblnombre);
-        Txtnombre.setText(bnombre);
+        Txtnombre.setText(GetInfoFromSharedPreferences("Nombre"));
 
-
-
-        bundle2.putString("id_establecimiento", bid_establecimiento);
-        bundle2.putString("nombre", bnombre);
-        bundle2.putString("distrito", bdistrito);
-        bundle2.putString("categoria", bcategoria);
-        bundle2.putString("direccion", bdireccion);
-        bundle2.putString("telefono", btelefono);
-        bundle2.putString("descripcion", bdescripcion);
-        bundle2.putString("capacidad", bcapacidad);
-        bundle2.putString("totalresenas", btotalresenas);
-        bundle2.putString("puntuacion", bpuntuacion);
-        bundle2.putString("url_imagen_logo", burl_imagen_logo);
-        bundle2.putString("url_imagen_documento", burl_imagen_documento);
-        bundle2.putString("puntogeografico", bpuntogeografico);
-        bundle2.putString("estado", bestado);
 
         Btndescripcion = (Button) v.findViewById(R.id.btndescripcion);
         Btndescripcion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PerfilEstablecimiento perfilEstablecimiento = new PerfilEstablecimiento();
-                perfilEstablecimiento.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, perfilEstablecimiento);
                 transaction.commit();
@@ -204,8 +162,6 @@ public class ListaItemsMenu extends Fragment {
             @Override
             public void onClick(View v) {
                 ListaResenas listaResenas = new ListaResenas();
-                listaResenas.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaResenas);
                 transaction.commit();
@@ -217,8 +173,6 @@ public class ListaItemsMenu extends Fragment {
             @Override
             public void onClick(View v) {
                 ListaCupon listaCupon = new ListaCupon();
-                listaCupon.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaCupon);
                 transaction.commit();
@@ -230,8 +184,6 @@ public class ListaItemsMenu extends Fragment {
             @Override
             public void onClick(View v) {
                 ImagenesEstablecimiento imagenesEstablecimiento = new ImagenesEstablecimiento();
-                imagenesEstablecimiento.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, imagenesEstablecimiento);
                 transaction.commit();
@@ -243,7 +195,6 @@ public class ListaItemsMenu extends Fragment {
             @Override
             public void onClick(View v) {
                 RegistroItemMenu registroItemMenu = new RegistroItemMenu();
-                registroItemMenu.setArguments(bundle2);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, registroItemMenu);
                 transaction.commit();
@@ -261,32 +212,12 @@ public class ListaItemsMenu extends Fragment {
             @Override
             public void onModificar (int position) {
 
-                final Bundle bundle3 = new Bundle();
 
-                bundle3.putString("id_establecimiento", bid_establecimiento);
-                bundle3.putString("nombre", bnombre);
-                bundle3.putString("distrito", bdistrito);
-                bundle3.putString("categoria", bcategoria);
-                bundle3.putString("direccion", bdireccion);
-                bundle3.putString("telefono", btelefono);
-                bundle3.putString("descripcion", bdescripcion);
-                bundle3.putString("capacidad", bcapacidad);
-                bundle3.putString("totalresenas", btotalresenas);
-                bundle3.putString("puntuacion", bpuntuacion);
-                bundle3.putString("url_imagen_logo", burl_imagen_logo);
-                bundle3.putString("url_imagen_documento", burl_imagen_documento);
-                bundle3.putString("puntogeografico", bpuntogeografico);
-                bundle3.putString("estado", bestado);
-
-
-                bundle3.putString("id_item_menu", String.valueOf(Items.get(position).getID_Item_Menu()));
-                bundle3.putString("nombremenu", String.valueOf(Items.get(position).getNombre()));
-                bundle3.putString("descripcionmenu", String.valueOf(Items.get(position).getDescripcion()));
-                bundle3.putString("precio", String.valueOf(Items.get(position).getPrecio()));
-                bundle3.putString("url_imagen", String.valueOf(Items.get(position).getUrl_Imagen()));
+                SaveInfoMenuSharedPreferences(String.valueOf(Items.get(position).getID_Item_Menu()),String.valueOf(Items.get(position).getNombre()),
+                        String.valueOf(Items.get(position).getDescripcion()),String.valueOf(Items.get(position).getPrecio()),
+                        String.valueOf(Items.get(position).getUrl_Imagen()));
 
                 ModificarItemMenu modificarItemMenu = new ModificarItemMenu();
-                modificarItemMenu.setArguments(bundle3);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, modificarItemMenu);
                 transaction.commit();
@@ -327,21 +258,18 @@ public class ListaItemsMenu extends Fragment {
         switch (item.getItemId()){
             case 1:
                 VisualizarDocumento visualizarDocumento = new VisualizarDocumento();
-                visualizarDocumento.setArguments(bundle2);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, visualizarDocumento);
                 transaction.commit();
                 break;
             case 2:
                 ListaRepartidores listaRepartidores = new ListaRepartidores();
-                listaRepartidores.setArguments(bundle2);
                 FragmentTransaction transaction2 = getFragmentManager().beginTransaction();
                 transaction2.replace(R.id.contenedorfragment, listaRepartidores);
                 transaction2.commit();
                 break;
             case 3:
                 ListaPedidos listaPedidos = new ListaPedidos();
-                listaPedidos.setArguments(bundle2);
                 FragmentTransaction transaction3 = getFragmentManager().beginTransaction();
                 transaction3.replace(R.id.contenedorfragment, listaPedidos);
                 transaction3.commit();
@@ -435,5 +363,22 @@ public class ListaItemsMenu extends Fragment {
 
         BuscarMenu();
         Recycler_View.setAdapter(Adaptador);
+    }
+
+    private String GetInfoFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
+    }
+
+    private void SaveInfoMenuSharedPreferences(String ID_Item_Menu, String Nombre_Menu, String Descripcion_Menu, String Precio, String Url_Imagen){
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("info_menu", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("ID_Item_Menu", ID_Item_Menu);
+        editor.putString("Nombre_Menu", Nombre_Menu);
+        editor.putString("Descripcion_Menu", Descripcion_Menu);
+        editor.putString("Precio", Precio);
+        editor.putString("Url_Imagen", Url_Imagen);
+        editor.apply();
     }
 }

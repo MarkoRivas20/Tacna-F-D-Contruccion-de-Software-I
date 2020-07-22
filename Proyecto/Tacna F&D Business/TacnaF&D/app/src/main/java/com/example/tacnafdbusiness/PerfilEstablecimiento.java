@@ -2,6 +2,7 @@ package com.example.tacnafdbusiness;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -71,11 +72,7 @@ public class PerfilEstablecimiento extends Fragment implements OnMapReadyCallbac
     TextView Btnopciones;
 
     String Url_Imagen_Logo = "";
-    String Url_Imagen_Documento = "";
     String Punto_Geofragico = "";
-    String Total_Resenas = "";
-    String Puntuacion = "";
-    String Estado = "";
     String Id_Establecimiento = "";
 
     ImageView Img_Logo;
@@ -92,8 +89,6 @@ public class PerfilEstablecimiento extends Fragment implements OnMapReadyCallbac
     private CustomMapView Map_View;
 
     AlertDialog Alert_Dialog;
-
-    final Bundle bundle2 = new Bundle();
 
 
     @Override
@@ -155,22 +150,16 @@ public class PerfilEstablecimiento extends Fragment implements OnMapReadyCallbac
         });
 
 
-        Bundle bundle = getArguments();
-
-        Txtnombre.setText(bundle.getString("nombre"));
-        Txtdistrito.setText(bundle.getString("distrito"));
-        Txtcategoria.setText(bundle.getString("categoria"));
-        Txtdireccion.setText(bundle.getString("direccion"));
-        Txtdescripcion.setText(bundle.getString("descripcion"));
-        Txtcapacidad.setText(bundle.getString("capacidad"));
-        Txttelefono.setText(bundle.getString("telefono"));
-        Url_Imagen_Logo = bundle.getString("url_imagen_logo");
-        Url_Imagen_Documento = bundle.getString("url_imagen_documento");
-        Punto_Geofragico = bundle.getString("puntogeografico");
-        Total_Resenas = bundle.getString("totalresenas");
-        Puntuacion = bundle.getString("puntuacion");
-        Estado = bundle.getString("estado");
-        Id_Establecimiento = bundle.getString("id_establecimiento");
+        Txtnombre.setText(GetInfoFromSharedPreferences("Nombre"));
+        Txtdistrito.setText(GetInfoFromSharedPreferences("Distrito"));
+        Txtcategoria.setText(GetInfoFromSharedPreferences("Categoria"));
+        Txtdireccion.setText(GetInfoFromSharedPreferences("Direccion"));
+        Txtdescripcion.setText(GetInfoFromSharedPreferences("Descripcion"));
+        Txtcapacidad.setText(GetInfoFromSharedPreferences("Capacidad"));
+        Txttelefono.setText(GetInfoFromSharedPreferences("Telefono"));
+        Url_Imagen_Logo = GetInfoFromSharedPreferences("Url_Imagen_Logo");
+        Punto_Geofragico = GetInfoFromSharedPreferences("Punto_Geografico");
+        Id_Establecimiento = GetInfoFromSharedPreferences("ID");
 
         Picasso.with(getContext()).load(Url_Imagen_Logo).into(Img_Logo);
 
@@ -181,31 +170,12 @@ public class PerfilEstablecimiento extends Fragment implements OnMapReadyCallbac
 
 
 
-
-        bundle2.putString("id_establecimiento", Id_Establecimiento);
-        bundle2.putString("nombre", Txtnombre.getText().toString());
-        bundle2.putString("distrito", Txtdistrito.getText().toString());
-        bundle2.putString("categoria", Txtcategoria.getText().toString());
-        bundle2.putString("direccion", Txtdireccion.getText().toString());
-        bundle2.putString("telefono", Txttelefono.getText().toString());
-        bundle2.putString("descripcion", Txtdescripcion.getText().toString());
-        bundle2.putString("capacidad", Txtcapacidad.getText().toString());
-        bundle2.putString("totalresenas", Total_Resenas);
-        bundle2.putString("puntuacion", Puntuacion);
-        bundle2.putString("url_imagen_logo", Url_Imagen_Logo);
-        bundle2.putString("url_imagen_documento", Url_Imagen_Documento);
-        bundle2.putString("puntogeografico", Punto_Geofragico);
-        bundle2.putString("estado", Estado);
-
-
         Btnmodificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
                 ModificarEstablecimiento modificarEstablecimiento = new ModificarEstablecimiento();
-                modificarEstablecimiento.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, modificarEstablecimiento);
                 transaction.commit();
@@ -218,8 +188,6 @@ public class PerfilEstablecimiento extends Fragment implements OnMapReadyCallbac
             public void onClick(View v) {
 
                 ImagenesEstablecimiento imagenesEstablecimiento = new ImagenesEstablecimiento();
-                imagenesEstablecimiento.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, imagenesEstablecimiento);
                 transaction.commit();
@@ -245,8 +213,6 @@ public class PerfilEstablecimiento extends Fragment implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 ListaResenas listaResenas = new ListaResenas();
-                listaResenas.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaResenas);
                 transaction.commit();
@@ -258,8 +224,6 @@ public class PerfilEstablecimiento extends Fragment implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 ListaCupon listaCupon = new ListaCupon();
-                listaCupon.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaCupon);
                 transaction.commit();
@@ -271,7 +235,6 @@ public class PerfilEstablecimiento extends Fragment implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 ListaItemsMenu listaItemsMenu = new ListaItemsMenu();
-                listaItemsMenu.setArguments(bundle2);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaItemsMenu);
                 transaction.commit();
@@ -300,21 +263,18 @@ public class PerfilEstablecimiento extends Fragment implements OnMapReadyCallbac
         switch (item.getItemId()){
             case 1:
                 VisualizarDocumento visualizarDocumento = new VisualizarDocumento();
-                visualizarDocumento.setArguments(bundle2);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, visualizarDocumento);
                 transaction.commit();
                 break;
             case 2:
                 ListaRepartidores listaRepartidores = new ListaRepartidores();
-                listaRepartidores.setArguments(bundle2);
                 FragmentTransaction transaction2 = getFragmentManager().beginTransaction();
                 transaction2.replace(R.id.contenedorfragment, listaRepartidores);
                 transaction2.commit();
                 break;
             case 3:
                 ListaPedidos listaPedidos = new ListaPedidos();
-                listaPedidos.setArguments(bundle2);
                 FragmentTransaction transaction3 = getFragmentManager().beginTransaction();
                 transaction3.replace(R.id.contenedorfragment, listaPedidos);
                 transaction3.commit();
@@ -384,6 +344,12 @@ public class PerfilEstablecimiento extends Fragment implements OnMapReadyCallbac
             Log.e("Error", e.toString());
         }
 
+    }
+
+
+    private String GetInfoFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
     }
 
 

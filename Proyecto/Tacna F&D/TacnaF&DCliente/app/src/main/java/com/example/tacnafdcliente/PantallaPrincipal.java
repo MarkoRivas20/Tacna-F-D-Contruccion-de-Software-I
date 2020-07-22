@@ -45,6 +45,7 @@ public class PantallaPrincipal extends Fragment {
     Button Btnperfil;
     Button Btnestablecimiento;
     Button Btnmicupon;
+    Button Btnmipedido;
 
     TextView Txtcontador;
     ArcSeekBar SeekBar;
@@ -168,6 +169,19 @@ public class PantallaPrincipal extends Fragment {
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaMiCupon);
+                transaction.commit();
+            }
+        });
+
+        Btnmipedido = (Button)v.findViewById(R.id.btnmipedido);
+        Btnmipedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ListaPedidos listaPedidos = new ListaPedidos();
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.contenedorfragment, listaPedidos);
                 transaction.commit();
             }
         });

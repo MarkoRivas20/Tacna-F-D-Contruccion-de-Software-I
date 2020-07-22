@@ -1,5 +1,7 @@
 package com.example.tacnafdcliente;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -101,14 +103,11 @@ public class BuscarEstablecimiento extends Fragment {
         Btnbuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("nombre", Txtnombre.getText().toString());
-                bundle.putString("distrito", Spinner_Distrito.getSelectedItem().toString());
-                bundle.putString("categoria", Spinner_Categoria.getSelectedItem().toString());
-                bundle.putString("capacidad", Txtcapacidad.getText().toString());
-                ListaEstablecimiento listaEstablecimiento = new ListaEstablecimiento();
-                listaEstablecimiento.setArguments(bundle);
 
+                SaveSearchSharedPreferences(Txtnombre.getText().toString(), Spinner_Distrito.getSelectedItem().toString(),
+                        Spinner_Categoria.getSelectedItem().toString(), Txtcapacidad.getText().toString());
+
+                ListaEstablecimiento listaEstablecimiento = new ListaEstablecimiento();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaEstablecimiento);
                 transaction.commit();
@@ -116,5 +115,16 @@ public class BuscarEstablecimiento extends Fragment {
         });
 
         return v;
+    }
+
+    private void SaveSearchSharedPreferences(String Nombre, String Distrito, String Categoria, String Capacidad){
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("info_search", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("Nombre", Nombre);
+        editor.putString("Distrito", Distrito);
+        editor.putString("Categoria", Categoria);
+        editor.putString("Capacidad", Capacidad);
+        editor.apply();
     }
 }

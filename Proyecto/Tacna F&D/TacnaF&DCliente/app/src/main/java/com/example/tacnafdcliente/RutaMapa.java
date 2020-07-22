@@ -2,6 +2,7 @@ package com.example.tacnafdcliente;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.location.Location;
@@ -45,24 +46,9 @@ public class RutaMapa extends Fragment implements OnMapReadyCallback {
         // Required empty public constructor
     }
 
-    String Nombre = "";
-    String Distrito = "";
-    String Categoria = "";
-    String Capacidad = "";
-
     String bid_establecimiento = "";
-    String bnombre = "";
-    String bdistrito = "";
-    String bcategoria = "";
-    String bdireccion = "";
-    String btelefono = "";
-    String bdescripcion = "";
-    String bcapacidad = "";
-    String btotalresenas = "";
-    String bpuntuacion = "";
     String burl_imagen_logo = "";
     String bpuntogeografico = "";
-    String bestado = "";
 
     boolean Booleano = false;
 
@@ -78,9 +64,6 @@ public class RutaMapa extends Fragment implements OnMapReadyCallback {
     TextView Txtnombre;
     TextView Lbldistancia;
     TextView Lbltiempo;
-
-    String Mi_Comentario = "";
-    Float Mi_puntuacion = (float) 0.0;
 
 
     private GoogleMap Mapa;
@@ -110,59 +93,20 @@ public class RutaMapa extends Fragment implements OnMapReadyCallback {
         Lbldistancia = (TextView) v.findViewById(R.id.lbldistancia);
         Lbltiempo = (TextView) v.findViewById(R.id.lbltiempo);
 
-        Bundle bundle = getArguments();
 
-        bid_establecimiento = bundle.getString("id_establecimiento");
-        bnombre = bundle.getString("nombre");
-        bdistrito = bundle.getString("distrito");
-        bcategoria = bundle.getString("categoria");
-        bdireccion = bundle.getString("direccion");
-        btelefono = bundle.getString("telefono");
-        bdescripcion = bundle.getString("descripcion");
-        bcapacidad = bundle.getString("capacidad");
-        btotalresenas = bundle.getString("totalresenas");
-        bpuntuacion = bundle.getString("puntuacion");
-        burl_imagen_logo = bundle.getString("url_imagen_logo");
-        bpuntogeografico = bundle.getString("puntogeografico");
-        bestado = bundle.getString("estado");
-        Nombre = bundle.getString("nombreb");
-        Distrito = bundle.getString("distritob");
-        Categoria = bundle.getString("categoriab");
-        Capacidad = bundle.getString("capacidadb");
-        Booleano = bundle.getBoolean("banderaresena");
-        Mi_Comentario = bundle.getString("micomentario");
-        Mi_puntuacion = bundle.getFloat("mipuntuacion");
+
+        bid_establecimiento = GetInfoFromSharedPreferences("ID");
+        burl_imagen_logo = GetInfoFromSharedPreferences("Url_Imagen_Logo");
+
+        Booleano = Boolean.valueOf(GetResenaFromSharedPreferences("Bandera_Resena"));
 
         Img_Logo = (ImageView) v.findViewById(R.id.imglogo);
 
         Picasso.with(getContext()).load(burl_imagen_logo).into(Img_Logo);
 
         Txtnombre = (TextView) v.findViewById(R.id.lblnombre);
-        Txtnombre.setText(bnombre);
+        Txtnombre.setText(GetInfoFromSharedPreferences("Nombre"));
 
-
-        final Bundle bundle2 = new Bundle();
-
-        bundle2.putString("id_establecimiento", bid_establecimiento);
-        bundle2.putString("nombre", bnombre);
-        bundle2.putString("distrito", bdistrito);
-        bundle2.putString("categoria", bcategoria);
-        bundle2.putString("direccion", bdireccion);
-        bundle2.putString("telefono", btelefono);
-        bundle2.putString("descripcion", bdescripcion);
-        bundle2.putString("capacidad", bcapacidad);
-        bundle2.putString("totalresenas", btotalresenas);
-        bundle2.putString("puntuacion", bpuntuacion);
-        bundle2.putString("url_imagen_logo", burl_imagen_logo);
-        bundle2.putString("puntogeografico", bpuntogeografico);
-        bundle2.putString("estado", bestado);
-        bundle2.putString("nombreb", Nombre);
-        bundle2.putString("distritob", Distrito);
-        bundle2.putString("categoriab", Categoria);
-        bundle2.putString("capacidadb", Capacidad);
-        bundle2.putBoolean("banderaresena", Booleano);
-        bundle2.putString("micomentario", Mi_Comentario);
-        bundle2.putFloat("mipuntuacion", Mi_puntuacion);
 
 
         v.setFocusableInTouchMode(true);
@@ -175,15 +119,8 @@ public class RutaMapa extends Fragment implements OnMapReadyCallback {
                     if (keyCode == KeyEvent.KEYCODE_BACK)
                     {
 
-                        Bundle bundle3 = new Bundle();
-                        bundle3.putString("nombre", Nombre);
-                        bundle3.putString("distrito", Distrito);
-                        bundle3.putString("categoria", Categoria);
-                        bundle3.putString("capacidad", Capacidad);
 
                         ListaEstablecimiento fragmentEstablecimiento = new ListaEstablecimiento();
-
-                        fragmentEstablecimiento.setArguments(bundle3);
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.replace(R.id.contenedorfragment, fragmentEstablecimiento);
                         transaction.commit();
@@ -211,8 +148,6 @@ public class RutaMapa extends Fragment implements OnMapReadyCallback {
 
 
                 PerfilEstablecimiento perfilEstablecimiento = new PerfilEstablecimiento();
-                perfilEstablecimiento.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, perfilEstablecimiento);
                 transaction.commit();
@@ -227,8 +162,6 @@ public class RutaMapa extends Fragment implements OnMapReadyCallback {
 
 
                 ListaItemsMenu listaItemsMenu = new ListaItemsMenu();
-                listaItemsMenu.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaItemsMenu);
                 transaction.commit();
@@ -243,8 +176,6 @@ public class RutaMapa extends Fragment implements OnMapReadyCallback {
 
 
                 ListaCupon listaCupon = new ListaCupon();
-                listaCupon.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaCupon);
                 transaction.commit();
@@ -260,8 +191,6 @@ public class RutaMapa extends Fragment implements OnMapReadyCallback {
                 if (!Booleano)
                 {
                     ListaResenas listaResenas = new ListaResenas();
-                    listaResenas.setArguments(bundle2);
-
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.contenedorfragment, listaResenas);
                     transaction.commit();
@@ -269,8 +198,6 @@ public class RutaMapa extends Fragment implements OnMapReadyCallback {
                 else
                 {
                     ListaResenas2 listaResenas2 = new ListaResenas2();
-                    listaResenas2.setArguments(bundle2);
-
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.contenedorfragment, listaResenas2);
                     transaction.commit();
@@ -413,5 +340,15 @@ public class RutaMapa extends Fragment implements OnMapReadyCallback {
 
             }
         }
+    }
+    private String GetInfoFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
+    }
+
+
+    private String GetResenaFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_resena", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
     }
 }

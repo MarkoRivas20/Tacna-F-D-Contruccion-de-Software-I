@@ -1,4 +1,4 @@
-package com.example.tacnafdbusiness.Adaptador;
+package com.example.tacnafdcliente.Adaptador;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tacnafdbusiness.Model.Pedido;
-import com.example.tacnafdbusiness.R;
+import com.example.tacnafdcliente.Model.Pedido;
+import com.example.tacnafdcliente.R;
 
 import java.util.List;
 
@@ -24,8 +24,7 @@ public class PedidoAdapter extends RecyclerView.Adapter <PedidoAdapter.PedidoVie
 
         public TextView Txtid_Recycler_Pedido;
         public TextView Txtestadp_Recycler_Pedido;
-        public TextView Txtcliente_Recycler_Pedido;
-        public TextView Txtrepartidor_Recycler_Pedido;
+        public TextView Txtestablecimiento_Recycler_Pedido;
         public TextView Txtfecha_Recycler_Pedido;
         public TextView Txtdireccion_Recycler_Pedido;
         public TextView Txtprecio_Recycler_Pedido;
@@ -36,8 +35,7 @@ public class PedidoAdapter extends RecyclerView.Adapter <PedidoAdapter.PedidoVie
 
             Txtid_Recycler_Pedido = (TextView) v.findViewById(R.id.txtid_Recycler_pedido);
             Txtestadp_Recycler_Pedido = (TextView) v.findViewById(R.id.txtestado_Recycler_pedido);
-            Txtcliente_Recycler_Pedido = (TextView) v.findViewById(R.id.txtcliente_recycler_pedido);
-            Txtrepartidor_Recycler_Pedido = (TextView) v.findViewById(R.id.txtrepartidor_Recycler_pedido);
+            Txtestablecimiento_Recycler_Pedido = (TextView) v.findViewById(R.id.txtestablecimiento_Recycler_pedido);
             Txtfecha_Recycler_Pedido = (TextView) v.findViewById(R.id.txtfecha_Recycler_pedido);
             Txtdireccion_Recycler_Pedido = (TextView) v.findViewById(R.id.txtdireccion_Recycler_pedido);
             Txtprecio_Recycler_Pedido = (TextView) v.findViewById(R.id.txtprecio_Recycler_pedido);
@@ -48,8 +46,7 @@ public class PedidoAdapter extends RecyclerView.Adapter <PedidoAdapter.PedidoVie
 
             Txtid_Recycler_Pedido.setText(String.valueOf(dataModel.getID_Pedido()));
             Txtestadp_Recycler_Pedido.setText("Estado: " + dataModel.getEstado());
-            Txtcliente_Recycler_Pedido.setText("Cliente: " + dataModel.getUsuario_Cliente());
-            Txtrepartidor_Recycler_Pedido.setText("Repartidor: " + dataModel.getUsuario_Repartidor());
+            Txtestablecimiento_Recycler_Pedido.setText("Establecimiento: " + dataModel.getNombre_Establecimiento());
             Txtfecha_Recycler_Pedido.setText("Fecha: " + dataModel.getFecha());
             Txtdireccion_Recycler_Pedido.setText("Direccion: " + dataModel.getDireccion_Destino());
             Txtprecio_Recycler_Pedido.setText("Precio: S/."+ dataModel.getPrecio_Total());

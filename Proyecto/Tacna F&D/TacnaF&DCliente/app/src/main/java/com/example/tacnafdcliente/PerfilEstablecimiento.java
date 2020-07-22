@@ -66,15 +66,7 @@ public class PerfilEstablecimiento extends Fragment {
     TextView Txttelefono;
 
     String url_imagen_logo = "";
-    String puntogeofragico = "";
-    String totalresenas = "";
-    String puntuacion = "";
-    String estado = "";
     String ID_Establecimiento = "";
-    String nombre = "";
-    String distrito = "";
-    String categoria = "";
-    String capacidad = "";
 
     ImageView Img_Logo;
 
@@ -93,8 +85,6 @@ public class PerfilEstablecimiento extends Fragment {
     Float Mi_Puntuacion = (float) 0.0;
 
     boolean Booleano = false;
-
-    final Bundle bundle2 = new Bundle();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -121,49 +111,17 @@ public class PerfilEstablecimiento extends Fragment {
         Img_Logo = (ImageView) v.findViewById(R.id.imglogo);
         Btnllamar = (Button) v.findViewById(R.id.btnllamar);
 
-
-
-        Bundle bundle = getArguments();
-
-        Txtnombre.setText(bundle.getString("nombre"));
-        Txtdistrito.setText(bundle.getString("distrito"));
-        Txtcategoria.setText(bundle.getString("categoria"));
-        Txtdireccion.setText(bundle.getString("direccion"));
-        Txtdescripcion.setText(bundle.getString("descripcion"));
-        Txtcapacidad.setText(bundle.getString("capacidad"));
-        Txttelefono.setText(bundle.getString("telefono"));
-        url_imagen_logo = bundle.getString("url_imagen_logo");
-        puntogeofragico = bundle.getString("puntogeografico");
-        totalresenas = bundle.getString("totalresenas");
-        puntuacion = bundle.getString("puntuacion");
-        estado = bundle.getString("estado");
-        ID_Establecimiento = bundle.getString("id_establecimiento");
-        nombre = bundle.getString("nombreb");
-        distrito = bundle.getString("distritob");
-        categoria = bundle.getString("categoriab");
-        capacidad = bundle.getString("capacidadb");
+        Txtnombre.setText(GetInfoFromSharedPreferences("Nombre"));
+        Txtdistrito.setText(GetInfoFromSharedPreferences("Distrito"));
+        Txtcategoria.setText(GetInfoFromSharedPreferences("Categoria"));
+        Txtdireccion.setText(GetInfoFromSharedPreferences("Direccion"));
+        Txtdescripcion.setText(GetInfoFromSharedPreferences("Descripcion"));
+        Txtcapacidad.setText(GetInfoFromSharedPreferences("Capacidad"));
+        Txttelefono.setText(GetInfoFromSharedPreferences("Telefono"));
+        url_imagen_logo = GetInfoFromSharedPreferences("Url_Imagen_Logo");
+        ID_Establecimiento = GetInfoFromSharedPreferences("ID");
 
         Picasso.with(getContext()).load(url_imagen_logo).into(Img_Logo);
-
-
-
-        bundle2.putString("id_establecimiento", ID_Establecimiento);
-        bundle2.putString("nombre", Txtnombre.getText().toString());
-        bundle2.putString("distrito", Txtdistrito.getText().toString());
-        bundle2.putString("categoria", Txtcategoria.getText().toString());
-        bundle2.putString("direccion", Txtdireccion.getText().toString());
-        bundle2.putString("telefono", Txttelefono.getText().toString());
-        bundle2.putString("descripcion", Txtdescripcion.getText().toString());
-        bundle2.putString("capacidad", Txtcapacidad.getText().toString());
-        bundle2.putString("totalresenas", totalresenas);
-        bundle2.putString("puntuacion", puntuacion);
-        bundle2.putString("url_imagen_logo", url_imagen_logo);
-        bundle2.putString("puntogeografico", puntogeofragico);
-        bundle2.putString("estado", estado);
-        bundle2.putString("nombreb", nombre);
-        bundle2.putString("distritob", distrito);
-        bundle2.putString("categoriab", categoria);
-        bundle2.putString("capacidadb", capacidad);
 
 
         v.setFocusableInTouchMode(true);
@@ -176,15 +134,8 @@ public class PerfilEstablecimiento extends Fragment {
                     if (keyCode == KeyEvent.KEYCODE_BACK)
                     {
 
-                        Bundle bundle3 = new Bundle();
-                        bundle3.putString("nombre", nombre);
-                        bundle3.putString("distrito", distrito);
-                        bundle3.putString("categoria", categoria);
-                        bundle3.putString("capacidad", capacidad);
 
                         ListaEstablecimiento fragmentEstablecimiento = new ListaEstablecimiento();
-
-                        fragmentEstablecimiento.setArguments(bundle3);
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.replace(R.id.contenedorfragment, fragmentEstablecimiento);
                         transaction.commit();
@@ -240,8 +191,6 @@ public class PerfilEstablecimiento extends Fragment {
 
 
                 RutaMapa rutaMapa = new RutaMapa();
-                rutaMapa.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, rutaMapa);
                 transaction.commit();
@@ -255,8 +204,6 @@ public class PerfilEstablecimiento extends Fragment {
 
 
                 ListaItemsMenu listaItemsMenu = new ListaItemsMenu();
-                listaItemsMenu.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaItemsMenu);
                 transaction.commit();
@@ -271,8 +218,6 @@ public class PerfilEstablecimiento extends Fragment {
                 if (!Booleano)
                 {
                     ListaResenas listaResenas = new ListaResenas();
-                    listaResenas.setArguments(bundle2);
-
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.contenedorfragment, listaResenas);
                     transaction.commit();
@@ -280,8 +225,6 @@ public class PerfilEstablecimiento extends Fragment {
                 else
                 {
                     ListaResenas2 listaResenas2 = new ListaResenas2();
-                    listaResenas2.setArguments(bundle2);
-
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.contenedorfragment, listaResenas2);
                     transaction.commit();
@@ -298,8 +241,6 @@ public class PerfilEstablecimiento extends Fragment {
 
 
                 ListaCupon listaCupon = new ListaCupon();
-                listaCupon.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaCupon);
                 transaction.commit();
@@ -370,9 +311,8 @@ public class PerfilEstablecimiento extends Fragment {
 
             }
 
-            bundle2.putBoolean("banderaresena", Booleano);
-            bundle2.putString("micomentario", Mi_Comentario);
-            bundle2.putFloat("mipuntuacion", Mi_Puntuacion);
+
+            SaveResenaSharedPreferences(Booleano,Mi_Comentario,Mi_Puntuacion);
 
             Items = new ArrayList<>();
 
@@ -396,6 +336,27 @@ public class PerfilEstablecimiento extends Fragment {
             Log.e("Error", e.toString());
         }
 
+    }
+
+    private String GetInfoFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
+    }
+
+    private void SaveResenaSharedPreferences(Boolean Bandera_Resena, String Mi_Comentario, Float Mi_Puntuacion){
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("info_resena", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        if(Bandera_Resena){
+            editor.putString("Bandera_Resena", "true");
+        }
+        else
+        {
+            editor.putString("Bandera_Resena", "false");
+        }
+        editor.putString("Mi_Comentario", Mi_Comentario);
+        editor.putString("Mi_Puntuacion", String.valueOf(Mi_Puntuacion));
+        editor.apply();
     }
 
 

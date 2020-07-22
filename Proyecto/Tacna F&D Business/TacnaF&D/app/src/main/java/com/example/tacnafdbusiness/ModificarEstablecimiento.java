@@ -3,6 +3,7 @@ package com.example.tacnafdbusiness;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -72,19 +73,7 @@ public class ModificarEstablecimiento extends Fragment implements OnMapReadyCall
     String Foto="";
 
     String bid_establecimiento = "";
-    String bnombre = "";
-    String bdistrito = "";
-    String bcategoria = "";
-    String bdireccion = "";
-    String btelefono = "";
-    String bdescripcion = "";
-    String bcapacidad = "";
-    String btotalresenas = "";
-    String bpuntuacion = "";
     String burl_imagen_logo = "";
-    String burl_imagen_documento = "";
-    String bpuntogeografico = "";
-    String bestado = "";
 
     Button Btnatras;
 
@@ -143,37 +132,21 @@ public class ModificarEstablecimiento extends Fragment implements OnMapReadyCall
         Map_View.onResume();
         Map_View.getMapAsync(this);
 
-        Bundle bundle = getArguments();
-
-        bid_establecimiento = bundle.getString("id_establecimiento");
-        bnombre = bundle.getString("nombre");
-        bdistrito = bundle.getString("distrito");
-        bcategoria = bundle.getString("categoria");
-        bdireccion = bundle.getString("direccion");
-        btelefono = bundle.getString("telefono");
-        bdescripcion = bundle.getString("descripcion");
-        bcapacidad = bundle.getString("capacidad");
-        btotalresenas = bundle.getString("totalresenas");
-        bpuntuacion = bundle.getString("puntuacion");
-        burl_imagen_logo = bundle.getString("url_imagen_logo");
-        burl_imagen_documento = bundle.getString("url_imagen_documento");
-        bpuntogeografico = bundle.getString("puntogeografico");
-        bestado = bundle.getString("estado");
 
 
+        bid_establecimiento = GetInfoFromSharedPreferences("ID");
+        burl_imagen_logo = GetInfoFromSharedPreferences("Url_Imagen_Logo");
 
-
-
-        Txtnombre.setText(bundle.getString("nombre"));
-        Txtdireccion.setText(bundle.getString("direccion"));
-        Txttelefono.setText(bundle.getString("telefono"));
-        Txtdescripcion.setText(bundle.getString("descripcion"));
-        Txtcapacidad.setText(bundle.getString("capacidad"));
-        Punto_Geografico = bundle.getString("puntogeografico");
+        Txtnombre.setText(GetInfoFromSharedPreferences("Nombre"));
+        Txtdireccion.setText(GetInfoFromSharedPreferences("Direccion"));
+        Txttelefono.setText(GetInfoFromSharedPreferences("Telefono"));
+        Txtdescripcion.setText(GetInfoFromSharedPreferences("Descripcion"));
+        Txtcapacidad.setText(GetInfoFromSharedPreferences("Capacidad"));
+        Punto_Geografico = GetInfoFromSharedPreferences("Punto_Geografico");
 
         for (int i=0; i<categorias.length; i++)
         {
-            if ((bundle.getString("categoria")).equals(categorias[i]))
+            if ((GetInfoFromSharedPreferences("Categoria")).equals(categorias[i]))
             {
                 Spinner_Categoria.setSelection(i);
                 break;
@@ -185,7 +158,7 @@ public class ModificarEstablecimiento extends Fragment implements OnMapReadyCall
         }
         for (int i=0; i<distritos.length; i++)
         {
-            String b = bundle.getString("distrito");
+            String b = GetInfoFromSharedPreferences("Distrito");
             if (b.equals(distritos[i]))
             {
                 Spinner_Distrito.setSelection(i);
@@ -199,7 +172,7 @@ public class ModificarEstablecimiento extends Fragment implements OnMapReadyCall
 
         for (int i=0; i<estados.length; i++)
         {
-            if ((bundle.getString("estado")).equals(estados[i]))
+            if ((GetInfoFromSharedPreferences("Estado")).equals(estados[i]))
             {
                 Spinner_Estado.setSelection(i);
                 break;
@@ -210,26 +183,9 @@ public class ModificarEstablecimiento extends Fragment implements OnMapReadyCall
             }
         }
 
-        Url_Imagen_Logo = bundle.getString("url_imagen_logo");
+        Url_Imagen_Logo = GetInfoFromSharedPreferences("Url_Imagen_Logo");
 
         Picasso.with(getActivity()).load(Url_Imagen_Logo).into(Foto_Gallery);
-
-        final Bundle bundle2 = new Bundle();
-        bundle2.putString("id_establecimiento", bid_establecimiento);
-        bundle2.putString("nombre", bnombre);
-        bundle2.putString("distrito", bdistrito);
-        bundle2.putString("categoria", bcategoria);
-        bundle2.putString("direccion", bdireccion);
-        bundle2.putString("telefono", btelefono);
-        bundle2.putString("descripcion", bdescripcion);
-        bundle2.putString("capacidad", bcapacidad);
-        bundle2.putString("totalresenas", btotalresenas);
-        bundle2.putString("puntuacion", bpuntuacion);
-        bundle2.putString("url_imagen_logo", burl_imagen_logo);
-        bundle2.putString("url_imagen_documento", burl_imagen_documento);
-        bundle2.putString("puntogeografico", bpuntogeografico);
-        bundle2.putString("estado", bestado);
-
 
         v.setFocusableInTouchMode(true);
         v.requestFocus();
@@ -243,8 +199,6 @@ public class ModificarEstablecimiento extends Fragment implements OnMapReadyCall
 
 
                         PerfilEstablecimiento perfilEstablecimiento = new PerfilEstablecimiento();
-                        perfilEstablecimiento.setArguments(bundle2);
-
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.replace(R.id.contenedorfragment, perfilEstablecimiento);
                         transaction.commit();
@@ -273,8 +227,6 @@ public class ModificarEstablecimiento extends Fragment implements OnMapReadyCall
 
 
                 PerfilEstablecimiento perfilEstablecimiento = new PerfilEstablecimiento();
-                perfilEstablecimiento.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, perfilEstablecimiento);
                 transaction.commit();
@@ -404,6 +356,12 @@ public class ModificarEstablecimiento extends Fragment implements OnMapReadyCall
                                 Statement stm = ConectarDB().createStatement();
                                 stm.execute("Update Establecimiento set Url_Imagen_Logo='" + Foto + "' where ID_Establecimiento='" + bid_establecimiento + "'");
 
+                                SaveInfoSharedPreferences(bid_establecimiento,GetInfoFromSharedPreferences("Nombre"), GetInfoFromSharedPreferences("Distrito"),
+                                        GetInfoFromSharedPreferences("Categoria"), GetInfoFromSharedPreferences("Direccion"), GetInfoFromSharedPreferences("Telefono"),
+                                        GetInfoFromSharedPreferences("Descripcion"),GetInfoFromSharedPreferences("Capacidad"), GetInfoFromSharedPreferences("Total_Resenas"),
+                                        GetInfoFromSharedPreferences("Puntuacion"), burl_imagen_logo, GetInfoFromSharedPreferences("Url_Imagen_Documento"),
+                                        GetInfoFromSharedPreferences("Punto_Geografico"), GetInfoFromSharedPreferences("Estado"));
+
                             }catch (Exception e){
                                 Log.e("Error", e.toString());
                             }
@@ -528,25 +486,13 @@ public class ModificarEstablecimiento extends Fragment implements OnMapReadyCall
 
             Alert_Dialog.dismiss();
 
-            Bundle bundle3 = new Bundle();
-            bundle3.putString("id_establecimiento", bid_establecimiento);
-            bundle3.putString("nombre", Txtnombre.getText().toString());
-            bundle3.putString("distrito", Spinner_Distrito.getSelectedItem().toString());
-            bundle3.putString("categoria", Spinner_Categoria.getSelectedItem().toString());
-            bundle3.putString("direccion", Txtdireccion.getText().toString());
-            bundle3.putString("telefono", Txttelefono.getText().toString());
-            bundle3.putString("descripcion", Txtdescripcion.getText().toString());
-            bundle3.putString("capacidad", Txtcapacidad.getText().toString());
-            bundle3.putString("totalresenas", btotalresenas);
-            bundle3.putString("puntuacion", bpuntuacion);
-            bundle3.putString("url_imagen_logo", burl_imagen_logo);
-            bundle3.putString("url_imagen_documento", burl_imagen_documento);
-            bundle3.putString("puntogeografico", Punto_Geografico);
-            bundle3.putString("estado", Spinner_Estado.getSelectedItem().toString());
+            SaveInfoSharedPreferences(bid_establecimiento, Txtnombre.getText().toString(), Spinner_Distrito.getSelectedItem().toString(),
+                    Spinner_Categoria.getSelectedItem().toString(), Txtdireccion.getText().toString(), Txttelefono.getText().toString(),
+                    Txtdescripcion.getText().toString(), Txtcapacidad.getText().toString(), GetInfoFromSharedPreferences("Total_Resenas"),
+                    GetInfoFromSharedPreferences("Puntuacion"), burl_imagen_logo, GetInfoFromSharedPreferences("Url_Imagen_Documento"),
+                    Punto_Geografico, Spinner_Estado.getSelectedItem().toString());
 
             PerfilEstablecimiento perfilEstablecimiento = new PerfilEstablecimiento();
-            perfilEstablecimiento.setArguments(bundle3);
-
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.contenedorfragment, perfilEstablecimiento);
             transaction.commit();
@@ -556,5 +502,34 @@ public class ModificarEstablecimiento extends Fragment implements OnMapReadyCall
         }
 
 
+    }
+
+
+    private void SaveInfoSharedPreferences(String ID, String Nombre, String Distrito, String Categoria, String Direccion, String Telefono,
+                                           String Descripcion, String Capacidad, String Total_Resenas, String Puntuacion, String Url_Imagen_Logo,
+                                           String Url_Imagen_Documento, String Punto_Geografico, String Estado){
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("ID", ID);
+        editor.putString("Nombre", Nombre);
+        editor.putString("Distrito", Distrito);
+        editor.putString("Categoria", Categoria);
+        editor.putString("Direccion", Direccion);
+        editor.putString("Telefono", Telefono);
+        editor.putString("Descripcion", Descripcion);
+        editor.putString("Capacidad", Capacidad);
+        editor.putString("Total_Resenas", Total_Resenas);
+        editor.putString("Puntuacion", Puntuacion);
+        editor.putString("Url_Imagen_Logo", Url_Imagen_Logo);
+        editor.putString("Url_Imagen_Documento", Url_Imagen_Documento);
+        editor.putString("Punto_Geografico", Punto_Geografico);
+        editor.putString("Estado", Estado);
+        editor.apply();
+    }
+
+    private String GetInfoFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
     }
 }

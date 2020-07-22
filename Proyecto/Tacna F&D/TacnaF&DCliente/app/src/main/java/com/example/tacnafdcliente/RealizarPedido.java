@@ -76,31 +76,12 @@ public class RealizarPedido extends Fragment {
     String Direccion_Destino = "";
     String Punto_Geografico_Destino = "";
 
-    String Nombre = "";
-    String Distrito = "";
-    String Categoria = "";
-    String Capacidad = "";
 
     String bid_establecimiento = "";
-    String bnombre = "";
-    String bdistrito = "";
-    String bcategoria = "";
-    String bdireccion = "";
-    String btelefono = "";
-    String bdescripcion = "";
-    String bcapacidad = "";
-    String btotalresenas = "";
-    String bpuntuacion = "";
-    String burl_imagen_logo = "";
-    String bpuntogeografico = "";
-    String bestado = "";
 
     boolean Booleano = false;
     boolean Booleano_2 = false;
     int posicion = 0;
-
-    String Mi_Comentario = "";
-    Float Mi_Puntuacion = (float) 0.0;
 
     AlertDialog Alert_Dialog;
 
@@ -133,7 +114,7 @@ public class RealizarPedido extends Fragment {
     Double Subtotal = 0.0;
     Double Total = 0.0;
 
-    String Urls = "https://data.fixer.io/api/latest?access_key=APIKEY&base=PEN&symbols=USD&format=1";
+    String Urls = "https://data.fixer.io/api/latest?access_key=API&base=PEN&symbols=USD&format=1";
     String Json_Result = "";
 
     String Precio_Dolar = "";
@@ -184,28 +165,11 @@ public class RealizarPedido extends Fragment {
                 .setCancelable(false)
                 .build();
 
-        Bundle bundle = getArguments();
 
-        bid_establecimiento = bundle.getString("id_establecimiento");
-        bnombre = bundle.getString("nombre");
-        bdistrito = bundle.getString("distrito");
-        bcategoria = bundle.getString("categoria");
-        bdireccion = bundle.getString("direccion");
-        btelefono = bundle.getString("telefono");
-        bdescripcion = bundle.getString("descripcion");
-        bcapacidad = bundle.getString("capacidad");
-        btotalresenas = bundle.getString("totalresenas");
-        bpuntuacion= bundle.getString("puntuacion");
-        burl_imagen_logo = bundle.getString("url_imagen_logo");
-        bpuntogeografico = bundle.getString("puntogeografico");
-        bestado = bundle.getString("estado");
-        Nombre = bundle.getString("nombreb");
-        Distrito = bundle.getString("distritob");
-        Categoria = bundle.getString("categoriab");
-        Capacidad = bundle.getString("capacidadb");
-        Booleano = bundle.getBoolean("banderaresena");
-        Mi_Comentario = bundle.getString("micomentario");
-        Mi_Puntuacion = bundle.getFloat("mipuntuacion");
+
+        bid_establecimiento = GetInfoFromSharedPreferences("ID");
+
+        Bundle bundle=getArguments();
         Direccion_Destino = bundle.getString("direcciondestino");
         Punto_Geografico_Destino = bundle.getString("puntogeograficodestino");
         Codigo_Paypal = bundle.getString("codigopaypal");
@@ -216,28 +180,6 @@ public class RealizarPedido extends Fragment {
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,CONFIG);
         getActivity().startService(intent);
 
-        final Bundle bundle2 = new Bundle();
-
-        bundle2.putString("id_establecimiento",bid_establecimiento);
-        bundle2.putString("nombre",bnombre);
-        bundle2.putString("distrito",bdistrito);
-        bundle2.putString("categoria",bcategoria);
-        bundle2.putString("direccion",bdireccion);
-        bundle2.putString("telefono",btelefono);
-        bundle2.putString("descripcion",bdescripcion);
-        bundle2.putString("capacidad",bcapacidad);
-        bundle2.putString("totalresenas",btotalresenas);
-        bundle2.putString("puntuacion",bpuntuacion);
-        bundle2.putString("url_imagen_logo",burl_imagen_logo);
-        bundle2.putString("puntogeografico",bpuntogeografico);
-        bundle2.putString("estado",bestado);
-        bundle2.putString("nombreb",Nombre);
-        bundle2.putString("distritob",Distrito);
-        bundle2.putString("categoriab",Categoria);
-        bundle2.putString("capacidadb",Capacidad);
-        bundle2.putBoolean("banderaresena",Booleano);
-        bundle2.putString("micomentario",Mi_Comentario);
-        bundle2.putFloat("mipuntuacion",Mi_Puntuacion);
 
         v.setFocusableInTouchMode(true);
         v.requestFocus();
@@ -277,8 +219,6 @@ public class RealizarPedido extends Fragment {
             @Override
             public void onClick(View v) {
                 DatosPedido datosPedido = new DatosPedido();
-                datosPedido.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, datosPedido);
                 transaction.commit();
@@ -773,6 +713,11 @@ public class RealizarPedido extends Fragment {
 
             Alert_Dialog.dismiss();
 
+            ListaPedidos listaPedidos = new ListaPedidos();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.contenedorfragment, listaPedidos);
+            transaction.commit();
+
 
         }
 
@@ -781,6 +726,11 @@ public class RealizarPedido extends Fragment {
 
     private String GetFromSharedPreferences (String Key){
         SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("login_usuario", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
+    }
+
+    private String GetInfoFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
         return sharedPref.getString(Key,"");
     }
 }

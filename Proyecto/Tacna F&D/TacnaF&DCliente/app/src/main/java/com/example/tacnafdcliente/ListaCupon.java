@@ -1,5 +1,7 @@
 package com.example.tacnafdcliente;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -35,24 +37,9 @@ public class ListaCupon extends Fragment {
     public ListaCupon() {
         // Required empty public constructor
     }
-    String Nombre = "";
-    String Distrito = "";
-    String Categoria = "";
-    String Capacidad = "";
 
     String bid_establecimiento = "";
-    String bnombre = "";
-    String bdistrito = "";
-    String bcategoria = "";
-    String bdireccion = "";
-    String btelefono = "";
-    String bdescripcion = "";
-    String bcapacidad = "";
-    String btotalresenas = "";
-    String bpuntuacion = "";
     String burl_imagen_logo = "";
-    String bpuntogeografico = "";
-    String bestado = "";
 
     boolean Booleano = false;
 
@@ -76,8 +63,6 @@ public class ListaCupon extends Fragment {
 
     ResultSet Result_Set;
 
-    String Mi_Comentario = "";
-    Float Mi_Puntuacion = (float) 0.0;
 
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -87,58 +72,21 @@ public class ListaCupon extends Fragment {
 
         Recycler_View = (RecyclerView) v.findViewById(R.id.Recycler_ListaCupon) ;
 
-        Bundle bundle = getArguments();
 
-        bid_establecimiento = bundle.getString("id_establecimiento");
-        bnombre = bundle.getString("nombre");
-        bdistrito = bundle.getString("distrito");
-        bcategoria = bundle.getString("categoria");
-        bdireccion = bundle.getString("direccion");
-        btelefono = bundle.getString("telefono");
-        bdescripcion = bundle.getString("descripcion");
-        bcapacidad = bundle.getString("capacidad");
-        btotalresenas = bundle.getString("totalresenas");
-        bpuntuacion = bundle.getString("puntuacion");
-        burl_imagen_logo = bundle.getString("url_imagen_logo");
-        bpuntogeografico = bundle.getString("puntogeografico");
-        bestado = bundle.getString("estado");
-        Nombre = bundle.getString("nombreb");
-        Distrito = bundle.getString("distritob");
-        Categoria = bundle.getString("categoriab");
-        Capacidad = bundle.getString("capacidadb");
-        Booleano = bundle.getBoolean("banderaresena");
-        Mi_Comentario = bundle.getString("micomentario");
-        Mi_Puntuacion = bundle.getFloat("mipuntuacion");
+
+        bid_establecimiento = GetInfoFromSharedPreferences("ID");
+        burl_imagen_logo = GetInfoFromSharedPreferences("Url_Imagen_Logo");
+
+        Booleano = Boolean.valueOf(GetResenaFromSharedPreferences("Bandera_Resena"));
 
         Img_Logo = (ImageView) v.findViewById(R.id.imglogo);
 
         Picasso.with(getContext()).load(burl_imagen_logo).into(Img_Logo);
 
         Txtnombre = (TextView) v.findViewById(R.id.lblnombre);
-        Txtnombre.setText(bnombre);
+        Txtnombre.setText(GetInfoFromSharedPreferences("Nombre"));
 
-        final Bundle bundle2 = new Bundle();
 
-        bundle2.putString("id_establecimiento",bid_establecimiento);
-        bundle2.putString("nombre",bnombre);
-        bundle2.putString("distrito",bdistrito);
-        bundle2.putString("categoria",bcategoria);
-        bundle2.putString("direccion",bdireccion);
-        bundle2.putString("telefono",btelefono);
-        bundle2.putString("descripcion",bdescripcion);
-        bundle2.putString("capacidad",bcapacidad);
-        bundle2.putString("totalresenas",btotalresenas);
-        bundle2.putString("puntuacion",bpuntuacion);
-        bundle2.putString("url_imagen_logo",burl_imagen_logo);
-        bundle2.putString("puntogeografico",bpuntogeografico);
-        bundle2.putString("estado",bestado);
-        bundle2.putString("nombreb",Nombre);
-        bundle2.putString("distritob",Distrito);
-        bundle2.putString("categoriab",Categoria);
-        bundle2.putString("capacidadb",Capacidad);
-        bundle2.putBoolean("banderaresena",Booleano);
-        bundle2.putString("micomentario",Mi_Comentario);
-        bundle2.putFloat("mipuntuacion",Mi_Puntuacion);
 
         v.setFocusableInTouchMode(true);
         v.requestFocus();
@@ -149,16 +97,7 @@ public class ListaCupon extends Fragment {
                 {
                     if (keyCode == KeyEvent.KEYCODE_BACK)
                     {
-
-                        Bundle bundle3 = new Bundle();
-                        bundle3.putString("nombre",Nombre);
-                        bundle3.putString("distrito",Distrito);
-                        bundle3.putString("categoria",Categoria);
-                        bundle3.putString("capacidad",Capacidad);
-
                         ListaEstablecimiento fragmentEstablecimiento = new ListaEstablecimiento();
-
-                        fragmentEstablecimiento.setArguments(bundle3);
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.replace(R.id.contenedorfragment, fragmentEstablecimiento);
                         transaction.commit();
@@ -185,8 +124,6 @@ public class ListaCupon extends Fragment {
 
 
                 PerfilEstablecimiento perfilEstablecimiento = new PerfilEstablecimiento();
-                perfilEstablecimiento.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, perfilEstablecimiento);
                 transaction.commit();
@@ -200,8 +137,6 @@ public class ListaCupon extends Fragment {
 
 
                 RutaMapa rutaMapa = new RutaMapa();
-                rutaMapa.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, rutaMapa);
                 transaction.commit();
@@ -215,8 +150,6 @@ public class ListaCupon extends Fragment {
 
 
                 ListaItemsMenu listaItemsMenu = new ListaItemsMenu();
-                listaItemsMenu.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaItemsMenu);
                 transaction.commit();
@@ -232,8 +165,6 @@ public class ListaCupon extends Fragment {
                 if(!Booleano)
                 {
                     ListaResenas listaResenas = new ListaResenas();
-                    listaResenas.setArguments(bundle2);
-
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.contenedorfragment, listaResenas);
                     transaction.commit();
@@ -241,8 +172,6 @@ public class ListaCupon extends Fragment {
                 else
                 {
                     ListaResenas2 listaResenas2 = new ListaResenas2();
-                    listaResenas2.setArguments(bundle2);
-
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.contenedorfragment, listaResenas2);
                     transaction.commit();
@@ -335,5 +264,16 @@ public class ListaCupon extends Fragment {
             Log.e("Error", e.toString());
         }
 
+    }
+
+    private String GetInfoFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
+    }
+
+
+    private String GetResenaFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_resena", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
     }
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -93,7 +92,7 @@ public class DetallePedidoAdapter extends RecyclerView.Adapter<DetallePedidoAdap
 
     @Override
     public DetallePedidoViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_lista_pedido, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_lista_detallepedido, parent, false);
         DetallePedidoViewHolder detallePedidoViewHolder = new DetallePedidoViewHolder(v,mListener);
         return detallePedidoViewHolder;
     }

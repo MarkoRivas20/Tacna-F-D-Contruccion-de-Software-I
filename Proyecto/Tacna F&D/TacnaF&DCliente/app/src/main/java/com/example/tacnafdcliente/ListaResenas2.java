@@ -46,24 +46,8 @@ public class ListaResenas2 extends Fragment {
         // Required empty public constructor
     }
 
-    String Nombre = "";
-    String Distrito = "";
-    String Categoria = "";
-    String Capacidad = "";
-
     String bid_establecimiento = "";
-    String bnombre = "";
-    String bdistrito = "";
-    String bcategoria = "";
-    String bdireccion = "";
-    String btelefono = "";
-    String bdescripcion = "";
-    String bcapacidad = "";
-    String btotalresenas = "";
-    String bpuntuacion = "";
     String burl_imagen_logo = "";
-    String bpuntogeografico = "";
-    String bestado = "";
 
     boolean Booleano = false;
 
@@ -104,8 +88,6 @@ public class ListaResenas2 extends Fragment {
     ResultSet Result_Set_2;
     ResultSet Result_Set_3;
     AlertDialog Alert_Dialog;
-
-    final Bundle bundle2 = new Bundle();
 
     private RecyclerView Recycler_View;
     private ReseñasAdapter Adaptador;
@@ -171,60 +153,29 @@ public class ListaResenas2 extends Fragment {
                 .setCancelable(false)
                 .build();
 
-        Bundle bundle = getArguments();
 
-        bid_establecimiento = bundle.getString("id_establecimiento");
-        bnombre = bundle.getString("nombre");
-        bdistrito = bundle.getString("distrito");
-        bcategoria = bundle.getString("categoria");
-        bdireccion = bundle.getString("direccion");
-        btelefono = bundle.getString("telefono");
-        bdescripcion = bundle.getString("descripcion");
-        bcapacidad = bundle.getString("capacidad");
-        btotalresenas = bundle.getString("totalresenas");
-        bpuntuacion = bundle.getString("puntuacion");
-        burl_imagen_logo = bundle.getString("url_imagen_logo");
-        bpuntogeografico = bundle.getString("puntogeografico");
-        bestado = bundle.getString("estado");
-        Nombre = bundle.getString("nombreb");
-        Distrito = bundle.getString("distritob");
-        Categoria = bundle.getString("categoriab");
-        Capacidad = bundle.getString("capacidadb");
-        Booleano = bundle.getBoolean("banderaresena");
+
+        bid_establecimiento = GetInfoFromSharedPreferences("ID");
+        burl_imagen_logo = GetInfoFromSharedPreferences("Url_Imagen_Logo");
+
+
+         Booleano = Boolean.valueOf(GetResenaFromSharedPreferences("Bandera_Resena"));
+
+
+
 
         Img_Logo = (ImageView) v.findViewById(R.id.imglogo);
 
         Picasso.with(getContext()).load(burl_imagen_logo).into(Img_Logo);
 
         Txtnombre = (TextView) v.findViewById(R.id.lblnombre);
-        Txtnombre.setText(bnombre);
+        Txtnombre.setText(GetInfoFromSharedPreferences("Nombre"));
 
-        Lbltotal.setText(btotalresenas);
-        Lblpuntuacion.setText(bpuntuacion);
-        Ratingbar_Calificacion_Total.setRating(Float.parseFloat(bpuntuacion));
+        Lbltotal.setText(GetInfoFromSharedPreferences("Total_Resenas"));
+        Lblpuntuacion.setText(GetInfoFromSharedPreferences("Puntuacion"));
+        Ratingbar_Calificacion_Total.setRating(Float.parseFloat(GetInfoFromSharedPreferences("Puntuacion")));
 
 
-
-        bundle2.putString("id_establecimiento", bid_establecimiento);
-        bundle2.putString("nombre", bnombre);
-        bundle2.putString("distrito", bdistrito);
-        bundle2.putString("categoria", bcategoria);
-        bundle2.putString("direccion", bdireccion);
-        bundle2.putString("telefono", btelefono);
-        bundle2.putString("descripcion", bdescripcion);
-        bundle2.putString("capacidad", bcapacidad);
-        bundle2.putString("totalresenas", btotalresenas);
-        bundle2.putString("puntuacion", bpuntuacion);
-        bundle2.putString("url_imagen_logo", burl_imagen_logo);
-        bundle2.putString("puntogeografico", bpuntogeografico);
-        bundle2.putString("estado", bestado);
-        bundle2.putString("nombreb", Nombre);
-        bundle2.putString("distritob", Distrito);
-        bundle2.putString("categoriab", Categoria);
-        bundle2.putString("capacidadb", Capacidad);
-        bundle2.putBoolean("banderaresena", Booleano);
-        bundle2.putString("micomentario", bundle.getString("micomentario"));
-        bundle2.putFloat("mipuntuacion", bundle.getFloat("mipuntuacion"));
 
         v.setFocusableInTouchMode(true);
         v.requestFocus();
@@ -236,15 +187,7 @@ public class ListaResenas2 extends Fragment {
                     if (keyCode == KeyEvent.KEYCODE_BACK)
                     {
 
-                        Bundle bundle3 = new Bundle();
-                        bundle3.putString("nombre", Nombre);
-                        bundle3.putString("distrito", Distrito);
-                        bundle3.putString("categoria", Categoria);
-                        bundle3.putString("capacidad", Capacidad);
-
                         ListaEstablecimiento fragmentEstablecimiento = new ListaEstablecimiento();
-
-                        fragmentEstablecimiento.setArguments(bundle3);
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.replace(R.id.contenedorfragment, fragmentEstablecimiento);
                         transaction.commit();
@@ -294,8 +237,6 @@ public class ListaResenas2 extends Fragment {
 
 
                 PerfilEstablecimiento perfilEstablecimiento = new PerfilEstablecimiento();
-                perfilEstablecimiento.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, perfilEstablecimiento);
                 transaction.commit();
@@ -309,8 +250,6 @@ public class ListaResenas2 extends Fragment {
 
 
                 RutaMapa rutaMapa = new RutaMapa();
-                rutaMapa.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, rutaMapa);
                 transaction.commit();
@@ -323,8 +262,6 @@ public class ListaResenas2 extends Fragment {
             public void onClick(View v) {
 
                 ListaCupon listaCupon = new ListaCupon();
-                listaCupon.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaCupon);
                 transaction.commit();
@@ -337,17 +274,16 @@ public class ListaResenas2 extends Fragment {
             public void onClick(View v) {
 
                 ListaItemsMenu listaItemsMenu = new ListaItemsMenu();
-                listaItemsMenu.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaItemsMenu);
                 transaction.commit();
             }
         });
 
-        Txtcomentario.setText(bundle.getString("micomentario"));
-        Ratingbar_Calificacion.setRating(bundle.getFloat("mipuntuacion"));
+        Txtcomentario.setText(GetResenaFromSharedPreferences("Mi_Comentario"));
+        Ratingbar_Calificacion.setRating(Float.parseFloat(GetResenaFromSharedPreferences("Mi_Puntuacion")));
         Ratingbar_Calificacion.setIsIndicator(true);
+
 
         Btneliminar_Resena = (Button) v.findViewById(R.id.btneliminarresena);
         Btneliminar_Resena.setOnClickListener(new View.OnClickListener() {
@@ -366,11 +302,7 @@ public class ListaResenas2 extends Fragment {
             @Override
             public void onClick(View v) {
 
-                bundle2.putString("nombreestablecimiento", Txtnombre.getText().toString());
-
                 ModificarResena modificarResena = new ModificarResena();
-                modificarResena.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, modificarResena);
                 transaction.commit();
@@ -666,16 +598,14 @@ public class ListaResenas2 extends Fragment {
                 Nro_Cupones = Nro_Cupones-1;
                 SaveNroCuponesSharedPreferences(Nro_Cupones);
 
-                bundle2.putString("totalresenas", String.valueOf(Total_Resenas));
-                bundle2.putString("puntuacion", String.valueOf(Puntuacion_Total));
-                bundle2.putFloat("mipuntuacion", (float) 0.0);
-                bundle2.putString("micomentario", "");
-                bundle2.putInt("banderaresena", 0);
-
+                SaveInfoSharedPreferences(GetInfoFromSharedPreferences("ID"), GetInfoFromSharedPreferences("Nombre"), GetInfoFromSharedPreferences("Distrito"),
+                        GetInfoFromSharedPreferences("Categoria"), GetInfoFromSharedPreferences("Direccion"), GetInfoFromSharedPreferences("Telefono"),
+                        GetInfoFromSharedPreferences("Descripcion"), GetInfoFromSharedPreferences("Capacidad"), String.valueOf(Total_Resenas),
+                        String.valueOf(Puntuacion_Total), GetInfoFromSharedPreferences("Url_Imagen_Logo"), GetInfoFromSharedPreferences("Url_Imagen_Documento"),
+                        GetInfoFromSharedPreferences("Punto_Geografico"), GetInfoFromSharedPreferences("Estado"));
+                SaveResenaSharedPreferences(false, "", (float) 0.0);
 
                 ListaResenas listaResenas = new ListaResenas();
-                listaResenas.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaResenas);
                 transaction.commit();
@@ -743,22 +673,21 @@ public class ListaResenas2 extends Fragment {
 
                     Alert_Dialog.dismiss();
 
-                    //nrocupones=nrocupones-1;
+                    Nro_Cupones=Nro_Cupones-1;
                     //savenrocuponesSharedPreferences(nrocupones);
 
-                    Nro_Cupones = 0;
+                    //Nro_Cupones = 0;
                     SaveNroCuponesSharedPreferences(Nro_Cupones);
 
-                    bundle2.putString("totalresenas", String.valueOf(Total_Resenas));
-                    bundle2.putString("puntuacion", String.valueOf(Puntuacion_Total));
-                    bundle2.putFloat("mipuntuacion", (float) 0.0);
-                    bundle2.putString("micomentario", "");
-                    bundle2.putInt("banderaresena", 0);
+                    SaveInfoSharedPreferences(GetInfoFromSharedPreferences("ID"), GetInfoFromSharedPreferences("Nombre"), GetInfoFromSharedPreferences("Distrito"),
+                            GetInfoFromSharedPreferences("Categoria"), GetInfoFromSharedPreferences("Direccion"), GetInfoFromSharedPreferences("Telefono"),
+                            GetInfoFromSharedPreferences("Descripcion"), GetInfoFromSharedPreferences("Capacidad"), String.valueOf(Total_Resenas),
+                            String.valueOf(Puntuacion_Total), GetInfoFromSharedPreferences("Url_Imagen_Logo"), GetInfoFromSharedPreferences("Url_Imagen_Documento"),
+                            GetInfoFromSharedPreferences("Punto_Geografico"), GetInfoFromSharedPreferences("Estado"));
+                    SaveResenaSharedPreferences(false, "", (float) 0.0);
 
 
                     ListaResenas listaResenas = new ListaResenas();
-                    listaResenas.setArguments(bundle2);
-
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.contenedorfragment, listaResenas);
                     transaction.commit();
@@ -833,16 +762,14 @@ public class ListaResenas2 extends Fragment {
             Nro_Cupones = 4;
             SaveNroCuponesSharedPreferences(Nro_Cupones);
 
-            bundle2.putString("totalresenas", String.valueOf(Total_Resenas));
-            bundle2.putString("puntuacion", String.valueOf(Puntuacion_Total));
-            bundle2.putFloat("mipuntuacion", (float) 0.0);
-            bundle2.putString("micomentario", "");
-            bundle2.putInt("banderaresena", 0);
-
+            SaveInfoSharedPreferences(GetInfoFromSharedPreferences("ID"), GetInfoFromSharedPreferences("Nombre"), GetInfoFromSharedPreferences("Distrito"),
+                    GetInfoFromSharedPreferences("Categoria"), GetInfoFromSharedPreferences("Direccion"), GetInfoFromSharedPreferences("Telefono"),
+                    GetInfoFromSharedPreferences("Descripcion"), GetInfoFromSharedPreferences("Capacidad"), String.valueOf(Total_Resenas),
+                    String.valueOf(Puntuacion_Total), GetInfoFromSharedPreferences("Url_Imagen_Logo"), GetInfoFromSharedPreferences("Url_Imagen_Documento"),
+                    GetInfoFromSharedPreferences("Punto_Geografico"), GetInfoFromSharedPreferences("Estado"));
+            SaveResenaSharedPreferences(false, "", (float) 0.0);
 
             ListaResenas listaResenas = new ListaResenas();
-            listaResenas.setArguments(bundle2);
-
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.contenedorfragment, listaResenas);
             transaction.commit();
@@ -853,5 +780,53 @@ public class ListaResenas2 extends Fragment {
         }
 
 
+    }
+    private void SaveInfoSharedPreferences(String ID, String Nombre, String Distrito, String Categoria, String Direccion, String Telefono,
+                                           String Descripcion, String Capacidad, String Total_Resenas, String Puntuacion, String Url_Imagen_Logo,
+                                           String Url_Imagen_Documento, String Punto_Geografico, String Estado){
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("ID", ID);
+        editor.putString("Nombre", Nombre);
+        editor.putString("Distrito", Distrito);
+        editor.putString("Categoria", Categoria);
+        editor.putString("Direccion", Direccion);
+        editor.putString("Telefono", Telefono);
+        editor.putString("Descripcion", Descripcion);
+        editor.putString("Capacidad", Capacidad);
+        editor.putString("Total_Resenas", Total_Resenas);
+        editor.putString("Puntuacion", Puntuacion);
+        editor.putString("Url_Imagen_Logo", Url_Imagen_Logo);
+        editor.putString("Url_Imagen_Documento", Url_Imagen_Documento);
+        editor.putString("Punto_Geografico", Punto_Geografico);
+        editor.putString("Estado", Estado);
+        editor.apply();
+    }
+
+    private void SaveResenaSharedPreferences(Boolean Bandera_Resena, String Mi_Comentario, Float Mi_Puntuacion){
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("info_resena", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        if(Bandera_Resena){
+            editor.putString("Bandera_Resena", "true");
+        }
+        else
+        {
+            editor.putString("Bandera_Resena", "false");
+        }
+        editor.putString("Mi_Comentario", Mi_Comentario);
+        editor.putString("Mi_Puntuacion", String.valueOf(Mi_Puntuacion));
+        editor.apply();
+    }
+
+    private String GetInfoFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
+    }
+
+    private String GetResenaFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_resena", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
     }
 }

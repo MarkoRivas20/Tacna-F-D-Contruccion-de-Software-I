@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="2dp"
+    android:layout_marginBottom="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="#FFFFFF"
+        android:padding="10dp">
+
+
+
+        <TextView
+            android:id="@+id/txtid_Recycler_pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID"
+            android:textSize="50dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        <TextView
+            android:id="@+id/txtestado_Recycler_pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:text="Estado"
+            android:textColor="#000000"
+            app:layout_constraintStart_toEndOf="@+id/txtid_Recycler_pedido"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        <TextView
+            android:id="@+id/txtestablecimiento_Recycler_pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Establecimiento"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/txtestado_Recycler_pedido"
+            app:layout_constraintTop_toBottomOf="@+id/txtestado_Recycler_pedido" />
+
+        <TextView
+            android:id="@+id/txtfecha_Recycler_pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Fecha"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/txtestablecimiento_Recycler_pedido"
+            app:layout_constraintTop_toBottomOf="@+id/txtestablecimiento_Recycler_pedido" />
+        <TextView
+            android:id="@+id/txtdireccion_Recycler_pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Direccion"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/txtfecha_Recycler_pedido"
+            app:layout_constraintTop_toBottomOf="@+id/txtfecha_Recycler_pedido" />
+        <TextView
+            android:id="@+id/txtprecio_Recycler_pedido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Precio"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/txtdireccion_Recycler_pedido"
+            app:layout_constraintTop_toBottomOf="@+id/txtdireccion_Recycler_pedido" />
+        <TextView
+            android:id="@+id/txtdescripcion_Recycler_pedido"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:justificationMode="inter_word"
+            android:layout_marginTop="10dp"
+            android:text="Descripcion"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/txtprecio_Recycler_pedido"
+            app:layout_constraintTop_toBottomOf="@+id/txtprecio_Recycler_pedido" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

@@ -41,29 +41,9 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
         // Required empty public constructor
     }
 
-    String Nombre = "";
-    String Distrito = "";
-    String Categoria = "";
-    String Capacidad = "";
+
 
     String bid_establecimiento = "";
-    String bnombre = "";
-    String bdistrito = "";
-    String bcategoria = "";
-    String bdireccion = "";
-    String btelefono = "";
-    String bdescripcion = "";
-    String bcapacidad = "";
-    String btotalresenas = "";
-    String bpuntuacion = "";
-    String burl_imagen_logo = "";
-    String bpuntogeografico = "";
-    String bestado = "";
-
-    boolean Booleano = false;
-
-    String Mi_Comentario = "";
-    Float Mi_Puntuacion = (float) 0.0;
 
     Button Btnatras;
     Button Btnsiguiente;
@@ -79,8 +59,6 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
     ResultSet Result_Set;
 
     AlertDialog Alert_Dialog;
-
-    final Bundle bundle2 = new Bundle();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,51 +79,8 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
 
         String Nombre_Cliente = GetFromSharedPreferences("nombre") + " " + GetFromSharedPreferences("apellido");
 
-        final Bundle bundle = getArguments();
+        bid_establecimiento = GetInfoFromSharedPreferences("ID");
 
-        bid_establecimiento = bundle.getString("id_establecimiento");
-        bnombre = bundle.getString("nombre");
-        bdistrito = bundle.getString("distrito");
-        bcategoria = bundle.getString("categoria");
-        bdireccion = bundle.getString("direccion");
-        btelefono = bundle.getString("telefono");
-        bdescripcion = bundle.getString("descripcion");
-        bcapacidad = bundle.getString("capacidad");
-        btotalresenas = bundle.getString("totalresenas");
-        bpuntuacion= bundle.getString("puntuacion");
-        burl_imagen_logo = bundle.getString("url_imagen_logo");
-        bpuntogeografico = bundle.getString("puntogeografico");
-        bestado = bundle.getString("estado");
-        Nombre = bundle.getString("nombreb");
-        Distrito = bundle.getString("distritob");
-        Categoria = bundle.getString("categoriab");
-        Capacidad = bundle.getString("capacidadb");
-        Booleano = bundle.getBoolean("banderaresena");
-        Mi_Comentario = bundle.getString("micomentario");
-        Mi_Puntuacion = bundle.getFloat("mipuntuacion");
-
-
-
-        bundle2.putString("id_establecimiento",bid_establecimiento);
-        bundle2.putString("nombre",bnombre);
-        bundle2.putString("distrito",bdistrito);
-        bundle2.putString("categoria",bcategoria);
-        bundle2.putString("direccion",bdireccion);
-        bundle2.putString("telefono",btelefono);
-        bundle2.putString("descripcion",bdescripcion);
-        bundle2.putString("capacidad",bcapacidad);
-        bundle2.putString("totalresenas",btotalresenas);
-        bundle2.putString("puntuacion",bpuntuacion);
-        bundle2.putString("url_imagen_logo",burl_imagen_logo);
-        bundle2.putString("puntogeografico",bpuntogeografico);
-        bundle2.putString("estado",bestado);
-        bundle2.putString("nombreb",Nombre);
-        bundle2.putString("distritob",Distrito);
-        bundle2.putString("categoriab",Categoria);
-        bundle2.putString("capacidadb",Capacidad);
-        bundle2.putBoolean("banderaresena",Booleano);
-        bundle2.putString("micomentario",Mi_Comentario);
-        bundle2.putFloat("mipuntuacion",Mi_Puntuacion);
 
         v.setFocusableInTouchMode(true);
         v.requestFocus();
@@ -181,7 +116,7 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
         Txtnombre_Cliente.setEnabled(false);
 
         Txtnombre_Establecimiento = (EditText) v.findViewById(R.id.txtnombreestablecimiento);
-        Txtnombre_Establecimiento.setText(bnombre);
+        Txtnombre_Establecimiento.setText(GetInfoFromSharedPreferences("Nombre"));
         Txtnombre_Establecimiento.setEnabled(false);
 
         Btnatras = (Button) v.findViewById(R.id.btnatras);
@@ -189,8 +124,6 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 ListaItemsMenu listaItemsMenu = new ListaItemsMenu();
-                listaItemsMenu.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaItemsMenu);
                 transaction.commit();
@@ -320,14 +253,13 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
 
                 if(Result_Set.next())
                 {
-
-                    bundle2.putString("direcciondestino",TxtDireccion.getText().toString());
-                    bundle2.putString("puntogeograficodestino",Punto_Geografico);
-                    bundle2.putString("codigopaypal",Result_Set.getString(1));
+                    Bundle bundle = new Bundle();
+                    bundle.putString("direcciondestino",TxtDireccion.getText().toString());
+                    bundle.putString("puntogeograficodestino",Punto_Geografico);
+                    bundle.putString("codigopaypal",Result_Set.getString(1));
 
                     RealizarPedido realizarPedido = new RealizarPedido();
-                    realizarPedido.setArguments(bundle2);
-
+                    realizarPedido.setArguments(bundle);
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.contenedorfragment, realizarPedido);
                     transaction.commit();
@@ -347,5 +279,10 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
         }
 
 
+    }
+
+    private String GetInfoFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
     }
 }

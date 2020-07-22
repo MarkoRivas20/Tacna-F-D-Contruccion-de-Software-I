@@ -12,22 +12,22 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="207dp"
-        android:layout_height="97dp"
+        android:layout_width="318dp"
+        android:layout_height="116dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_padlock" />
+        app:srcCompat="@drawable/logotacnabusiness" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
         android:text="@string/main_recuperar"
         android:textColor="#000000"

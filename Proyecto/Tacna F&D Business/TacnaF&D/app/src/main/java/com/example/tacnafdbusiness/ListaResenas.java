@@ -2,6 +2,7 @@ package com.example.tacnafdbusiness;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -53,19 +54,7 @@ public class ListaResenas extends Fragment {
     private RecyclerView.LayoutManager Layout_Manager;
 
     String bid_establecimiento = "";
-    String bnombre = "";
-    String bdistrito = "";
-    String bcategoria = "";
-    String bdireccion = "";
-    String btelefono = "";
-    String bdescripcion = "";
-    String bcapacidad = "";
-    String btotalresenas = "";
-    String bpuntuacion = "";
     String burl_imagen_logo = "";
-    String burl_imagen_documento = "";
-    String bpuntogeografico = "";
-    String bestado = "";
 
     ImageView Img_Logo;
     TextView Txtnombre;
@@ -98,8 +87,6 @@ public class ListaResenas extends Fragment {
     int Contador_3 = 0;
     int Contador_4 = 0;
     int Contador_5 = 0;
-
-    final Bundle bundle2 = new Bundle();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -157,58 +144,28 @@ public class ListaResenas extends Fragment {
                 .build();
 
 
-        Bundle bundle = getArguments();
 
-        bid_establecimiento = bundle.getString("id_establecimiento");
-        bnombre = bundle.getString("nombre");
-        bdistrito = bundle.getString("distrito");
-        bcategoria = bundle.getString("categoria");
-        bdireccion = bundle.getString("direccion");
-        btelefono = bundle.getString("telefono");
-        bdescripcion = bundle.getString("descripcion");
-        bcapacidad = bundle.getString("capacidad");
-        btotalresenas = bundle.getString("totalresenas");
-        bpuntuacion = bundle.getString("puntuacion");
-        burl_imagen_logo = bundle.getString("url_imagen_logo");
-        burl_imagen_documento = bundle.getString("url_imagen_documento");
-        bpuntogeografico = bundle.getString("puntogeografico");
-        bestado = bundle.getString("estado");
+
+        bid_establecimiento = GetInfoFromSharedPreferences("ID");
+        burl_imagen_logo = GetInfoFromSharedPreferences("Url_Imagen_Logo");
 
         Img_Logo = (ImageView) v.findViewById(R.id.imglogo);
 
         Picasso.with(getContext()).load(burl_imagen_logo).into(Img_Logo);
 
         Txtnombre = (TextView) v.findViewById(R.id.lblnombre);
-        Txtnombre.setText(bnombre);
+        Txtnombre.setText(GetInfoFromSharedPreferences("Nombre"));
 
-        Lbltotal.setText(btotalresenas);
-        Lblpuntuacion.setText(bpuntuacion);
-        Ratingbar_Calificacion.setRating(Float.parseFloat(bpuntuacion));
+        Lbltotal.setText(GetInfoFromSharedPreferences("Total_Resenas"));
+        Lblpuntuacion.setText(GetInfoFromSharedPreferences("Puntuacion"));
+        Ratingbar_Calificacion.setRating(Float.parseFloat(GetInfoFromSharedPreferences("Puntuacion")));
 
-
-
-        bundle2.putString("id_establecimiento", bid_establecimiento);
-        bundle2.putString("nombre", bnombre);
-        bundle2.putString("distrito", bdistrito);
-        bundle2.putString("categoria", bcategoria);
-        bundle2.putString("direccion", bdireccion);
-        bundle2.putString("telefono", btelefono);
-        bundle2.putString("descripcion", bdescripcion);
-        bundle2.putString("capacidad", bcapacidad);
-        bundle2.putString("totalresenas", btotalresenas);
-        bundle2.putString("puntuacion", bpuntuacion);
-        bundle2.putString("url_imagen_logo", burl_imagen_logo);
-        bundle2.putString("url_imagen_documento", burl_imagen_documento);
-        bundle2.putString("puntogeografico", bpuntogeografico);
-        bundle2.putString("estado", bestado);
 
         Btndescripcion = (Button) v.findViewById(R.id.btndescripcion);
         Btndescripcion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PerfilEstablecimiento perfilEstablecimiento = new PerfilEstablecimiento();
-                perfilEstablecimiento.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, perfilEstablecimiento);
                 transaction.commit();
@@ -232,7 +189,6 @@ public class ListaResenas extends Fragment {
             @Override
             public void onClick(View v) {
                 ImagenesEstablecimiento imagenesEstablecimiento = new ImagenesEstablecimiento();
-                imagenesEstablecimiento.setArguments(bundle2);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, imagenesEstablecimiento);
                 transaction.commit();
@@ -245,8 +201,6 @@ public class ListaResenas extends Fragment {
             @Override
             public void onClick(View v) {
                 ListaCupon listaCupon = new ListaCupon();
-                listaCupon.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaCupon);
                 transaction.commit();
@@ -258,7 +212,6 @@ public class ListaResenas extends Fragment {
             @Override
             public void onClick(View v) {
                 ListaItemsMenu listaItemsMenu = new ListaItemsMenu();
-                listaItemsMenu.setArguments(bundle2);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaItemsMenu);
                 transaction.commit();
@@ -287,21 +240,18 @@ public class ListaResenas extends Fragment {
         switch (item.getItemId()){
             case 1:
                 VisualizarDocumento visualizarDocumento = new VisualizarDocumento();
-                visualizarDocumento.setArguments(bundle2);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, visualizarDocumento);
                 transaction.commit();
                 break;
             case 2:
                 ListaRepartidores listaRepartidores = new ListaRepartidores();
-                listaRepartidores.setArguments(bundle2);
                 FragmentTransaction transaction2 = getFragmentManager().beginTransaction();
                 transaction2.replace(R.id.contenedorfragment, listaRepartidores);
                 transaction2.commit();
                 break;
             case 3:
                 ListaPedidos listaPedidos = new ListaPedidos();
-                listaPedidos.setArguments(bundle2);
                 FragmentTransaction transaction3 = getFragmentManager().beginTransaction();
                 transaction3.replace(R.id.contenedorfragment, listaPedidos);
                 transaction3.commit();
@@ -446,6 +396,11 @@ public class ListaResenas extends Fragment {
         }catch (Exception e){
             Log.e("Error", e.toString());
         }
+    }
+
+    private String GetInfoFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
     }
 
 

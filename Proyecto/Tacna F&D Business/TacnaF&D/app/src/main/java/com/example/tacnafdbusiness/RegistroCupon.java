@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,27 +47,14 @@ public class RegistroCupon extends Fragment {
         // Required empty public constructor
     }
 
-    String bid_establecimiento = "";
-    String bnombre = "";
-    String bdistrito = "";
-    String bcategoria = "";
-    String bdireccion = "";
-    String btelefono = "";
-    String bdescripcion = "";
-    String bcapacidad = "";
-    String btotalresenas = "";
-    String bpuntuacion = "";
-    String burl_imagen_logo = "";
-    String burl_imagen_documento = "";
-    String bpuntogeografico = "";
-    String bestado = "";
-
     Spinner Spinner_Estado;
 
     EditText Txttitulo;
     EditText Txtdescripcion;
     EditText Txtfecha_Inicio;
     EditText Txtfecha_Final;
+
+    String bid_establecimiento = "";
 
     public final Calendar Calendario = Calendar.getInstance();
     final int Mes = Calendario.get(Calendar.MONTH);
@@ -107,23 +95,6 @@ public class RegistroCupon extends Fragment {
                 .setMessage("Espere")
                 .setCancelable(false)
                 .build();
-        Bundle bundle = getArguments();
-
-        bid_establecimiento = bundle.getString("id_establecimiento");
-        bnombre = bundle.getString("nombre");
-        bdistrito = bundle.getString("distrito");
-        bcategoria = bundle.getString("categoria");
-        bdireccion = bundle.getString("direccion");
-        btelefono = bundle.getString("telefono");
-        bdescripcion = bundle.getString("descripcion");
-        bcapacidad = bundle.getString("capacidad");
-        btotalresenas = bundle.getString("totalresenas");
-        bpuntuacion = bundle.getString("puntuacion");
-        burl_imagen_logo = bundle.getString("url_imagen_logo");
-        burl_imagen_documento = bundle.getString("url_imagen_documento");
-        bpuntogeografico = bundle.getString("puntogeografico");
-        bestado = bundle.getString("estado");
-
 
 
         Btnseleccionar = (Button) v.findViewById(R.id.btnseleccionar);
@@ -143,6 +114,7 @@ public class RegistroCupon extends Fragment {
 
         Spinner_Estado.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, estados));
 
+        bid_establecimiento = GetInfoFromSharedPreferences("ID");
 
         Txtfecha_Inicio = (EditText) v.findViewById(R.id.txtfechainicio);
         Txtfecha_Inicio.setFocusable(false);
@@ -217,25 +189,9 @@ public class RegistroCupon extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Bundle bundle2 = new Bundle();
-                bundle2.putString("id_establecimiento", bid_establecimiento);
-                bundle2.putString("nombre", bnombre);
-                bundle2.putString("distrito", bdistrito);
-                bundle2.putString("categoria", bcategoria);
-                bundle2.putString("direccion", bdireccion);
-                bundle2.putString("telefono", btelefono);
-                bundle2.putString("descripcion", bdescripcion);
-                bundle2.putString("capacidad", bcapacidad);
-                bundle2.putString("totalresenas", btotalresenas);
-                bundle2.putString("puntuacion", bpuntuacion);
-                bundle2.putString("url_imagen_logo", burl_imagen_logo);
-                bundle2.putString("url_imagen_documento", burl_imagen_documento);
-                bundle2.putString("puntogeografico", bpuntogeografico);
-                bundle2.putString("estado", bestado);
+
 
                 ListaCupon listaCupon = new ListaCupon();
-                listaCupon.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaCupon);
                 transaction.commit();
@@ -421,5 +377,10 @@ public class RegistroCupon extends Fragment {
         }
 
 
+    }
+
+    private String GetInfoFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
     }
 }

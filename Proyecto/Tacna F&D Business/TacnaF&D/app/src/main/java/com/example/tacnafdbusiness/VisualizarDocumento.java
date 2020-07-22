@@ -1,5 +1,7 @@
 package com.example.tacnafdbusiness;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Matrix;
 import android.os.Bundle;
 
@@ -28,25 +30,7 @@ public class VisualizarDocumento extends Fragment {
 
     PhotoView Imgdocumento;
 
-    String bid_establecimiento = "";
-    String bnombre = "";
-    String bdistrito = "";
-    String bcategoria = "";
-    String bdireccion = "";
-    String btelefono = "";
-    String bdescripcion = "";
-    String bcapacidad = "";
-    String btotalresenas = "";
-    String bpuntuacion = "";
-    String burl_imagen_logo = "";
-    String burl_imagen_documento = "";
-    String bpuntogeografico = "";
-    String bestado = "";
-
     String Url_Imagen_Documento = "";
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,49 +40,12 @@ public class VisualizarDocumento extends Fragment {
 
         Imgdocumento = (PhotoView) v.findViewById(R.id.imgdocumento);
 
-        Bundle bundle = getArguments();
 
-        bid_establecimiento = bundle.getString("id_establecimiento");
-        bnombre = bundle.getString("nombre");
-        bdistrito = bundle.getString("distrito");
-        bcategoria = bundle.getString("categoria");
-        bdireccion = bundle.getString("direccion");
-        btelefono = bundle.getString("telefono");
-        bdescripcion = bundle.getString("descripcion");
-        bcapacidad = bundle.getString("capacidad");
-        btotalresenas = bundle.getString("totalresenas");
-        bpuntuacion = bundle.getString("puntuacion");
-        burl_imagen_logo = bundle.getString("url_imagen_logo");
-        burl_imagen_documento = bundle.getString("url_imagen_documento");
-        bpuntogeografico = bundle.getString("puntogeografico");
-        bestado = bundle.getString("estado");
-
-        Url_Imagen_Documento = bundle.getString("url_imagen_documento");
+        Url_Imagen_Documento = GetInfoFromSharedPreferences("Url_Imagen_Documento");
 
         Picasso.with(getActivity()).load(Url_Imagen_Documento).into(Imgdocumento);
 
         Imgdocumento.setScaleType(ImageView.ScaleType.FIT_CENTER);
-
-
-
-
-
-
-        final Bundle bundle2 = new Bundle();
-        bundle2.putString("id_establecimiento", bid_establecimiento);
-        bundle2.putString("nombre", bnombre);
-        bundle2.putString("distrito", bdistrito);
-        bundle2.putString("categoria", bcategoria);
-        bundle2.putString("direccion", bdireccion);
-        bundle2.putString("telefono", btelefono);
-        bundle2.putString("descripcion", bdescripcion);
-        bundle2.putString("capacidad", bcapacidad);
-        bundle2.putString("totalresenas", btotalresenas);
-        bundle2.putString("puntuacion", bpuntuacion);
-        bundle2.putString("url_imagen_logo", burl_imagen_logo);
-        bundle2.putString("url_imagen_documento", burl_imagen_documento);
-        bundle2.putString("puntogeografico", bpuntogeografico);
-        bundle2.putString("estado", bestado);
 
         v.setFocusableInTouchMode(true);
         v.requestFocus();
@@ -109,17 +56,10 @@ public class VisualizarDocumento extends Fragment {
                 {
                     if (keyCode == KeyEvent.KEYCODE_BACK)
                     {
-
-
                         PerfilEstablecimiento perfilEstablecimiento = new PerfilEstablecimiento();
-                        perfilEstablecimiento.setArguments(bundle2);
-
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.replace(R.id.contenedorfragment, perfilEstablecimiento);
                         transaction.commit();
-
-
-
                         return true;
                     }
                     else
@@ -139,9 +79,9 @@ public class VisualizarDocumento extends Fragment {
         return v;
     }
 
-
-
-
-
+    private String GetInfoFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
+    }
 
 }

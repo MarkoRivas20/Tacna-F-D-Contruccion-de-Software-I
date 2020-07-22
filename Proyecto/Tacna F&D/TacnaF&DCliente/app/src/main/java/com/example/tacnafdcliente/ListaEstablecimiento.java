@@ -1,5 +1,7 @@
 package com.example.tacnafdcliente;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -130,35 +132,32 @@ public class ListaEstablecimiento extends Fragment {
         Txtnombre = (EditText)v.findViewById(R.id.txtnombre);
         Txtcapacidad = (EditText)v.findViewById(R.id.txtcapacidad);
 
-
-        Bundle bundle=getArguments();
-
-        Nombre = bundle.getString("nombre");
-        if (bundle.getString("distrito").equals("Seleccione un Distrito"))
+        Nombre = GetSearchFromSharedPreferences("Nombre");
+        if (GetSearchFromSharedPreferences("Distrito").equals("Seleccione un Distrito"))
         {
             Distrito = "";
         }
         else
         {
-            Distrito = bundle.getString("distrito");
+            Distrito = GetSearchFromSharedPreferences("Distrito");
         }
 
-        if (bundle.getString("categoria").equals("Seleccione una Categoria"))
+        if (GetSearchFromSharedPreferences("Categoria").equals("Seleccione una Categoria"))
         {
             Categoria = "";
         }
         else
         {
-            Categoria = bundle.getString("categoria");
+            Categoria = GetSearchFromSharedPreferences("Categoria");
         }
 
-        if (bundle.getString("capacidad").equals("") || bundle.getString("capacidad").equals("0"))
+        if (GetSearchFromSharedPreferences("Capacidad").equals("") || GetSearchFromSharedPreferences("Capacidad").equals("0"))
         {
             Capacidad = "0";
         }
         else
         {
-            Capacidad = bundle.getString("capacidad");
+            Capacidad = GetSearchFromSharedPreferences("Capacidad");
             Txtcapacidad.setText(Capacidad);
         }
         Txtnombre.setText(Nombre);
@@ -176,7 +175,7 @@ public class ListaEstablecimiento extends Fragment {
 
         for (int i=0; i<categorias.length; i++)
         {
-            if ((bundle.getString("categoria")).equals(categorias[i]))
+            if ((GetSearchFromSharedPreferences("Categoria")).equals(categorias[i]))
             {
                 Spinnercategoria.setSelection(i);
                 break;
@@ -188,7 +187,7 @@ public class ListaEstablecimiento extends Fragment {
         }
         for (int i=0; i<distritos.length; i++)
         {
-            String b = bundle.getString("distrito");
+            String b = GetSearchFromSharedPreferences("Distrito");
             if (b.equals(distritos[i]))
             {
                 Spinnerdistrito.setSelection(i);
@@ -208,28 +207,22 @@ public class ListaEstablecimiento extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Bundle bundle = new Bundle();
-                bundle.putString("id_establecimiento", String.valueOf(Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getID_Establecimiento()));
-                bundle.putString("nombre", Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getNombre());
-                bundle.putString("distrito", Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getDistrito());
-                bundle.putString("categoria", Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getCategoria());
-                bundle.putString("direccion", Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getDireccion());
-                bundle.putString("telefono", Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getTelefono());
-                bundle.putString("descripcion", Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getDescripcion());
-                bundle.putString("capacidad", String.valueOf(Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getCapacidad()));
-                bundle.putString("totalresenas", String.valueOf(Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getTotalResenas()));
-                bundle.putString("puntuacion", String.valueOf(Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getPuntuacion()));
-                bundle.putString("url_imagen_logo", Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getUrl_Imagen_Logo());
-                bundle.putString("puntogeografico", Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getPuntoGeografico());
-                bundle.putString("estado", Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getEstado());
-                bundle.putString("nombreb", Nombre);
-                bundle.putString("distritob", Distrito);
-                bundle.putString("categoriab", Categoria);
-                bundle.putString("capacidadb", Capacidad);
+                SaveInfoSharedPreferences(String.valueOf(Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getID_Establecimiento()),
+                        Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getNombre(), Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getDistrito(),
+                        Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getCategoria(), Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getDireccion(),
+                        Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getTelefono(), Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getDescripcion(),
+                        String.valueOf(Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getCapacidad()),
+                        String.valueOf(Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getTotalResenas()),
+                        String.valueOf(Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getPuntuacion()),
+                        Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getUrl_Imagen_Logo(),
+                        "",
+                        Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getPuntoGeografico(),
+                        Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getEstado());
+
+
+                SaveSearchSharedPreferences(Nombre, Distrito, Categoria, Capacidad);
 
                 PerfilEstablecimiento perfilEstablecimiento = new PerfilEstablecimiento();
-                perfilEstablecimiento.setArguments(bundle);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, perfilEstablecimiento);
                 transaction.commit();
@@ -424,5 +417,43 @@ public class ListaEstablecimiento extends Fragment {
         }
 
 
+    }
+
+    private void SaveInfoSharedPreferences(String ID, String Nombre, String Distrito, String Categoria, String Direccion, String Telefono,
+                                           String Descripcion, String Capacidad, String Total_Resenas, String Puntuacion, String Url_Imagen_Logo,
+                                           String Url_Imagen_Documento, String Punto_Geografico, String Estado){
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("ID", ID);
+        editor.putString("Nombre", Nombre);
+        editor.putString("Distrito", Distrito);
+        editor.putString("Categoria", Categoria);
+        editor.putString("Direccion", Direccion);
+        editor.putString("Telefono", Telefono);
+        editor.putString("Descripcion", Descripcion);
+        editor.putString("Capacidad", Capacidad);
+        editor.putString("Total_Resenas", Total_Resenas);
+        editor.putString("Puntuacion", Puntuacion);
+        editor.putString("Url_Imagen_Logo", Url_Imagen_Logo);
+        editor.putString("Url_Imagen_Documento", Url_Imagen_Documento);
+        editor.putString("Punto_Geografico", Punto_Geografico);
+        editor.putString("Estado", Estado);
+        editor.apply();
+    }
+    private void SaveSearchSharedPreferences(String Nombre, String Distrito, String Categoria, String Capacidad){
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("info_search", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("Nombre", Nombre);
+        editor.putString("Distrito", Distrito);
+        editor.putString("Categoria", Categoria);
+        editor.putString("Capacidad", Capacidad);
+        editor.apply();
+    }
+
+    private String GetSearchFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_search", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
     }
 }

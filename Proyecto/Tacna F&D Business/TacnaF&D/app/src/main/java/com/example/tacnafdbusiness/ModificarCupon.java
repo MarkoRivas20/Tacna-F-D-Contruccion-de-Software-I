@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -51,19 +52,6 @@ public class ModificarCupon extends Fragment {
 
 
     String bid_establecimiento = "";
-    String bnombre = "";
-    String bdistrito = "";
-    String bcategoria = "";
-    String bdireccion = "";
-    String btelefono = "";
-    String bdescripcion = "";
-    String bcapacidad = "";
-    String btotalresenas = "";
-    String bpuntuacion = "";
-    String burl_imagen_logo = "";
-    String burl_imagen_documento = "";
-    String bpuntogeografico = "";
-    String bestado = "";
 
     Spinner Spinner_Estado;
 
@@ -147,29 +135,15 @@ public class ModificarCupon extends Fragment {
         Txtfecha_Inicio.setFocusable(false);
         Foto_Gallery = (ImageView) v.findViewById(R.id.imagenlogo);
 
-        Bundle bundle = getArguments();
-        Id_Cupon = bundle.getString("id_cupon");
-        Url_Actual_Cupon = bundle.getString("url_imagen");
-        Txttitulo.setText(bundle.getString("titulo"));
-        Txtdescripcion.setText(bundle.getString("descripcioncupon"));
-        Txtfecha_Final.setText(bundle.getString("fecha_final"));
-        Txtfecha_Inicio.setText(bundle.getString("fecha_inicio"));
+        bid_establecimiento = GetInfoFromSharedPreferences("ID");
 
+        Id_Cupon = GetInfoCuponFromSharedPreferences("ID_Cupon");
+        Url_Actual_Cupon = GetInfoCuponFromSharedPreferences("Url_Imagen_Cupon");
+        Txttitulo.setText(GetInfoCuponFromSharedPreferences("Titulo"));
+        Txtdescripcion.setText(GetInfoCuponFromSharedPreferences("Descripcion_Cupon"));
+        Txtfecha_Final.setText(GetInfoCuponFromSharedPreferences("Fecha_Final"));
+        Txtfecha_Inicio.setText(GetInfoCuponFromSharedPreferences("Fecha_Inicio"));
 
-        bid_establecimiento = bundle.getString("id_establecimiento");
-        bnombre = bundle.getString("nombre");
-        bdistrito = bundle.getString("distrito");
-        bcategoria = bundle.getString("categoria");
-        bdireccion = bundle.getString("direccion");
-        btelefono = bundle.getString("telefono");
-        bdescripcion = bundle.getString("descripcion");
-        bcapacidad = bundle.getString("capacidad");
-        btotalresenas = bundle.getString("totalresenas");
-        bpuntuacion = bundle.getString("puntuacion");
-        burl_imagen_logo = bundle.getString("url_imagen_logo");
-        burl_imagen_documento = bundle.getString("url_imagen_documento");
-        bpuntogeografico = bundle.getString("puntogeografico");
-        bestado = bundle.getString("estado");
 
         String[] estados = {"Seleccione un estado", "Activo", "Inactivo"};
         Spinner_Estado = (Spinner) v.findViewById(R.id.spinnerestado);
@@ -178,7 +152,7 @@ public class ModificarCupon extends Fragment {
 
         for (int i=0; i<estados.length; i++)
         {
-            if ((bundle.getString("estadocupon")).equals(estados[i]))
+            if ((GetInfoCuponFromSharedPreferences("Estado_Cupon")).equals(estados[i]))
             {
                 Spinner_Estado.setSelection(i);
                 break;
@@ -190,7 +164,7 @@ public class ModificarCupon extends Fragment {
 
         }
 
-        Picasso.with(getActivity()).load(bundle.getString("url_imagen")).into(Foto_Gallery);
+        Picasso.with(getActivity()).load(GetInfoCuponFromSharedPreferences("Url_Imagen_Cupon")).into(Foto_Gallery);
 
         Btnmodificar = (Button) v.findViewById(R.id.btnmodificarcupon);
         Btnmodificar.setOnClickListener(new View.OnClickListener() {
@@ -256,25 +230,7 @@ public class ModificarCupon extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Bundle bundle2 = new Bundle();
-                bundle2.putString("id_establecimiento", bid_establecimiento);
-                bundle2.putString("nombre", bnombre);
-                bundle2.putString("distrito", bdistrito);
-                bundle2.putString("categoria", bcategoria);
-                bundle2.putString("direccion", bdireccion);
-                bundle2.putString("telefono", btelefono);
-                bundle2.putString("descripcion", bdescripcion);
-                bundle2.putString("capacidad", bcapacidad);
-                bundle2.putString("totalresenas", btotalresenas);
-                bundle2.putString("puntuacion", bpuntuacion);
-                bundle2.putString("url_imagen_logo", burl_imagen_logo);
-                bundle2.putString("url_imagen_documento", burl_imagen_documento);
-                bundle2.putString("puntogeografico", bpuntogeografico);
-                bundle2.putString("estado", bestado);
-
                 ListaCupon listaCupon = new ListaCupon();
-                listaCupon.setArguments(bundle2);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaCupon);
                 transaction.commit();
@@ -456,25 +412,7 @@ public class ModificarCupon extends Fragment {
 
             Alert_Dialog.dismiss();
 
-            Bundle bundle2 = new Bundle();
-            bundle2.putString("id_establecimiento", bid_establecimiento);
-            bundle2.putString("nombre", bnombre);
-            bundle2.putString("distrito", bdistrito);
-            bundle2.putString("categoria", bcategoria);
-            bundle2.putString("direccion", bdireccion);
-            bundle2.putString("telefono", btelefono);
-            bundle2.putString("descripcion", bdescripcion);
-            bundle2.putString("capacidad", bcapacidad);
-            bundle2.putString("totalresenas", btotalresenas);
-            bundle2.putString("puntuacion", bpuntuacion);
-            bundle2.putString("url_imagen_logo", burl_imagen_logo);
-            bundle2.putString("url_imagen_documento", burl_imagen_documento);
-            bundle2.putString("puntogeografico", bpuntogeografico);
-            bundle2.putString("estado", bestado);
-
             ListaCupon listaCupon = new ListaCupon();
-            listaCupon.setArguments(bundle2);
-
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.contenedorfragment, listaCupon);
             transaction.commit();
@@ -484,5 +422,15 @@ public class ModificarCupon extends Fragment {
         }
 
 
+    }
+
+    private String GetInfoFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
+    }
+
+    private String GetInfoCuponFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_cupon", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
     }
 }

@@ -84,7 +84,7 @@ public class ListaEstablecimientos extends Fragment {
     String puntogeofrafico = "";
 
     @Override
-    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView (LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_lista_establecimientos, container, false);
 
@@ -202,26 +202,10 @@ public class ListaEstablecimientos extends Fragment {
                     estado = Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getEstado();
                 }
 
-
-                Bundle bundle = new Bundle();
-                bundle.putString("id_establecimiento", ID_Establecimiento);
-                bundle.putString("nombre", nombre);
-                bundle.putString("distrito", distrito);
-                bundle.putString("categoria", categoria);
-                bundle.putString("direccion", direccion);
-                bundle.putString("telefono", telefono);
-                bundle.putString("descripcion", descripcion);
-                bundle.putString("capacidad", capacidad);
-                bundle.putString("totalresenas", totalresenas);
-                bundle.putString("puntuacion", puntuacion);
-                bundle.putString("url_imagen_logo", url_imagen_logo);
-                bundle.putString("url_imagen_documento", url_imagen_documento);
-                bundle.putString("puntogeografico", puntogeofrafico);
-                bundle.putString("estado", estado);
+                SaveInfoSharedPreferences(ID_Establecimiento,nombre,distrito,categoria,direccion,telefono,descripcion,
+                        capacidad,totalresenas,puntuacion,url_imagen_logo,url_imagen_documento,puntogeofrafico,estado);
 
                 PerfilEstablecimiento perfilEstablecimiento = new PerfilEstablecimiento();
-                perfilEstablecimiento.setArguments(bundle);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, perfilEstablecimiento);
                 transaction.commit();
@@ -347,6 +331,28 @@ public class ListaEstablecimientos extends Fragment {
         }
 
 
+    }
+    private void SaveInfoSharedPreferences(String ID, String Nombre, String Distrito, String Categoria, String Direccion, String Telefono,
+                                           String Descripcion, String Capacidad, String Total_Resenas, String Puntuacion, String Url_Imagen_Logo,
+                                           String Url_Imagen_Documento, String Punto_Geografico, String Estado){
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("ID", ID);
+        editor.putString("Nombre", Nombre);
+        editor.putString("Distrito", Distrito);
+        editor.putString("Categoria", Categoria);
+        editor.putString("Direccion", Direccion);
+        editor.putString("Telefono", Telefono);
+        editor.putString("Descripcion", Descripcion);
+        editor.putString("Capacidad", Capacidad);
+        editor.putString("Total_Resenas", Total_Resenas);
+        editor.putString("Puntuacion", Puntuacion);
+        editor.putString("Url_Imagen_Logo", Url_Imagen_Logo);
+        editor.putString("Url_Imagen_Documento", Url_Imagen_Documento);
+        editor.putString("Punto_Geografico", Punto_Geografico);
+        editor.putString("Estado", Estado);
+        editor.apply();
     }
 
 
