@@ -13,8 +13,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -64,6 +67,7 @@ public class RutaMapa extends Fragment implements OnMapReadyCallback {
     TextView Txtnombre;
     TextView Lbldistancia;
     TextView Lbltiempo;
+    TextView Btnopciones;
 
 
     private GoogleMap Mapa;
@@ -106,6 +110,9 @@ public class RutaMapa extends Fragment implements OnMapReadyCallback {
 
         Txtnombre = (TextView) v.findViewById(R.id.lblnombre);
         Txtnombre.setText(GetInfoFromSharedPreferences("Nombre"));
+
+        Btnopciones = (TextView) v.findViewById(R.id.Btnopciones);
+        registerForContextMenu(Btnopciones);
 
 
 
@@ -236,6 +243,27 @@ public class RutaMapa extends Fragment implements OnMapReadyCallback {
 
 
         return v;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Opciones");
+        menu.add(Menu.NONE, 1, 1, "Visualizar Documento");
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        Toast.makeText(getActivity().getApplicationContext(), "Selected Item: " +item.getItemId(), Toast.LENGTH_SHORT).show();
+
+        switch (item.getItemId()){
+            case 1:
+                VisualizarDocumento visualizarDocumento = new VisualizarDocumento();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.contenedorfragment, visualizarDocumento);
+                transaction.commit();
+                break;
+        }
+        return true;
     }
 
     private void RequestPermission(){

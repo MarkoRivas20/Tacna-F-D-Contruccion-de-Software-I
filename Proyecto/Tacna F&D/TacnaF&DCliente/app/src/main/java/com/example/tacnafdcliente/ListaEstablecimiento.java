@@ -215,7 +215,7 @@ public class ListaEstablecimiento extends Fragment {
                         String.valueOf(Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getTotalResenas()),
                         String.valueOf(Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getPuntuacion()),
                         Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getUrl_Imagen_Logo(),
-                        "",
+                        Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getUrl_Imagen_Documento(),
                         Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getPuntoGeografico(),
                         Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getEstado());
 
@@ -394,6 +394,7 @@ public class ListaEstablecimiento extends Fragment {
                 establecimiento.setCapacidad(Result_Set.getInt(9));
                 establecimiento.setPuntoGeografico(Result_Set.getString(13));
                 establecimiento.setUrl_Imagen_Logo(Result_Set.getString(12));
+                establecimiento.setUrl_Imagen_Documento(Result_Set.getString(15));
                 establecimiento.setNombre(Result_Set.getString(3));
                 establecimiento.setDireccion(Result_Set.getString(6));
                 establecimiento.setTotalResenas(Result_Set.getInt(10));

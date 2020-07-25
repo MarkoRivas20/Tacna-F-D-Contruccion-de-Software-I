@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">TacnaF&amp;DDelivery</string>
+
+    <string name="main_email">Correo Electronico</string>
+    <string name="main_clave">Contraseña</string>
+    <string name="main_iniciar">Iniciar Sesion</string>
+    <string name="main_registrar">Registrarse</string>
+    <string name="main_recuperar">¿Olvidaste tu contraseña?</string>
+
+
+    <string name="registro_txt1">Nombre</string>
+    <string name="registro_txt2">Apellido</string>
+    <string name="registro_txt3">¡Empecemos!</string>
+    <string name="registro_txt4">Crea una cuenta en Tacna F&amp;D Delivery</string>
+    <string name="registro_txt5">Celular</string>
+    <string name="registro_enviar">Crear Cuenta</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

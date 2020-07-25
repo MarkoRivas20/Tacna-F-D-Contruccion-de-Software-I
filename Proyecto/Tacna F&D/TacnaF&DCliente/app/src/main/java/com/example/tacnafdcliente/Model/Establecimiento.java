@@ -15,6 +15,7 @@ public class Establecimiento {
     private int TotalResenas;
     private Double Puntuacion;
     private String Url_Imagen_Logo;
+    private String Url_Imagen_Documento;
     private String PuntoGeografico;
     private String Estado;
 
@@ -116,6 +117,14 @@ public class Establecimiento {
 
     public void setUrl_Imagen_Logo(String url_Imagen_Logo) {
         Url_Imagen_Logo = url_Imagen_Logo;
+    }
+
+    public String getUrl_Imagen_Documento() {
+        return Url_Imagen_Documento;
+    }
+
+    public void setUrl_Imagen_Documento(String url_Imagen_Documento) {
+        Url_Imagen_Documento = url_Imagen_Documento;
     }
 
     public String getPuntoGeografico() {

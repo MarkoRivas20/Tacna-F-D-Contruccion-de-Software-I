@@ -14,8 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -24,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tacnafdcliente.Adaptador.ReseñasAdapter;
 import com.example.tacnafdcliente.Model.MiCupon;
@@ -65,6 +69,7 @@ public class ListaResenas2 extends Fragment {
     TextView Txtnombre;
     TextView Lbltotal;
     TextView Lblpuntuacion;
+    TextView Btnopciones;
 
     RatingBar Ratingbar_Calificacion_Total;
     RatingBar Ratingbar_Calificacion;
@@ -110,6 +115,9 @@ public class ListaResenas2 extends Fragment {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_lista_resenas2, container, false);
 
+
+        Btnopciones = (TextView) v.findViewById(R.id.Btnopciones);
+        registerForContextMenu(Btnopciones);
 
         builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Eliminar Reseña");
@@ -312,6 +320,27 @@ public class ListaResenas2 extends Fragment {
         new ListarResenaPorEstablecimiento (getActivity()).execute(new String[]{"Listarresenas"});
 
         return v;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Opciones");
+        menu.add(Menu.NONE, 1, 1, "Visualizar Documento");
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        Toast.makeText(getActivity().getApplicationContext(), "Selected Item: " +item.getItemId(), Toast.LENGTH_SHORT).show();
+
+        switch (item.getItemId()){
+            case 1:
+                VisualizarDocumento visualizarDocumento = new VisualizarDocumento();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.contenedorfragment, visualizarDocumento);
+                transaction.commit();
+                break;
+        }
+        return true;
     }
 
     private void SaveNroCuponesSharedPreferences (int nrocupones){

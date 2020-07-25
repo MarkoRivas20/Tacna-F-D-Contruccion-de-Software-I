@@ -11,13 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tacnafdcliente.Adaptador.CuponAdapter;
 import com.example.tacnafdcliente.Model.Cupon;
@@ -53,6 +57,7 @@ public class ListaCupon extends Fragment {
     Button Btnreseñas;
 
     TextView Txtnombre;
+    TextView Btnopciones;
 
 
     private RecyclerView Recycler_View;
@@ -85,6 +90,9 @@ public class ListaCupon extends Fragment {
 
         Txtnombre = (TextView) v.findViewById(R.id.lblnombre);
         Txtnombre.setText(GetInfoFromSharedPreferences("Nombre"));
+
+        Btnopciones = (TextView) v.findViewById(R.id.Btnopciones);
+        registerForContextMenu(Btnopciones);
 
 
 
@@ -207,6 +215,27 @@ public class ListaCupon extends Fragment {
         Recycler_View.setAdapter(Adaptador);
 
         return v;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Opciones");
+        menu.add(Menu.NONE, 1, 1, "Visualizar Documento");
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        Toast.makeText(getActivity().getApplicationContext(), "Selected Item: " +item.getItemId(), Toast.LENGTH_SHORT).show();
+
+        switch (item.getItemId()){
+            case 1:
+                VisualizarDocumento visualizarDocumento = new VisualizarDocumento();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.contenedorfragment, visualizarDocumento);
+                transaction.commit();
+                break;
+        }
+        return true;
     }
 
     public Connection ConnectionDB(){

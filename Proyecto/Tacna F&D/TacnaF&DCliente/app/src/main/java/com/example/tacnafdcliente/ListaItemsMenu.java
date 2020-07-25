@@ -11,8 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -54,7 +57,9 @@ public class ListaItemsMenu extends Fragment {
     Button Btnreseñas;
     Button Btnrealizar_Pedido;
 
+
     TextView Txtnombre;
+    TextView Btnopciones;
 
     ResultSet Result_Set;
 
@@ -73,8 +78,8 @@ public class ListaItemsMenu extends Fragment {
 
         Recycler_View = (RecyclerView) v.findViewById(R.id.Recycler_ListaMenu) ;
 
-
-
+        Btnopciones = (TextView) v.findViewById(R.id.Btnopciones);
+        registerForContextMenu(Btnopciones);
 
         bid_establecimiento = GetInfoFromSharedPreferences("ID");
         burl_imagen_logo = GetInfoFromSharedPreferences("Url_Imagen_Logo");
@@ -221,6 +226,27 @@ public class ListaItemsMenu extends Fragment {
 
 
         return v;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Opciones");
+        menu.add(Menu.NONE, 1, 1, "Visualizar Documento");
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        Toast.makeText(getActivity().getApplicationContext(), "Selected Item: " +item.getItemId(), Toast.LENGTH_SHORT).show();
+
+        switch (item.getItemId()){
+            case 1:
+                VisualizarDocumento visualizarDocumento = new VisualizarDocumento();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.contenedorfragment, visualizarDocumento);
+                transaction.commit();
+                break;
+        }
+        return true;
     }
 
     public Connection ConnectionDB(){

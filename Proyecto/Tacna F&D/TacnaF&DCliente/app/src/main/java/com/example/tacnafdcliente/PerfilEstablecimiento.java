@@ -19,13 +19,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tacnafdcliente.Adaptador.CarruselAdapter;
 import com.example.tacnafdcliente.Model.Carrusel;
@@ -64,6 +68,7 @@ public class PerfilEstablecimiento extends Fragment {
     TextView Txtdescripcion;
     TextView Txtcapacidad;
     TextView Txttelefono;
+    TextView Btnopciones;
 
     String url_imagen_logo = "";
     String ID_Establecimiento = "";
@@ -110,6 +115,8 @@ public class PerfilEstablecimiento extends Fragment {
         Txttelefono = (TextView) v.findViewById(R.id.lbltelefono);
         Img_Logo = (ImageView) v.findViewById(R.id.imglogo);
         Btnllamar = (Button) v.findViewById(R.id.btnllamar);
+        Btnopciones = (TextView) v.findViewById(R.id.Btnopciones);
+        registerForContextMenu(Btnopciones);
 
         Txtnombre.setText(GetInfoFromSharedPreferences("Nombre"));
         Txtdistrito.setText(GetInfoFromSharedPreferences("Distrito"));
@@ -264,6 +271,26 @@ public class PerfilEstablecimiento extends Fragment {
         Recycler_View.setAdapter(Adaptador);
 
         return v;
+    }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Opciones");
+        menu.add(Menu.NONE, 1, 1, "Visualizar Documento");
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        Toast.makeText(getActivity().getApplicationContext(), "Selected Item: " +item.getItemId(), Toast.LENGTH_SHORT).show();
+
+        switch (item.getItemId()){
+            case 1:
+                VisualizarDocumento visualizarDocumento = new VisualizarDocumento();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.contenedorfragment, visualizarDocumento);
+                transaction.commit();
+                break;
+        }
+        return true;
     }
 
     private String GetFromSharedPreferences (String Key){
