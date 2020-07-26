@@ -329,7 +329,7 @@ public class RutaMapa extends Fragment implements OnMapReadyCallback {
             try {
 
                 String desde = Mi_Ltd + "," + Mi_Lng;
-                String[] hastapuntos = bpuntogeografico.split("/");
+                String[] hastapuntos = GetInfoFromSharedPreferences("Punto_Geografico").split("/");
                 String hasta = hastapuntos[0] + "," + hastapuntos[1];
 
                 final LatLng farma1 = new LatLng(Double.parseDouble(hastapuntos[0]), Double.parseDouble(hastapuntos[1]));

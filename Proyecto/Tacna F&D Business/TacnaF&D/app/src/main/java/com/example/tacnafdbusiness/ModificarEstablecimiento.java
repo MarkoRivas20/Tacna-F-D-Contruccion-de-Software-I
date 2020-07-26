@@ -407,6 +407,13 @@ public class ModificarEstablecimiento extends Fragment implements OnMapReadyCall
         LatLng lugar = new LatLng(Double.parseDouble(ltdlng[0]), Double.parseDouble(ltdlng[1]));
         Mapa.moveCamera(CameraUpdateFactory.newLatLng(lugar));
 
+        MarkerOptions markerOptions = new MarkerOptions();
+
+        markerOptions.position(lugar);
+        Mapa.clear();
+        Mapa.animateCamera(CameraUpdateFactory.newLatLng(lugar));
+        Mapa.addMarker(markerOptions);
+
         Mapa.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -416,7 +423,6 @@ public class ModificarEstablecimiento extends Fragment implements OnMapReadyCall
 
                 MarkerOptions marker = new MarkerOptions().position(new LatLng(Double.valueOf(latitud), Double.valueOf(longitud))).title("Marcador");
                 Mapa.addMarker(marker);
-
 
                 Punto_Geografico = latitud + "/" + longitud;
             }
@@ -432,7 +438,8 @@ public class ModificarEstablecimiento extends Fragment implements OnMapReadyCall
             StrictMode.setThreadPolicy(politica);
 
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
+            //cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
+            cnn= DriverManager.getConnection("jdbc:jtds:sqlserver://tacnafyd.database.windows.net:1433;databaseName=TacnaFyD;user=MarkoRivas;password=Tacna2018.;encrypt=true;trustServerCertificate=false;hostNameInCertificate=ContruccionI.database.windows.net;loginTimeout=30;");
 
 
         }catch (Exception e){

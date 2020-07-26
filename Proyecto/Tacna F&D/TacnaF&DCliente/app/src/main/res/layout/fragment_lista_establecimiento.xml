@@ -183,6 +183,7 @@
 
                                 android:background="@drawable/shape_textbosbuscar"
                                 android:drawableLeft="@drawable/ic_people"
+                                android:inputType="number"
                                 android:drawablePadding="10dp"
                                 android:hint="Capacidad"
                                 android:padding="8dp"

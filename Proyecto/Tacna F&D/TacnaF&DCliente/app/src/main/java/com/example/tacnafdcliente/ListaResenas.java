@@ -342,7 +342,8 @@ public class ListaResenas extends Fragment {
             StrictMode.setThreadPolicy(politica);
 
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
+            //cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
+            cnn= DriverManager.getConnection("jdbc:jtds:sqlserver://tacnafyd.database.windows.net:1433;databaseName=TacnaFyD;user=MarkoRivas;password=Tacna2018.;encrypt=true;trustServerCertificate=false;hostNameInCertificate=ContruccionI.database.windows.net;loginTimeout=30;");
 
 
         }catch (Exception e){
@@ -509,7 +510,7 @@ public class ListaResenas extends Fragment {
                 Statement stm=ConnectionDB().createStatement();
                 stm.execute("insert into Resena(ID_Usuario_Cliente,ID_Establecimiento,Descripcion,Calificacion,Fecha) " +
                         "values (" + Id_Usuario+"," + bid_establecimiento+",'" + Txtcomentario.getText().toString() +"',"
-                        + Ratingbar_Calificacion.getRating()+",'" + Fecha_Actual+"')");
+                        + Ratingbar_Calificacion.getRating()+",Convert(date,'" + Fecha_Actual+"',103))");
 
             }catch (Exception e){
                 Log.e("Error", e.toString());

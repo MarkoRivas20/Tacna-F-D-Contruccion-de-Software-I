@@ -270,7 +270,8 @@ public class ListaEstablecimientos extends Fragment {
             StrictMode.setThreadPolicy(politica);
 
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
+            //cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
+            cnn= DriverManager.getConnection("jdbc:jtds:sqlserver://tacnafyd.database.windows.net:1433;databaseName=TacnaFyD;user=MarkoRivas;password=Tacna2018.;encrypt=true;trustServerCertificate=false;hostNameInCertificate=ContruccionI.database.windows.net;loginTimeout=30;");
 
 
         }catch (Exception e){
@@ -305,14 +306,14 @@ public class ListaEstablecimientos extends Fragment {
                 establecimiento.setTelefono(Result_Set.getString(7));
                 establecimiento.setDescripcion(Result_Set.getString(8));
                 establecimiento.setCapacidad(Result_Set.getInt(9));
-                establecimiento.setPuntoGeografico(Result_Set.getString(13));
+                establecimiento.setPuntoGeografico(Result_Set.getString(14));
                 establecimiento.setUrl_Imagen_Logo(Result_Set.getString(12));
-                establecimiento.setUrl_Imagen_Documento(Result_Set.getString(15));
+                establecimiento.setUrl_Imagen_Documento(Result_Set.getString(13));
                 establecimiento.setNombre(Result_Set.getString(3));
                 establecimiento.setDireccion(Result_Set.getString(6));
                 establecimiento.setTotalResenas(Result_Set.getInt(10));
                 establecimiento.setPuntuacion(Result_Set.getDouble(11));
-                establecimiento.setEstado(Result_Set.getString(14));
+                establecimiento.setEstado(Result_Set.getString(15));
 
                 Items.add(establecimiento);
             }

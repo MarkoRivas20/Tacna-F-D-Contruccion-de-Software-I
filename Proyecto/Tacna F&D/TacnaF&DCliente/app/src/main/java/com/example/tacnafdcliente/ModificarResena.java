@@ -197,7 +197,8 @@ public class ModificarResena extends Fragment {
             StrictMode.setThreadPolicy(politica);
 
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
+            //cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
+            cnn= DriverManager.getConnection("jdbc:jtds:sqlserver://tacnafyd.database.windows.net:1433;databaseName=TacnaFyD;user=MarkoRivas;password=Tacna2018.;encrypt=true;trustServerCertificate=false;hostNameInCertificate=ContruccionI.database.windows.net;loginTimeout=30;");
 
 
         }catch (Exception e){
@@ -224,8 +225,8 @@ public class ModificarResena extends Fragment {
 
                 Statement stm = ConnectionDB().createStatement();
                 stm.execute("Update Resena set Descripcion='" + Txtcomentario.getText().toString() +
-                        "', Calificacion=" + Ratingbar_Calificacion.getRating() + ", Fecha='" + Fecha_Actual
-                        +"' where ID_Establecimiento="+bid_establecimiento+" and ID_Usuario_Cliente="+Id_Usuario);
+                        "', Calificacion=" + Ratingbar_Calificacion.getRating() + ", Fecha=Convert(date,'" + Fecha_Actual
+                        +"',103) where ID_Establecimiento="+bid_establecimiento+" and ID_Usuario_Cliente="+Id_Usuario);
 
                 Statement stm3 = ConnectionDB().createStatement();
                 Result_Set_2 = stm3.executeQuery("select * from Resena where ID_Establecimiento="+bid_establecimiento);

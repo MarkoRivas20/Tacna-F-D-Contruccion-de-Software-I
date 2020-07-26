@@ -141,8 +141,11 @@ public class ModificarCupon extends Fragment {
         Url_Actual_Cupon = GetInfoCuponFromSharedPreferences("Url_Imagen_Cupon");
         Txttitulo.setText(GetInfoCuponFromSharedPreferences("Titulo"));
         Txtdescripcion.setText(GetInfoCuponFromSharedPreferences("Descripcion_Cupon"));
-        Txtfecha_Final.setText(GetInfoCuponFromSharedPreferences("Fecha_Final"));
-        Txtfecha_Inicio.setText(GetInfoCuponFromSharedPreferences("Fecha_Inicio"));
+
+        String []FechaInicio = GetInfoCuponFromSharedPreferences("Fecha_Inicio").split("-");
+        Txtfecha_Inicio.setText(FechaInicio[2]+"/"+FechaInicio[1]+"/"+FechaInicio[0]);
+        String []FechaFinal = GetInfoCuponFromSharedPreferences("Fecha_Final").split("-");
+        Txtfecha_Final.setText(FechaFinal[2]+"/"+FechaFinal[1]+"/"+FechaFinal[0]);
 
 
         String[] estados = {"Seleccione un estado", "Activo", "Inactivo"};
@@ -360,7 +363,8 @@ public class ModificarCupon extends Fragment {
             StrictMode.setThreadPolicy(politica);
 
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
+            //cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
+            cnn= DriverManager.getConnection("jdbc:jtds:sqlserver://tacnafyd.database.windows.net:1433;databaseName=TacnaFyD;user=MarkoRivas;password=Tacna2018.;encrypt=true;trustServerCertificate=false;hostNameInCertificate=ContruccionI.database.windows.net;loginTimeout=30;");
 
 
         }catch (Exception e){
@@ -385,9 +389,11 @@ public class ModificarCupon extends Fragment {
             try {
 
                 Statement stm = ConectarDB().createStatement();
+
                 stm.execute("Update Cupon set Titulo='" + Txttitulo.getText().toString() + "',Descripcion='" + Txtdescripcion.getText().toString() +
-                        "',Fecha_Inicio='" + Txtfecha_Inicio.getText().toString() + "',Fecha_Final='" + Txtfecha_Final.getText().toString() + "',Estado='"
-                        + Spinner_Estado.getSelectedItem().toString() + "'where ID_Cupon=" + Id_Cupon);
+                        "',Fecha_Inicio=Convert(date,'" + Txtfecha_Inicio.getText().toString()
+                        + "',103),Fecha_Final=Convert(date,'" + Txtfecha_Final.getText().toString() + "',103),Estado='"
+                        + Spinner_Estado.getSelectedItem().toString() + "' where ID_Cupon=" + Id_Cupon);
 
 
             }catch (Exception e){

@@ -114,7 +114,7 @@ public class RealizarPedido extends Fragment {
     Double Subtotal = 0.0;
     Double Total = 0.0;
 
-    String Urls = "https://data.fixer.io/api/latest?access_key=API&base=PEN&symbols=USD&format=1";
+    String Urls = "https://data.fixer.io/api/latest?access_key=api&base=PEN&symbols=USD&format=1";
     String Json_Result = "";
 
     String Precio_Dolar = "";
@@ -137,6 +137,7 @@ public class RealizarPedido extends Fragment {
     StorageReference storageReference;
     FirebaseStorage firebaseStorage;
 
+    ArrayList<String> Nombres_Items_Menu = new ArrayList<String>();
 
 
     @Override
@@ -267,7 +268,7 @@ public class RealizarPedido extends Fragment {
                 }
                 else
                 {
-
+                    Booleano_2 = false;
                 }
 
                 if(Booleano_2)
@@ -395,7 +396,8 @@ public class RealizarPedido extends Fragment {
             StrictMode.setThreadPolicy(politica);
 
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
+            //cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
+            cnn= DriverManager.getConnection("jdbc:jtds:sqlserver://tacnafyd.database.windows.net:1433;databaseName=TacnaFyD;user=MarkoRivas;password=Tacna2018.;encrypt=true;trustServerCertificate=false;hostNameInCertificate=ContruccionI.database.windows.net;loginTimeout=30;");
 
 
         }catch (Exception e){
@@ -422,7 +424,7 @@ public class RealizarPedido extends Fragment {
                 Statement stm2 = ConectarDB().createStatement();
                 Result_Set = stm2.executeQuery("select * from Item_Menu where ID_Establecimiento=" + bid_establecimiento);
 
-                ArrayList<String> Nombres_Items_Menu = new ArrayList<String>();
+
 
                 Items = new ArrayList<>();
 
@@ -437,11 +439,12 @@ public class RealizarPedido extends Fragment {
                     itemMenu.setUrl_Imagen(Result_Set.getString(6));
                     Items.add(itemMenu);
                     Nombres_Items_Menu.add(Result_Set.getString(3));
+
+
                 }
 
 
 
-                Spinner_Items_Menu.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, Nombres_Items_Menu));
 
 
             }catch (Exception e){
@@ -464,6 +467,7 @@ public class RealizarPedido extends Fragment {
         @Override
         protected  void onPostExecute (Boolean result){
 
+            Spinner_Items_Menu.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, Nombres_Items_Menu));
             ID_Item_Menu = Items.get(0).getID_Item_Menu();
             Precio_Unitario = Double.parseDouble(Items.get(0).getPrecio().toString());
             Url_Imagen = Items.get(0).getUrl_Imagen();
@@ -476,24 +480,6 @@ public class RealizarPedido extends Fragment {
 
     }
 
-    public Connection ConnectionDB(){
-
-        Connection cnn = null;
-        try {
-
-            StrictMode.ThreadPolicy politica = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(politica);
-
-            Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
-
-
-        }catch (Exception e){
-
-        }
-
-        return cnn;
-    }
 
     private class webService extends AsyncTask<Void,Void,String>{
         @Override
@@ -657,7 +643,7 @@ public class RealizarPedido extends Fragment {
 
             try {
 
-                Statement stm = ConnectionDB().createStatement();
+                Statement stm = ConectarDB().createStatement();
                 stm.execute("insert into Pedido(ID_Usuario_Cliente,ID_Establecimiento,Descripcion,Fecha,Estado,Precio_Total,Direccion_Destino," +
                         "PuntoGeografico_Destino) values(" + Id_Cliente + "," + bid_establecimiento + ",'" + Descripcion_Pedido + "','" + Fecha_Actual + "','Pendiente'," + Total +
                         ",'" + Direccion_Destino + "','"+Punto_Geografico_Destino+"')");

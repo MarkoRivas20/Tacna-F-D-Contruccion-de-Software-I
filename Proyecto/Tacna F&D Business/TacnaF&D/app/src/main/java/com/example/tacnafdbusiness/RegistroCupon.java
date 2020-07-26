@@ -299,7 +299,8 @@ public class RegistroCupon extends Fragment {
             StrictMode.setThreadPolicy(politica);
 
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
+            //cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.2;databaseName=dbtacnafyd;user=sa;password=upt;");
+            cnn= DriverManager.getConnection("jdbc:jtds:sqlserver://tacnafyd.database.windows.net:1433;databaseName=TacnaFyD;user=MarkoRivas;password=Tacna2018.;encrypt=true;trustServerCertificate=false;hostNameInCertificate=ContruccionI.database.windows.net;loginTimeout=30;");
 
 
         }catch (Exception e){
@@ -338,8 +339,8 @@ public class RegistroCupon extends Fragment {
 
                                     Statement stm = ConectarDB().createStatement();
                                     stm.execute("insert into Cupon(ID_Establecimiento,Titulo,Url_Imagen,Descripcion,Fecha_Inicio,Fecha_Final,Estado) " +
-                                            "values ('" + bid_establecimiento + "','" + Txttitulo.getText().toString() + "','" + Foto + "','" + Txtdescripcion.getText().toString() + "','"
-                                            + Txtfecha_Inicio.getText().toString() + "','" + Txtfecha_Final.getText().toString() + "','" + Spinner_Estado.getSelectedItem().toString() + "') ");
+                                            "values ('" + bid_establecimiento + "','" + Txttitulo.getText().toString() + "','" + Foto + "','" + Txtdescripcion.getText().toString() + "',Convert(date,'"
+                                            + Txtfecha_Inicio.getText().toString() + "',103),Convert(date,'" + Txtfecha_Final.getText().toString() + "',103),'" + Spinner_Estado.getSelectedItem().toString() + "') ");
 
                                 }catch (Exception e){
                                     Log.e("Error", e.toString());
