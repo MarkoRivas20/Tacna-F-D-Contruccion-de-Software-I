@@ -404,6 +404,11 @@ public class DetallePedido extends Fragment implements OnMapReadyCallback {
             pedido.setUsuario_Cliente(GetPedidoFromSharedPreferences("nombre_cliente"));
             databaseReference.child("Pedido").child(GetPedidoFromSharedPreferences("ID")).setValue(pedido);
 
+            Seguimiento seguimiento= new Seguimiento();
+            seguimiento.setID_Pedido(Integer.parseInt(GetPedidoFromSharedPreferences("ID")));
+            seguimiento.setPuntoGeografico(GetInfoFromSharedPreferences("puntogeografico_establecimiento"));
+            databaseReference.child("Seguimiento").child(GetPedidoFromSharedPreferences("ID")).setValue(seguimiento);
+
             SeguimientoPedido seguimientoPedido = new SeguimientoPedido();
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.contenedorfragment, seguimientoPedido);

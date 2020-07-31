@@ -49,5 +49,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:18.0.0'
     implementation 'com.google.firebase:firebase-storage:18.0.0'
     implementation 'com.github.chrisbanes:PhotoView:2.1.0'
+    implementation 'com.android.volley:volley:1.1.1'
     implementation files('libs/mail.jar')
 }

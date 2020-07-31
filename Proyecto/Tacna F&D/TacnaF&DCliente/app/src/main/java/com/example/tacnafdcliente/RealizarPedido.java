@@ -114,7 +114,7 @@ public class RealizarPedido extends Fragment {
     Double Subtotal = 0.0;
     Double Total = 0.0;
 
-    String Urls = "https://data.fixer.io/api/latest?access_key=Api&base=PEN&symbols=USD&format=1";
+    String Urls = "https://data.fixer.io/api/latest?access_key=API&base=PEN&symbols=USD&format=1";
     String Json_Result = "";
 
     String Precio_Dolar = "";

@@ -14,10 +14,22 @@ import com.example.tacnafdcliente.R;
 
 import java.util.List;
 
-public class PedidoAdapter extends RecyclerView.Adapter <PedidoAdapter.PedidoViewHolder>{
+public class PedidoAdapter extends RecyclerView.Adapter <PedidoAdapter.PedidoViewHolder>
+        implements View.OnClickListener{
 
     private List<Pedido> Items;
     private Context Contexto;
+    private View.OnClickListener Listener;
+
+    public void setOnClickListener (View.OnClickListener listener){
+        this.Listener=listener;
+    }
+    @Override
+    public void onClick (View v) {
+        if(Listener!=null){
+            Listener.onClick(v);
+        }
+    }
 
     public static class PedidoViewHolder extends RecyclerView.ViewHolder {
 
@@ -62,7 +74,7 @@ public class PedidoAdapter extends RecyclerView.Adapter <PedidoAdapter.PedidoVie
     @Override
     public PedidoViewHolder onCreateViewHolder (ViewGroup parent, int i) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_lista_pedidos, parent, false);
-
+        v.setOnClickListener(this);
         return new PedidoViewHolder(v);
     }
 
