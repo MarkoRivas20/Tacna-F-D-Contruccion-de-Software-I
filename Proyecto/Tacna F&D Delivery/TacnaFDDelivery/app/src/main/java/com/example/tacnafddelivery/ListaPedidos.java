@@ -144,46 +144,45 @@ public class ListaPedidos extends Fragment {
                         if(p.getEstado().equals("Pendiente"))
                         {
                             Lista_Pedido.add(p);
-
-                            Recycler_View.setHasFixedSize(true);
-                            Layout_Manager = new LinearLayoutManager(getActivity());
-                            Recycler_View.setLayoutManager(Layout_Manager);
-
-                            Adaptador = new PedidoAdapter(Lista_Pedido,getActivity());
-
-                            Adaptador.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                    SavePedidoSharedPreferences(String.valueOf(Lista_Pedido.get(Recycler_View.getChildAdapterPosition(v)).getID_Pedido()),
-                                            Lista_Pedido.get(Recycler_View.getChildAdapterPosition(v)).getUsuario_Cliente(),
-                                            Lista_Pedido.get(Recycler_View.getChildAdapterPosition(v)).getDescripcion(),
-                                            Lista_Pedido.get(Recycler_View.getChildAdapterPosition(v)).getFecha(),
-                                            Lista_Pedido.get(Recycler_View.getChildAdapterPosition(v)).getDireccion_Destino(),
-                                            Lista_Pedido.get(Recycler_View.getChildAdapterPosition(v)).getPuntoGeografico_Destino());
-
-                                    DetallePedido detallePedido = new DetallePedido();
-                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.contenedorfragment, detallePedido);
-                                    transaction.commit();
-                                }
-                            });
-
-                            Recycler_View.setAdapter(Adaptador);
                         }
                         else
                         {
 
                         }
-
                     }
                     else
                     {
 
                     }
-
-
                 }
+
+                Recycler_View.setHasFixedSize(true);
+                Layout_Manager = new LinearLayoutManager(getActivity());
+                Recycler_View.setLayoutManager(Layout_Manager);
+                Adaptador = new PedidoAdapter(Lista_Pedido,getActivity());
+
+                Adaptador.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        SavePedidoSharedPreferences(String.valueOf(Lista_Pedido.get(Recycler_View.getChildAdapterPosition(v)).getID_Pedido()),
+                                Lista_Pedido.get(Recycler_View.getChildAdapterPosition(v)).getUsuario_Cliente(),
+                                Lista_Pedido.get(Recycler_View.getChildAdapterPosition(v)).getDescripcion(),
+                                Lista_Pedido.get(Recycler_View.getChildAdapterPosition(v)).getFecha(),
+                                Lista_Pedido.get(Recycler_View.getChildAdapterPosition(v)).getDireccion_Destino(),
+                                String.valueOf(Lista_Pedido.get(Recycler_View.getChildAdapterPosition(v)).getPrecio_Total()),
+                                Lista_Pedido.get(Recycler_View.getChildAdapterPosition(v)).getPuntoGeografico_Destino());
+
+                        DetallePedido detallePedido = new DetallePedido();
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.contenedorfragment, detallePedido);
+                        transaction.commit();
+                    }
+                });
+
+                Recycler_View.setAdapter(Adaptador);
+
+
 
             }
 
@@ -204,7 +203,7 @@ public class ListaPedidos extends Fragment {
         firebaseStorage=FirebaseStorage.getInstance();
     }
 
-    private void SavePedidoSharedPreferences(String ID, String nombre_cliente, String descripcion_pedido, String fecha_pedido, String direccion_pedido, String Punto_Geografico){
+    private void SavePedidoSharedPreferences(String ID, String nombre_cliente, String descripcion_pedido, String fecha_pedido, String direccion_pedido,String precio_total, String Punto_Geografico){
         SharedPreferences sharedPref = getActivity().getSharedPreferences("info_pedido", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("ID", ID);
@@ -212,12 +211,13 @@ public class ListaPedidos extends Fragment {
         editor.putString("descripcion_pedido", descripcion_pedido);
         editor.putString("fecha_pedido", fecha_pedido);
         editor.putString("direccion_pedido", direccion_pedido);
+        editor.putString("precio_total", precio_total);
         editor.putString("Punto_Geografico", Punto_Geografico);
         editor.apply();
     }
 
     private String GetInfoFromSharedPreferences(String Key){
-        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
         return sharedPref.getString(Key,"");
     }
 }

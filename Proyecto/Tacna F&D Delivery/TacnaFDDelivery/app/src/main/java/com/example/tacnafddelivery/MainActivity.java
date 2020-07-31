@@ -219,4 +219,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("login_usuario", Context.MODE_PRIVATE);
         return sharedPref.getString(Key,"");
     }
+
+
 }

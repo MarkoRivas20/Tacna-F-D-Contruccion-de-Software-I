@@ -136,7 +136,7 @@ public class ListaEstablecimiento extends Fragment {
                 puntogeofrafico = Items.get(Recycler_View.getChildAdapterPosition(v)).getPuntoGeografico();
                 estado = Items.get(Recycler_View.getChildAdapterPosition(v)).getEstado();
 
-                SaveInfoSharedPreferences(ID_Establecimiento,nombre,direccion,url_imagen_logo);
+                SaveInfoSharedPreferences(ID_Establecimiento,nombre,direccion,url_imagen_logo,puntogeofrafico);
 
                 ListaPedidos listaPedidos = new ListaPedidos();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -207,14 +207,14 @@ public class ListaEstablecimiento extends Fragment {
                 establecimiento.setTelefono(Result_Set.getString(7));
                 establecimiento.setDescripcion(Result_Set.getString(8));
                 establecimiento.setCapacidad(Result_Set.getInt(9));
-                establecimiento.setPuntoGeografico(Result_Set.getString(13));
+                establecimiento.setPuntoGeografico(Result_Set.getString(14));
                 establecimiento.setUrl_Imagen_Logo(Result_Set.getString(12));
-                establecimiento.setUrl_Imagen_Documento(Result_Set.getString(15));
+                establecimiento.setUrl_Imagen_Documento(Result_Set.getString(13));
                 establecimiento.setNombre(Result_Set.getString(3));
                 establecimiento.setDireccion(Result_Set.getString(6));
                 establecimiento.setTotalResenas(Result_Set.getInt(10));
                 establecimiento.setPuntuacion(Result_Set.getDouble(11));
-                establecimiento.setEstado(Result_Set.getString(14));
+                establecimiento.setEstado(Result_Set.getString(15));
 
                 Items.add(establecimiento);
             }
@@ -235,13 +235,14 @@ public class ListaEstablecimiento extends Fragment {
 
     }
 
-    private void SaveInfoSharedPreferences(String ID, String nombre_establecimiento, String direccion_establecimiento, String url_establecimiento){
+    private void SaveInfoSharedPreferences(String ID, String nombre_establecimiento, String direccion_establecimiento, String url_establecimiento, String puntogeografico_establecimiento){
         SharedPreferences sharedPref = getActivity().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("ID", ID);
         editor.putString("nombre_establecimiento", nombre_establecimiento);
         editor.putString("direccion_establecimiento", direccion_establecimiento);
         editor.putString("url_establecimiento", url_establecimiento);
+        editor.putString("puntogeografico_establecimiento", puntogeografico_establecimiento);
 
         editor.apply();
     }

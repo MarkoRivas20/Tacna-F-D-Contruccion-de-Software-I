@@ -55,7 +55,7 @@ public class DibujarRuta extends AsyncTask<Void,Integer,Boolean> {
             url.append("&destination=");
             url.append(Hasta.replace(' ','+'));
             url.append("&key=");
-            url.append("api");
+            url.append("Api");
 
             final InputStream stream = new URL(url.toString()).openStream();
 
