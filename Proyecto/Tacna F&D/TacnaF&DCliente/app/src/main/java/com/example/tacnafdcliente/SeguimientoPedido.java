@@ -152,7 +152,7 @@ public class SeguimientoPedido extends Fragment implements OnMapReadyCallback {
                 Mapa.clear();
 
                 Seguimiento seguimiento = dataSnapshot.getValue(Seguimiento.class);
-                String []Latlng_Repartidor = seguimiento.getPuntoGeografico().split(",");
+                String []Latlng_Repartidor = seguimiento.getPuntoGeografico().split("/");
                 LatLng Ubicacion_Repartidor = new LatLng(Double.parseDouble(Latlng_Repartidor[0]),Double.parseDouble(Latlng_Repartidor[1]));
 
                 Mapa.moveCamera(CameraUpdateFactory.newLatLng(Ubicacion_Repartidor));
@@ -169,7 +169,7 @@ public class SeguimientoPedido extends Fragment implements OnMapReadyCallback {
 
                 Mapa.addMarker(new MarkerOptions().position(Ubicacion_Pedido).title("Destino").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
-                String url="https://maps.googleapis.com/maps/api/directions/json?origin="+desde+"&destination="+hasta+"&key=API";
+                String url="https://maps.googleapis.com/maps/api/directions/json?origin="+desde+"&destination="+hasta+"&key=api";
 
                 RequestQueue queue = Volley.newRequestQueue(getActivity());
                 StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {

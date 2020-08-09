@@ -60,13 +60,14 @@ public class ListaPedidos extends Fragment {
     private PedidoAdapter Adaptador;
     private RecyclerView.LayoutManager Layout_Manager;
 
-
+    int ID = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_lista_pedidos, container, false);
+
 
         inicializarfirebase();
         Recycler_View = (RecyclerView) v.findViewById(R.id.Recycler_ListaPedido) ;
@@ -96,6 +97,8 @@ public class ListaPedidos extends Fragment {
                 return false;
             }
         });
+
+        ID = Integer.parseInt(GetInfoFromSharedPreferences("ID"));
 
         Txtnombre_establecimiento = (TextView) v.findViewById(R.id.txtnombre_establecimiento);
         Txtnombre_establecimiento.setText(GetInfoFromSharedPreferences("nombre_establecimiento"));
@@ -139,7 +142,7 @@ public class ListaPedidos extends Fragment {
                 for(DataSnapshot objdatasnapshot : dataSnapshot.getChildren())
                 {
                     Pedido p = objdatasnapshot.getValue(Pedido.class);
-                    if(p.getID_Establecimiento() == Integer.parseInt(GetInfoFromSharedPreferences("ID")))
+                    if(p.getID_Establecimiento() == ID)
                     {
                         if(p.getEstado().equals("Pendiente"))
                         {

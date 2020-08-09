@@ -166,8 +166,10 @@ public class SeguimientoPedido extends Fragment implements OnMapReadyCallback {
                 && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return null;
+        }else{
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, locationListenerNetwork);
         }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, locationListenerNetwork);
+
 
 
 
@@ -270,7 +272,7 @@ public class SeguimientoPedido extends Fragment implements OnMapReadyCallback {
 
                 Mapa.addMarker(new MarkerOptions().position(farma1).title("Puntos").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
 
-                String url="https://maps.googleapis.com/maps/api/directions/json?origin="+desde+"&destination="+hasta+"&key=Api";
+                String url="https://maps.googleapis.com/maps/api/directions/json?origin="+desde+"&destination="+hasta+"&key=api";
 
                 RequestQueue queue = Volley.newRequestQueue(getActivity());
                 StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {

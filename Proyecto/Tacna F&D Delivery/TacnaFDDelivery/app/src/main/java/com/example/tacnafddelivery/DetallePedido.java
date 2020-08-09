@@ -204,6 +204,7 @@ public class DetallePedido extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
 
+                SaveSeguimientoSharedPreferences("Aceptado");
                 ListarPedido task = new ListarPedido(getActivity());
                 task.execute();
 
@@ -351,10 +352,10 @@ public class DetallePedido extends Fragment implements OnMapReadyCallback {
     public class ActualizarPedido extends AsyncTask<Void, Void, Boolean> {
 
 
-        private Context mContext = null;
+        private Context mContext2 = null;
 
-        ActualizarPedido (Context context){
-            mContext = context;
+        ActualizarPedido (Context context2){
+            mContext2 = context2;
         }
 
         @Override
@@ -369,7 +370,7 @@ public class DetallePedido extends Fragment implements OnMapReadyCallback {
                 stm.executeUpdate("Update Pedido set Estado='En Curso', ID_Usuario_Repartidor="+GetFromSharedPreferences("ID")+
                         " where ID_Pedido='" + GetPedidoFromSharedPreferences("ID") + "'");
 
-                SaveSeguimientoSharedPreferences("Aceptado");
+
 
 
             }catch (Exception e){
@@ -404,15 +405,17 @@ public class DetallePedido extends Fragment implements OnMapReadyCallback {
             pedido.setUsuario_Cliente(GetPedidoFromSharedPreferences("nombre_cliente"));
             databaseReference.child("Pedido").child(GetPedidoFromSharedPreferences("ID")).setValue(pedido);
 
-            Seguimiento seguimiento= new Seguimiento();
-            seguimiento.setID_Pedido(Integer.parseInt(GetPedidoFromSharedPreferences("ID")));
-            seguimiento.setPuntoGeografico(GetInfoFromSharedPreferences("puntogeografico_establecimiento"));
-            databaseReference.child("Seguimiento").child(GetPedidoFromSharedPreferences("ID")).setValue(seguimiento);
+
 
             SeguimientoPedido seguimientoPedido = new SeguimientoPedido();
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.contenedorfragment, seguimientoPedido);
             transaction.commit();
+
+
+
+
+
 
         }
 
@@ -454,6 +457,10 @@ public class DetallePedido extends Fragment implements OnMapReadyCallback {
         editor.putString("Seguimiento", seguimiento);
 
         editor.apply();
+    }
+    private String GetSeguimientoFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("info_estado_pedido", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
     }
 
     private String GetInfoFromSharedPreferences(String Key){
