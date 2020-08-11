@@ -278,6 +278,7 @@ public class ListaCupon extends Fragment {
                 cupon.setFecha_Inicio(Result_Set.getDate(6));
                 cupon.setFecha_Final(Result_Set.getDate(7));
                 cupon.setEstado(Result_Set.getString(8));
+                cupon.setPorcentaje_Descuento(Result_Set.getInt(9));
                 Items.add(cupon);
             }
 

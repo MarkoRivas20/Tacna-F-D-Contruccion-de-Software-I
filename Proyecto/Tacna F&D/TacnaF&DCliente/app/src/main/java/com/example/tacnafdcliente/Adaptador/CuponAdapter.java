@@ -28,14 +28,16 @@ public class CuponAdapter extends RecyclerView.Adapter<CuponAdapter.CuponViewHol
         public TextView Txtdescripcion;
         public TextView Txtfechainicio;
         public TextView Txtfechafinal;
+        public TextView TxtPorcentaje_Descuento;
 
         public CuponViewHolder (View v) {
             super(v);
             Imagen = (ImageView) v.findViewById(R.id.Imagen_Recycler_cupon);
-            Txttitulo = (TextView)v.findViewById(R.id.txttitulo_Recycler_cupon);
-            Txtdescripcion = (TextView)v.findViewById(R.id.txtdescripcion_recycler_cupon);
-            Txtfechainicio = (TextView)v.findViewById(R.id.txtfechainicio_Recycler_cupon);
-            Txtfechafinal = (TextView)v.findViewById(R.id.txtfechafinal_Recycler_cupon);
+            Txttitulo = (TextView) v.findViewById(R.id.txttitulo_Recycler_cupon);
+            Txtdescripcion = (TextView) v.findViewById(R.id.txtdescripcion_recycler_cupon);
+            Txtfechainicio = (TextView) v.findViewById(R.id.txtfechainicio_Recycler_cupon);
+            Txtfechafinal = (TextView) v.findViewById(R.id.txtfechafinal_Recycler_cupon);
+            TxtPorcentaje_Descuento = (TextView) v.findViewById(R.id.txtporcentajedescuento_Recycler_cupon);
         }
 
         public void bindData (Cupon dataModel, Context context) {
@@ -44,6 +46,7 @@ public class CuponAdapter extends RecyclerView.Adapter<CuponAdapter.CuponViewHol
             Txtdescripcion.setText(dataModel.getDescripcion());
             Txtfechainicio.setText("Fecha Inicio: "+dataModel.getFecha_Inicio());
             Txtfechafinal.setText("Fecha Final: "+dataModel.getFecha_Final());
+            TxtPorcentaje_Descuento.setText("Porcentaje de Descuento: "+dataModel.getPorcentaje_Descuento()+"%");
         }
 
 

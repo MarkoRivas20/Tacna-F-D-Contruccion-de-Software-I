@@ -205,7 +205,7 @@ public class ListaCupon extends Fragment {
                 SaveInfoCuponSharedPreferences(String.valueOf(Items.get(position).getID_Cupon()), String.valueOf(Items.get(position).getTitulo()),
                         String.valueOf(Items.get(position).getUrl_Imagen()), String.valueOf(Items.get(position).getDescripcion()),
                         String.valueOf(Items.get(position).getFecha_Inicio()), String.valueOf(Items.get(position).getFecha_Final()),
-                        String.valueOf(Items.get(position).getEstado()));
+                        String.valueOf(Items.get(position).getEstado()), String.valueOf(Items.get(position).getPorcentaje_Descuento()));
 
                 ModificarCupon modificarCupon = new ModificarCupon();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -297,6 +297,7 @@ public class ListaCupon extends Fragment {
                 cupon.setFecha_Inicio(Result_Set.getDate(6));
                 cupon.setFecha_Final(Result_Set.getDate(7));
                 cupon.setEstado(Result_Set.getString(8));
+                cupon.setPorcentaje_Descuento(Integer.parseInt(Result_Set.getString(9)));
                 Items.add(cupon);
             }
 
@@ -321,7 +322,7 @@ public class ListaCupon extends Fragment {
     }
 
     private void SaveInfoCuponSharedPreferences(String ID_Cupon, String Titulo, String Url_Imagen_Cupon, String Descripcion_Cupon,
-                                                String Fecha_Inicio, String Fecha_Final,String Estado_Cupon){
+                                                String Fecha_Inicio, String Fecha_Final,String Estado_Cupon, String Descuento_Cupon){
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences("info_cupon", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -332,6 +333,7 @@ public class ListaCupon extends Fragment {
         editor.putString("Fecha_Inicio", Fecha_Inicio);
         editor.putString("Fecha_Final", Fecha_Final);
         editor.putString("Estado_Cupon", Estado_Cupon);
+        editor.putString("Descuento_Cupon", Descuento_Cupon);
         editor.apply();
     }
 }

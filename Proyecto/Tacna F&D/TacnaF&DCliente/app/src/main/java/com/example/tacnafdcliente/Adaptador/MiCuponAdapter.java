@@ -49,6 +49,7 @@ public class MiCuponAdapter extends RecyclerView.Adapter<MiCuponAdapter.MiCuponV
         public TextView Txtdescripcion;
         public TextView Txtfechainicio;
         public TextView Txtfechafinal;
+        public TextView Txtporcentaje_Descuento;
 
         public MiCuponViewHolder (View v) {
             super(v);
@@ -58,15 +59,17 @@ public class MiCuponAdapter extends RecyclerView.Adapter<MiCuponAdapter.MiCuponV
             Txtdescripcion = (TextView) v.findViewById(R.id.txtdescripcion_recycler_micupon);
             Txtfechainicio = (TextView) v.findViewById(R.id.txtfechainicio_Recycler_micupon);
             Txtfechafinal = (TextView) v.findViewById(R.id.txtfechafinal_Recycler_micupon);
+            Txtporcentaje_Descuento = (TextView) v.findViewById(R.id.txtporcentajedescuento_Recycler_micupon);
         }
 
         public void bindData (MiCupon dataModel, Context context) {
             Picasso.with(context).load(dataModel.getUrl_Imagen()).into(Imagen);
             Txttitulo.setText(dataModel.getTitulo());
             Txtnombre.setText("Establecimiento: "+dataModel.getNombre());
-            Txtdescripcion.setText(dataModel.getDescripcion());
+            Txtdescripcion.setText("Descripcion: "+dataModel.getDescripcion());
             Txtfechainicio.setText("Fecha Inicio: "+dataModel.getFecha_Inicio());
             Txtfechafinal.setText("Fecha Final: "+dataModel.getFecha_Final());
+            Txtporcentaje_Descuento.setText("Porcentaje de Descuento: "+dataModel.getPorcentaje_Descuento()+"%");
         }
 
     }

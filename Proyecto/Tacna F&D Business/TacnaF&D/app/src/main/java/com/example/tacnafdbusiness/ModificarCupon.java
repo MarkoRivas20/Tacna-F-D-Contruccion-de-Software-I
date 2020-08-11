@@ -60,6 +60,7 @@ public class ModificarCupon extends Fragment {
     EditText Txtdescripcion;
     EditText Txtfecha_Inicio;
     EditText Txtfecha_Final;
+    EditText TxtPorcentaje_Descuento;
 
     public final Calendar Calendario = Calendar.getInstance();
     final int Mes = Calendario.get(Calendar.MONTH);
@@ -128,6 +129,7 @@ public class ModificarCupon extends Fragment {
                 .build();
 
         Txttitulo = (EditText) v.findViewById(R.id.txttitulo);
+        TxtPorcentaje_Descuento = (EditText) v.findViewById(R.id.txtporcentajedescuento);
         Txtdescripcion = (EditText) v.findViewById(R.id.txtdescripcion);
         Txtfecha_Final = (EditText) v.findViewById(R.id.txtfechafinal);
         Txtfecha_Final.setFocusable(false);
@@ -141,6 +143,7 @@ public class ModificarCupon extends Fragment {
         Url_Actual_Cupon = GetInfoCuponFromSharedPreferences("Url_Imagen_Cupon");
         Txttitulo.setText(GetInfoCuponFromSharedPreferences("Titulo"));
         Txtdescripcion.setText(GetInfoCuponFromSharedPreferences("Descripcion_Cupon"));
+        TxtPorcentaje_Descuento.setText(GetInfoCuponFromSharedPreferences("Descuento_Cupon"));
 
         String []FechaInicio = GetInfoCuponFromSharedPreferences("Fecha_Inicio").split("-");
         Txtfecha_Inicio.setText(FechaInicio[2]+"/"+FechaInicio[1]+"/"+FechaInicio[0]);
@@ -175,7 +178,7 @@ public class ModificarCupon extends Fragment {
             public void onClick(View v) {
 
                 if(Txttitulo.length() == 0 || Txtdescripcion.length() == 0 || Txtfecha_Final.length() == 0
-                        || Txtfecha_Inicio.length() == 0 || Spinner_Estado.getSelectedItemPosition() == 0)
+                        || Txtfecha_Inicio.length() == 0 || Spinner_Estado.getSelectedItemPosition() == 0 || TxtPorcentaje_Descuento.length() == 0)
                 {
 
                     if (Txttitulo.length() == 0)
@@ -213,6 +216,14 @@ public class ModificarCupon extends Fragment {
                     if (Spinner_Estado.getSelectedItemPosition() == 0)
                     {
                         Toast.makeText(getActivity(),"Seleccione un estado", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+
+                    }
+                    if (TxtPorcentaje_Descuento.length() == 0)
+                    {
+                        TxtPorcentaje_Descuento.setError("Campo requerido");
                     }
                     else
                     {
@@ -393,7 +404,8 @@ public class ModificarCupon extends Fragment {
                 stm.execute("Update Cupon set Titulo='" + Txttitulo.getText().toString() + "',Descripcion='" + Txtdescripcion.getText().toString() +
                         "',Fecha_Inicio=Convert(date,'" + Txtfecha_Inicio.getText().toString()
                         + "',103),Fecha_Final=Convert(date,'" + Txtfecha_Final.getText().toString() + "',103),Estado='"
-                        + Spinner_Estado.getSelectedItem().toString() + "' where ID_Cupon=" + Id_Cupon);
+                        + Spinner_Estado.getSelectedItem().toString() + "', Porcentaje_Descuento="+TxtPorcentaje_Descuento.getText().toString()
+                        +" where ID_Cupon=" + Id_Cupon);
 
 
             }catch (Exception e){

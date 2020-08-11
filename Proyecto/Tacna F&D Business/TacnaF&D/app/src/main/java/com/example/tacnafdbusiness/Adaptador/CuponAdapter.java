@@ -37,6 +37,7 @@ public class CuponAdapter extends RecyclerView.Adapter <CuponAdapter.CuponViewHo
         public TextView Txtfechainicio;
         public TextView Txtfechafinal;
         public TextView Txtestado;
+        public TextView Txtporcentajedescuento;
 
         public CuponViewHolder (View v) {
             super(v);
@@ -47,6 +48,7 @@ public class CuponAdapter extends RecyclerView.Adapter <CuponAdapter.CuponViewHo
             Txtfechainicio = (TextView) v.findViewById(R.id.txtfechainicio_Recycler_cupon);
             Txtfechafinal = (TextView) v.findViewById(R.id.txtfechafinal_Recycler_cupon);
             Txtestado = (TextView) v.findViewById(R.id.txtestado_Recycler_cupon);
+            Txtporcentajedescuento = (TextView) v.findViewById(R.id.txtporcentajedescuento_Recycler_cupon);
             v.setOnClickListener(this);
             v.setOnCreateContextMenuListener(this);
         }
@@ -58,6 +60,7 @@ public class CuponAdapter extends RecyclerView.Adapter <CuponAdapter.CuponViewHo
             Txtfechainicio.setText("Fecha Inicio: " + dataModel.getFecha_Inicio());
             Txtfechafinal.setText("Fecha Final: " + dataModel.getFecha_Final());
             Txtestado.setText("Estado: " + dataModel.getEstado());
+            Txtporcentajedescuento.setText("Porcentaje de Descuento: "+dataModel.getPorcentaje_Descuento()+"%");
         }
 
         @Override

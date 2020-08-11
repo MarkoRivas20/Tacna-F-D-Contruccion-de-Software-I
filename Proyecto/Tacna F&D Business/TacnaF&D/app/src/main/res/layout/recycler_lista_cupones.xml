@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Subtitle goes here"
+            android:text="Titulo"
             android:textColor="#000000"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/Imagen_Recycler_cupon"
@@ -60,10 +60,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Subtitle goes here"
+            android:text="Fecha inicio"
             android:textColor="#000000"
-            app:layout_constraintStart_toStartOf="@+id/txtdescripcion_recycler_cupon"
-            app:layout_constraintTop_toBottomOf="@+id/txtdescripcion_recycler_cupon" />
+            app:layout_constraintStart_toStartOf="@+id/txtporcentajedescuento_Recycler_cupon"
+            app:layout_constraintTop_toBottomOf="@+id/txtporcentajedescuento_Recycler_cupon" />
 
         <TextView
             android:id="@+id/txtdescripcion_recycler_cupon"
@@ -72,17 +72,27 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
             android:justificationMode="inter_word"
-            android:text="Description goes here"
+            android:text="Description"
             android:textColor="#000000"
             app:layout_constraintStart_toEndOf="@+id/Imagen_Recycler_cupon"
             app:layout_constraintTop_toBottomOf="@+id/imageViewseparador" />
+
+        <TextView
+            android:id="@+id/txtporcentajedescuento_Recycler_cupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Porcentaje descuento"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/txtdescripcion_recycler_cupon"
+            app:layout_constraintTop_toBottomOf="@+id/txtdescripcion_recycler_cupon" />
 
         <TextView
             android:id="@+id/txtfechafinal_Recycler_cupon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="TextView"
+            android:text="Fecha final"
             android:textColor="#000000"
             app:layout_constraintStart_toStartOf="@+id/txtfechainicio_Recycler_cupon"
             app:layout_constraintTop_toBottomOf="@+id/txtfechainicio_Recycler_cupon" />
@@ -92,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:text="Estado"
             android:textColor="#000000"
             app:layout_constraintStart_toStartOf="@+id/txtfechafinal_Recycler_cupon"
             app:layout_constraintTop_toBottomOf="@+id/txtfechafinal_Recycler_cupon" />

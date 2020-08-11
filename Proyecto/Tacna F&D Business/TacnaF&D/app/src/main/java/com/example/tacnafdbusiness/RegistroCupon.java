@@ -53,6 +53,7 @@ public class RegistroCupon extends Fragment {
     EditText Txtdescripcion;
     EditText Txtfecha_Inicio;
     EditText Txtfecha_Final;
+    EditText Txtporcentaje_Descuento;
 
     String bid_establecimiento = "";
 
@@ -99,6 +100,7 @@ public class RegistroCupon extends Fragment {
 
         Btnseleccionar = (Button) v.findViewById(R.id.btnseleccionar);
         Foto_Gallery = (ImageView) v.findViewById(R.id.imagenlogo);
+        Txtporcentaje_Descuento = (EditText) v.findViewById(R.id.txtporcentajedescuento);
 
         Btnseleccionar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,7 +206,8 @@ public class RegistroCupon extends Fragment {
             public void onClick(View v) {
 
                 if (Txttitulo.length() == 0 || Txtdescripcion.length() == 0 || Txtfecha_Final.length() == 0
-                        || Txtfecha_Inicio.length() == 0 || Spinner_Estado.getSelectedItemPosition()==0 || !Booleano)
+                        || Txtfecha_Inicio.length() == 0 || Spinner_Estado.getSelectedItemPosition()==0
+                        || Txtporcentaje_Descuento.length() == 0 || !Booleano)
                 {
 
                     if (Txttitulo.length() == 0)
@@ -242,6 +245,14 @@ public class RegistroCupon extends Fragment {
                     if (Spinner_Estado.getSelectedItemPosition() == 0)
                     {
                         Toast.makeText(getActivity(),"Seleccione un estado", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+
+                    }
+                    if (Txtporcentaje_Descuento.length() == 0)
+                    {
+                        Txtporcentaje_Descuento.setError("Campo requerido");
                     }
                     else
                     {
@@ -338,9 +349,10 @@ public class RegistroCupon extends Fragment {
                                 try {
 
                                     Statement stm = ConectarDB().createStatement();
-                                    stm.execute("insert into Cupon(ID_Establecimiento,Titulo,Url_Imagen,Descripcion,Fecha_Inicio,Fecha_Final,Estado) " +
-                                            "values ('" + bid_establecimiento + "','" + Txttitulo.getText().toString() + "','" + Foto + "','" + Txtdescripcion.getText().toString() + "',Convert(date,'"
-                                            + Txtfecha_Inicio.getText().toString() + "',103),Convert(date,'" + Txtfecha_Final.getText().toString() + "',103),'" + Spinner_Estado.getSelectedItem().toString() + "') ");
+                                    stm.execute("insert into Cupon(ID_Establecimiento,Titulo,Url_Imagen,Descripcion,Fecha_Inicio,Fecha_Final,Estado,Porcentaje_Descuento) " +
+                                            "values ('" + bid_establecimiento + "','" + Txttitulo.getText().toString() + "','" + Foto + "','" + Txtdescripcion.getText().toString()
+                                            + "',Convert(date,'"+ Txtfecha_Inicio.getText().toString() + "',103),Convert(date,'" + Txtfecha_Final.getText().toString() + "',103),'"
+                                            + Spinner_Estado.getSelectedItem().toString() + "',"+Txtporcentaje_Descuento.getText().toString()+") ");
 
                                 }catch (Exception e){
                                     Log.e("Error", e.toString());

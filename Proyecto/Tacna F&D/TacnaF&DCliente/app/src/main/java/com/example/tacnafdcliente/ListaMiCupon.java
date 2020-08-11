@@ -63,6 +63,8 @@ public class ListaMiCupon extends Fragment {
     String Descripcion = "";
     String Fecha_Inicio = "";
     String Fecha_Final = "";
+    String Porcentaje_Descuento = "";
+    String Id_Establecimiento = "";
 
     Button Btnatras;
     Button Btnperfil;
@@ -113,6 +115,8 @@ public class ListaMiCupon extends Fragment {
                     Descripcion = String.valueOf(Items.get(Recycler_View.getChildAdapterPosition(v)).getDescripcion());
                     Fecha_Inicio = String.valueOf(Items.get(Recycler_View.getChildAdapterPosition(v)).getFecha_Inicio());
                     Fecha_Final = String.valueOf(Items.get(Recycler_View.getChildAdapterPosition(v)).getFecha_Final());
+                    Porcentaje_Descuento = String.valueOf(Items.get(Recycler_View.getChildAdapterPosition(v)).getPorcentaje_Descuento());
+                    Id_Establecimiento = String.valueOf(Items.get(Recycler_View.getChildAdapterPosition(v)).getID_Establecimiento());
                 }
                 else
                 {
@@ -125,6 +129,8 @@ public class ListaMiCupon extends Fragment {
                     Descripcion = String.valueOf(Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getDescripcion());
                     Fecha_Inicio = String.valueOf(Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getFecha_Inicio());
                     Fecha_Final = String.valueOf(Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getFecha_Final());
+                    Porcentaje_Descuento = String.valueOf(Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getPorcentaje_Descuento());
+                    Id_Establecimiento = String.valueOf(Lista_Filtrada.get(Recycler_View.getChildAdapterPosition(v)).getID_Establecimiento());
                 }
 
                 Bundle bundle = new Bundle();
@@ -137,6 +143,8 @@ public class ListaMiCupon extends Fragment {
                 bundle.putString("Descripcion", Descripcion);
                 bundle.putString("Fecha_Inicio", Fecha_Inicio);
                 bundle.putString("Fecha_Final", Fecha_Final);
+                bundle.putString("Porcentaje_Descuento", Porcentaje_Descuento);
+                bundle.putString("ID_Establecimiento", Id_Establecimiento);
 
                 DetalleCupon detalleCupon = new DetalleCupon();
                 detalleCupon.setArguments(bundle);
@@ -259,7 +267,7 @@ public class ListaMiCupon extends Fragment {
         try {
 
             Statement stm2=ConnectionDB().createStatement();
-            Result_Set=stm2.executeQuery("select cu.ID_Cupon_Usuario,cu.ID_Cupon,e.Nombre,c.Titulo,c.Url_Imagen,c.Descripcion,c.Fecha_Inicio,c.Fecha_Final,cu.Fecha " +
+            Result_Set=stm2.executeQuery("select e.Nombre,c.Titulo,c.Url_Imagen,c.Descripcion,c.Fecha_Inicio,c.Fecha_Final,c.Porcentaje_Descuento,c.ID_Establecimiento,cu.*" +
                     "from Cupon_Usuario cu inner join Cupon c on cu.ID_Cupon=c.ID_Cupon inner join Establecimiento e on c.ID_Establecimiento=e.ID_Establecimiento " +
                     "where cu.ID_Usuario_Cliente=" + Id_Usuario + " and cu.Estado='Activo'");
 
@@ -268,15 +276,17 @@ public class ListaMiCupon extends Fragment {
             while (Result_Set.next())
             {
                 MiCupon miCupon = new MiCupon();
-                miCupon.setID_Cupon_Usuario(Result_Set.getInt(1));
-                miCupon.setID_Cupon(Result_Set.getInt(2));
-                miCupon.setNombre(Result_Set.getString(3));
-                miCupon.setTitulo(Result_Set.getString(4));
-                miCupon.setUrl_Imagen(Result_Set.getString(5));
-                miCupon.setDescripcion(Result_Set.getString(6));
-                miCupon.setFecha_Inicio(Result_Set.getDate(7));
-                miCupon.setFecha_Final(Result_Set.getDate(8));
-                miCupon.setFecha(Result_Set.getDate(9));
+                miCupon.setID_Cupon_Usuario(Result_Set.getInt(9));
+                miCupon.setID_Cupon(Result_Set.getInt(10));
+                miCupon.setNombre(Result_Set.getString(1));
+                miCupon.setTitulo(Result_Set.getString(2));
+                miCupon.setUrl_Imagen(Result_Set.getString(3));
+                miCupon.setDescripcion(Result_Set.getString(4));
+                miCupon.setFecha_Inicio(Result_Set.getDate(5));
+                miCupon.setFecha_Final(Result_Set.getDate(6));
+                miCupon.setFecha(Result_Set.getDate(12));
+                miCupon.setPorcentaje_Descuento(Result_Set.getInt(7));
+                miCupon.setID_Establecimiento(Result_Set.getInt(8));
                 Items.add(miCupon);
             }
 

@@ -52,6 +52,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -110,9 +111,11 @@ public class RealizarPedido extends Fragment {
 
     TextView Txtsubtotal;
     TextView Txttotal;
+    TextView Txtdescuento;
 
     Double Subtotal = 0.0;
     Double Total = 0.0;
+    Double Descuento = 0.0;
 
     String Urls = "https://data.fixer.io/api/latest?access_key=api&base=PEN&symbols=USD&format=1";
     String Json_Result = "";
@@ -127,6 +130,7 @@ public class RealizarPedido extends Fragment {
 
     String Id_Cliente = "";
     String Nombre_Cliente = "";
+    Double Porcentaje_Descuento = 0.0;
 
     private static final int PAYPAL_REQUEST_CODE=7171;
 
@@ -166,9 +170,18 @@ public class RealizarPedido extends Fragment {
                 .setCancelable(false)
                 .build();
 
-
-
-        bid_establecimiento = GetInfoFromSharedPreferences("ID");
+        Txtdescuento = (TextView) v.findViewById(R.id.txtdescuento);
+        if(GetEstablecimientoCuponFromSharedPreferences("ID").equals(""))
+        {
+            bid_establecimiento = GetInfoFromSharedPreferences("ID");
+            Txtdescuento.setVisibility(View.GONE);
+        }
+        else
+        {
+            bid_establecimiento = GetEstablecimientoCuponFromSharedPreferences("ID");
+            Porcentaje_Descuento = Double.parseDouble(GetEstablecimientoCuponFromSharedPreferences("Descuento"));
+            Txtdescuento.setVisibility(View.VISIBLE);
+        }
 
         Bundle bundle=getArguments();
         Direccion_Destino = bundle.getString("direcciondestino");
@@ -243,6 +256,7 @@ public class RealizarPedido extends Fragment {
 
         Number_Picker = (NumberPicker) v.findViewById(R.id.numberPicker);
 
+        final DecimalFormat formato = new DecimalFormat("#.00");
         Btnagregar = (Button) v.findViewById(R.id.btnagregar);
         Btnagregar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -315,7 +329,17 @@ public class RealizarPedido extends Fragment {
 
 
                 }
+                if(GetEstablecimientoCuponFromSharedPreferences("ID").equals(""))
+                {
 
+                }
+                else
+                {
+                    Descuento = (Porcentaje_Descuento/100.0)*Subtotal;
+                    Descuento = Double.parseDouble(String.valueOf(formato.format(Descuento)));
+                    Txtdescuento.setText("Descuento: S/."+Descuento);
+                    Total = Total-Descuento;
+                }
                 Txtsubtotal.setText("Subtotal: S/."+Subtotal);
                 Txttotal.setText("Total: S/."+Total);
 
@@ -331,6 +355,18 @@ public class RealizarPedido extends Fragment {
 
                         Subtotal=Subtotal-Items_Detalle_Pedido.get(position).getPrecio_Total();
                         Total=Subtotal+5;
+
+                        if(GetEstablecimientoCuponFromSharedPreferences("ID").equals(""))
+                        {
+
+                        }
+                        else
+                        {
+                            Descuento = (Porcentaje_Descuento/100.0)*Subtotal;
+                            Descuento = Double.parseDouble(String.valueOf(formato.format(Descuento)));
+                            Txtdescuento.setText("Descuento: S/."+Descuento);
+                            Total = Total-Descuento;
+                        }
 
                         Txtsubtotal.setText("Subtotal: S/."+Subtotal);
                         Txttotal.setText("Total: S/."+Total);
@@ -606,6 +642,7 @@ public class RealizarPedido extends Fragment {
 
                         String paymentDetails=confirmation.toJSONObject().toString(4);
 
+                        SaveEstablecimientoCuponSharedPreferences("","","","");
                         RegistrarPedido registrarPedido = new RegistrarPedido(getActivity().getApplicationContext());
                         registrarPedido.execute();
 
@@ -697,6 +734,68 @@ public class RealizarPedido extends Fragment {
                 Log.e("Error", e.toString());
             }
 
+            if(GetEstablecimientoCuponFromSharedPreferences("ID").equals(""))
+            {
+                Alert_Dialog.dismiss();
+
+                ListaPedidos listaPedidos = new ListaPedidos();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.contenedorfragment, listaPedidos);
+                transaction.commit();
+            }
+            else
+            {
+                new ActualizarEstadoCupon(getActivity()).execute(new String[]{"ActualizarCuponUsuario"});
+            }
+
+
+
+
+        }
+
+
+    }
+
+    public class ActualizarEstadoCupon extends AsyncTask <String, Integer, Boolean> {
+
+
+        private Context mContext = null;
+
+        ActualizarEstadoCupon(Context context){
+            mContext = context;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+
+
+            try{
+
+
+                Statement stm = ConectarDB().createStatement();
+                stm.execute("Update Cupon_Usuario set Estado='Inactivo' where ID_Cupon_Usuario=" + GetEstablecimientoCuponFromSharedPreferences("ID_Cupon_Usuario"));
+
+
+
+            }catch (Exception e){
+                Log.e("Error", e.toString());
+            }
+
+            return true;
+        }
+
+        @Override
+        protected  void onPreExecute() {
+
+            //Alert_Dialog.show();
+
+        }
+
+        @Override
+        protected  void onPostExecute(Boolean result){
+
+            Toast.makeText(getActivity(),"Cupon usado con exito", Toast.LENGTH_SHORT).show();
+
             Alert_Dialog.dismiss();
 
             ListaPedidos listaPedidos = new ListaPedidos();
@@ -710,6 +809,17 @@ public class RealizarPedido extends Fragment {
 
     }
 
+    private void SaveEstablecimientoCuponSharedPreferences(String ID, String Nombre, String Descuento,String ID_Cupon_Usuario){
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("info_establecimiento_cupon", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("ID", ID);
+        editor.putString("Nombre", Nombre);
+        editor.putString("Descuento", Descuento);
+        editor.putString("ID_Cupon_Usuario", ID_Cupon_Usuario);
+        editor.apply();
+    }
+
     private String GetFromSharedPreferences (String Key){
         SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("login_usuario", Context.MODE_PRIVATE);
         return sharedPref.getString(Key,"");
@@ -717,6 +827,11 @@ public class RealizarPedido extends Fragment {
 
     private String GetInfoFromSharedPreferences(String Key){
         SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
+    }
+
+    private String GetEstablecimientoCuponFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento_cupon", Context.MODE_PRIVATE);
         return sharedPref.getString(Key,"");
     }
 }

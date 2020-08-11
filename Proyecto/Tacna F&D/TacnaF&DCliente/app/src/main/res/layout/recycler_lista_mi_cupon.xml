@@ -62,8 +62,8 @@
             android:layout_marginTop="20dp"
             android:text="Subtitle goes here"
             android:textColor="#000000"
-            app:layout_constraintStart_toStartOf="@+id/txtdescripcion_recycler_micupon"
-            app:layout_constraintTop_toBottomOf="@+id/txtdescripcion_recycler_micupon" />
+            app:layout_constraintStart_toStartOf="@+id/txtporcentajedescuento_Recycler_micupon"
+            app:layout_constraintTop_toBottomOf="@+id/txtporcentajedescuento_Recycler_micupon" />
 
         <TextView
             android:id="@+id/txtdescripcion_recycler_micupon"
@@ -75,6 +75,16 @@
             android:textColor="#000000"
             app:layout_constraintStart_toStartOf="@+id/txtnombre_Recycler_micupon"
             app:layout_constraintTop_toBottomOf="@+id/txtnombre_Recycler_micupon" />
+
+        <TextView
+            android:id="@+id/txtporcentajedescuento_Recycler_micupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Porcentaje descuento"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="@+id/txtdescripcion_recycler_micupon"
+            app:layout_constraintTop_toBottomOf="@+id/txtdescripcion_recycler_micupon" />
 
         <TextView
             android:id="@+id/txtfechafinal_Recycler_micupon"

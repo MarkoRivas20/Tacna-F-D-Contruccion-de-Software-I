@@ -12,6 +12,7 @@ public class Cupon {
     private Date Fecha_Inicio;
     private Date Fecha_Final;
     private String Estado;
+    private int Porcentaje_Descuento;
 
     public Cupon(){
 
@@ -79,6 +80,15 @@ public class Cupon {
     public void setEstado(String estado) {
         Estado = estado;
     }
+
+    public int getPorcentaje_Descuento() {
+        return Porcentaje_Descuento;
+    }
+
+    public void setPorcentaje_Descuento(int porcentaje_Descuento) {
+        Porcentaje_Descuento = porcentaje_Descuento;
+    }
+
 
 
 

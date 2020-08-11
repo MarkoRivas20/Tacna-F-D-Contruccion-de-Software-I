@@ -3,6 +3,7 @@ package com.example.tacnafdcliente;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -47,6 +48,7 @@ public class DetalleCupon extends Fragment {
     TextView Txtdescripcion;
     TextView Txtfechainicio;
     TextView Txtfechafinal;
+    TextView TxtPorcentaje_Descuento;
 
     String Url_Imagen = "";
 
@@ -55,6 +57,8 @@ public class DetalleCupon extends Fragment {
     AlertDialog Alert_Dialog;
 
     String Id_Cupon_Usuario = "";
+    String Id_Establecimiento = "";
+    String Porcentaje_Descuento = "";
 
 
     AlertDialog.Builder Mensaje;
@@ -67,14 +71,18 @@ public class DetalleCupon extends Fragment {
 
         Mensaje = new AlertDialog.Builder(getActivity());
         Mensaje.setTitle("Usar Cupon");
-        Mensaje.setMessage("¿Esta seguro que desea usar su cupon? Ya no podra revertirlo");
+        Mensaje.setMessage("¿Esta seguro que desea usar su cupon?");
         Mensaje.setCancelable(false);
         Mensaje.setPositiveButton("Si, estoy seguro", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                new ActualizarEstadoCupon(getActivity()).execute(new String[]{"ActualizarCuponUsuario"});
 
+                SaveEstablecimientoCuponSharedPreferences(Id_Establecimiento,Txtnombre.getText().toString(),Porcentaje_Descuento,Id_Cupon_Usuario);
+                DatosPedido datosPedido = new DatosPedido();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.contenedorfragment, datosPedido);
+                transaction.commit();
             }
         });
         Mensaje.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -96,18 +104,22 @@ public class DetalleCupon extends Fragment {
         Txtdescripcion = (TextView) v.findViewById(R.id.txtdescripcion);
         Txtfechainicio = (TextView) v.findViewById(R.id.txtfechainicio);
         Txtfechafinal = (TextView) v.findViewById(R.id.txtfechafinal);
+        TxtPorcentaje_Descuento = (TextView) v.findViewById(R.id.txtporcentajedescuento);
         Foto_Gallery = (ImageView) v.findViewById(R.id.imagenlogo);
 
 
 
         Bundle bundle = getArguments();
 
+        Id_Establecimiento = bundle.getString("ID_Establecimiento");
         Txttitulo.setText(bundle.getString("Titulo"));
         Txtnombre.setText(bundle.getString("Nombre"));
         Txtfecha.setText(bundle.getString("Fecha"));
         Txtdescripcion.setText(bundle.getString("Descripcion"));
         Txtfechainicio.setText(bundle.getString("Fecha_Inicio"));
         Txtfechafinal.setText(bundle.getString("Fecha_Final"));
+        Porcentaje_Descuento=bundle.getString("Porcentaje_Descuento");
+        TxtPorcentaje_Descuento.setText(Porcentaje_Descuento+"%");
         Id_Cupon_Usuario=bundle.getString("ID_Cupon_Usuario");
 
         Picasso.with(getActivity()).load(bundle.getString("Url_Imagen")).into(Foto_Gallery);
@@ -206,57 +218,15 @@ public class DetalleCupon extends Fragment {
         return cnn;
     }
 
-    public class ActualizarEstadoCupon extends AsyncTask <String, Integer, Boolean> {
 
+    private void SaveEstablecimientoCuponSharedPreferences(String ID, String Nombre, String Descuento, String ID_Cupon_Usuario){
 
-        private Context mContext = null;
-
-        ActualizarEstadoCupon(Context context){
-            mContext = context;
-        }
-
-        @Override
-        protected Boolean doInBackground(String... strings) {
-
-
-            try{
-
-
-                Statement stm = ConnectionDB().createStatement();
-                stm.execute("Update Cupon_Usuario set Estado='Inactivo' where ID_Cupon_Usuario=" + Id_Cupon_Usuario);
-
-
-
-            }catch (Exception e){
-                Log.e("Error", e.toString());
-            }
-
-            return true;
-        }
-
-        @Override
-        protected  void onPreExecute() {
-
-            Alert_Dialog.show();
-
-        }
-
-        @Override
-        protected  void onPostExecute(Boolean result){
-
-            Toast.makeText(getActivity(),"Cupon usado con exito", Toast.LENGTH_SHORT).show();
-
-            Alert_Dialog.dismiss();
-
-            ListaMiCupon listaMiCupon = new ListaMiCupon();
-
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.contenedorfragment, listaMiCupon);
-            transaction.commit();
-
-
-        }
-
-
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("info_establecimiento_cupon", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("ID", ID);
+        editor.putString("Nombre", Nombre);
+        editor.putString("Descuento", Descuento);
+        editor.putString("ID_Cupon_Usuario", ID_Cupon_Usuario);
+        editor.apply();
     }
 }

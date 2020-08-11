@@ -8,6 +8,7 @@ public class MiCupon {
     private int ID_Cupon_Usuario;
     private int ID_Cupon;
     private int ID_Usuario_Cliente;
+    private int ID_Establecimiento;
     private String Nombre;
     private Date Fecha;
     private String Estado;
@@ -16,6 +17,7 @@ public class MiCupon {
     private String Descripcion;
     private Date Fecha_Inicio;
     private Date Fecha_Final;
+    private int Porcentaje_Descuento;
 
     public MiCupon(){
 
@@ -43,6 +45,14 @@ public class MiCupon {
 
     public void setID_Usuario_Cliente(int ID_Usuario_Cliente) {
         this.ID_Usuario_Cliente = ID_Usuario_Cliente;
+    }
+
+    public int getID_Establecimiento() {
+        return ID_Establecimiento;
+    }
+
+    public void setID_Establecimiento(int ID_Establecimiento) {
+        this.ID_Establecimiento = ID_Establecimiento;
     }
 
     public String getNombre() {
@@ -108,6 +118,15 @@ public class MiCupon {
     public void setFecha_Final(Date fecha_Final) {
         Fecha_Final = fecha_Final;
     }
+
+    public int getPorcentaje_Descuento() {
+        return Porcentaje_Descuento;
+    }
+
+    public void setPorcentaje_Descuento(int porcentaje_Descuento) {
+        Porcentaje_Descuento = porcentaje_Descuento;
+    }
+
 
 
 }

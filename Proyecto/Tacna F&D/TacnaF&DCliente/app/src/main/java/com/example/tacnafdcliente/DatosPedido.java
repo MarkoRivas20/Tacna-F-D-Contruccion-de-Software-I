@@ -54,7 +54,7 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap Mapa;
     private CustomMapView Map_View;
-    String Punto_Geografico = "";
+    String Punto_Geografico = "-18.003328/-70.247577";
 
     ResultSet Result_Set;
 
@@ -79,7 +79,19 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
 
         String Nombre_Cliente = GetFromSharedPreferences("nombre") + " " + GetFromSharedPreferences("apellido");
 
-        bid_establecimiento = GetInfoFromSharedPreferences("ID");
+        Txtnombre_Establecimiento = (EditText) v.findViewById(R.id.txtnombreestablecimiento);
+
+        if(GetEstablecimientoCuponFromSharedPreferences("ID").equals(""))
+        {
+            bid_establecimiento = GetInfoFromSharedPreferences("ID");
+            Txtnombre_Establecimiento.setText(GetInfoFromSharedPreferences("Nombre"));
+        }
+        else
+        {
+            bid_establecimiento = GetEstablecimientoCuponFromSharedPreferences("ID");
+            Txtnombre_Establecimiento.setText(GetEstablecimientoCuponFromSharedPreferences("Nombre"));
+        }
+        Txtnombre_Establecimiento.setEnabled(false);
 
 
         v.setFocusableInTouchMode(true);
@@ -115,14 +127,11 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
         Txtnombre_Cliente.setText(Nombre_Cliente);
         Txtnombre_Cliente.setEnabled(false);
 
-        Txtnombre_Establecimiento = (EditText) v.findViewById(R.id.txtnombreestablecimiento);
-        Txtnombre_Establecimiento.setText(GetInfoFromSharedPreferences("Nombre"));
-        Txtnombre_Establecimiento.setEnabled(false);
-
         Btnatras = (Button) v.findViewById(R.id.btnatras);
         Btnatras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SaveEstablecimientoCuponSharedPreferences("","","","");
                 ListaItemsMenu listaItemsMenu = new ListaItemsMenu();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.contenedorfragment, listaItemsMenu);
@@ -282,8 +291,24 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
 
     }
 
+    private void SaveEstablecimientoCuponSharedPreferences(String ID, String Nombre, String Descuento,String ID_Cupon_Usuario){
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("info_establecimiento_cupon", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("ID", ID);
+        editor.putString("Nombre", Nombre);
+        editor.putString("Descuento", Descuento);
+        editor.putString("ID_Cupon_Usuario", ID_Cupon_Usuario);
+        editor.apply();
+    }
+
     private String GetInfoFromSharedPreferences(String Key){
         SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento", Context.MODE_PRIVATE);
+        return sharedPref.getString(Key,"");
+    }
+
+    private String GetEstablecimientoCuponFromSharedPreferences(String Key){
+        SharedPreferences sharedPref = getActivity().getApplicationContext().getSharedPreferences("info_establecimiento_cupon", Context.MODE_PRIVATE);
         return sharedPref.getString(Key,"");
     }
 }

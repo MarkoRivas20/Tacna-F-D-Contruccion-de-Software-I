@@ -98,6 +98,23 @@
                 android:translationY="130dp"/>
 
             <EditText
+                android:id="@+id/txtporcentajedescuento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:background="@drawable/shape_textboxregistro"
+                android:drawableLeft="@drawable/ic_sale"
+                android:drawablePadding="10dp"
+                android:hint="Porcentaje de Descuento"
+                android:padding="15dp"
+                android:textColor="#003152"
+                android:textColorHighlight="#0F77F6"
+                android:textColorHint="#DDDEE0"
+                android:singleLine="true"
+                android:layout_gravity="top|center"
+                android:translationY="140dp"/>
+
+            <EditText
                 android:id="@+id/txtfechainicio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -112,7 +129,7 @@
                 android:textColorHint="#DDDEE0"
                 android:singleLine="true"
                 android:layout_gravity="top|center"
-                android:translationY="140dp"/>
+                android:translationY="150dp"/>
 
             <EditText
                 android:id="@+id/txtfechafinal"
@@ -129,13 +146,13 @@
                 android:textColorHint="#DDDEE0"
                 android:singleLine="true"
                 android:layout_gravity="top|center"
-                android:translationY="150dp"/>
+                android:translationY="160dp"/>
             <Spinner
                 android:id="@+id/spinnerestado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|center"
-                android:translationY="160dp"
+                android:translationY="170dp"
                 android:padding="4dp"
 
                 android:background="@drawable/gradient_spinner"
@@ -155,7 +172,7 @@
                 android:text="Actualizar Datos"
                 android:textColor="#FFFFFF"
                 android:layout_gravity="top|center"
-                android:translationY="220dp"/>
+                android:translationY="180dp"/>
 
 
 
