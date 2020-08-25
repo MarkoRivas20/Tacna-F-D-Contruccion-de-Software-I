@@ -294,13 +294,12 @@ public class PerfilEstablecimiento extends Fragment implements OnMapReadyCallbac
         String[] ltdlng = Punto_Geofragico.split("/");
 
         LatLng lugar = new LatLng(Double.parseDouble(ltdlng[0]), Double.parseDouble(ltdlng[1]));
-        Mapa.moveCamera(CameraUpdateFactory.newLatLng(lugar));
+        Mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(lugar, 17));
 
         MarkerOptions markerOptions = new MarkerOptions();
 
         markerOptions.position(lugar);
         Mapa.clear();
-        Mapa.animateCamera(CameraUpdateFactory.newLatLng(lugar));
         Mapa.addMarker(markerOptions);
     }
 

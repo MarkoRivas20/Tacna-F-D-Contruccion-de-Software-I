@@ -326,7 +326,7 @@ public class RegistroEstablecimiento extends Fragment implements OnMapReadyCallb
         Mapa = googleMap;
 
         LatLng Tacna = new LatLng(-18.012580, -70.246520);
-        Mapa.moveCamera(CameraUpdateFactory.newLatLng(Tacna));
+        Mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(Tacna, 13));
 
         Mapa.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override

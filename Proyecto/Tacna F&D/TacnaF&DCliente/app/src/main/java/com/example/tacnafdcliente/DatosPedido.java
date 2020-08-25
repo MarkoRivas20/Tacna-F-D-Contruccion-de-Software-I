@@ -184,7 +184,7 @@ public class DatosPedido extends Fragment implements OnMapReadyCallback {
         Mapa = googleMap;
 
         LatLng Tacna = new LatLng(-18.012580, -70.246520);
-        Mapa.moveCamera(CameraUpdateFactory.newLatLng(Tacna));
+        Mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(Tacna,15));
 
         Mapa.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override

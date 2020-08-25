@@ -779,7 +779,7 @@ public class ListaResenas extends Fragment {
 
                 Statement stm4 = ConnectionDB().createStatement();
                 stm4.execute("Insert into Cupon_Usuario(ID_Cupon,ID_Usuario_Cliente,Fecha,Estado) " +
-                        "values(" + ID_Cupon_alazar+"," + Id_Usuario + ",'" + Fecha_Actual + "','Activo')");
+                        "values(" + ID_Cupon_alazar+"," + Id_Usuario + ",Convert(date,'" + Fecha_Actual + "',103),'Activo')");
 
 
 

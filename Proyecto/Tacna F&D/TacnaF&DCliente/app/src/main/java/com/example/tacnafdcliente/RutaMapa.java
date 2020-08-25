@@ -307,9 +307,8 @@ public class RutaMapa extends Fragment implements OnMapReadyCallback {
 
         LatLng lugar = new LatLng(-18.0038755, -70.225904);
 
-        Mapa.moveCamera(CameraUpdateFactory.newLatLng(lugar));
         Mapa.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        Mapa.moveCamera(CameraUpdateFactory.zoomTo(11));
+        Mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(lugar, 13));
 
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {

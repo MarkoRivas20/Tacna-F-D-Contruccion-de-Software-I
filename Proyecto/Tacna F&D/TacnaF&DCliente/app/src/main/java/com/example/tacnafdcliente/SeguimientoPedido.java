@@ -57,6 +57,10 @@ public class SeguimientoPedido extends Fragment implements OnMapReadyCallback {
     public SeguimientoPedido() {
         // Required empty public constructor
     }
+    String Url_Imagen_Logo = "";
+
+    String Id_Pedido = "";
+    String Punto_Geografico_Pedido = "";
 
     Button Btnatras;
 
@@ -116,11 +120,15 @@ public class SeguimientoPedido extends Fragment implements OnMapReadyCallback {
         TxtDescripcion_Pedido = (TextView) v.findViewById(R.id.txtdescripcion_pedido);
         Lbldistancia = (TextView) v.findViewById(R.id.lbldistancia);
         Lbltiempo = (TextView) v.findViewById(R.id.lbltiempo);
+        Url_Imagen_Logo = GetInfoFromSharedPreferences("Url_Imagen_Logo");
 
         Picasso.with(getContext()).load(GetInfoFromSharedPreferences("Url_Imagen_Logo")).into(Imagen_Establecimiento);
         Txtnombre_Establecimiento.setText(GetInfoFromSharedPreferences("Nombre"));
         Txtprecio_Pedido.setText("Precio: " + GetPedidoFromSharedPreferences("precio_total"));
         TxtDescripcion_Pedido.setText("Descripcion: " + GetPedidoFromSharedPreferences("descripcion_pedido"));
+        Id_Pedido = GetPedidoFromSharedPreferences("ID");
+        Punto_Geografico_Pedido =  GetPedidoFromSharedPreferences("Punto_Geografico");
+
 
         Btnatras = (Button) v.findViewById(R.id.btnatras);
         Btnatras.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +153,7 @@ public class SeguimientoPedido extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         Mapa = googleMap;
 
-        databaseReference.child("Seguimiento").child(GetPedidoFromSharedPreferences("ID")).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Seguimiento").child(Id_Pedido).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -155,21 +163,21 @@ public class SeguimientoPedido extends Fragment implements OnMapReadyCallback {
                 String []Latlng_Repartidor = seguimiento.getPuntoGeografico().split("/");
                 LatLng Ubicacion_Repartidor = new LatLng(Double.parseDouble(Latlng_Repartidor[0]),Double.parseDouble(Latlng_Repartidor[1]));
 
-                Mapa.moveCamera(CameraUpdateFactory.newLatLng(Ubicacion_Repartidor));
+
                 Mapa.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                Mapa.moveCamera(CameraUpdateFactory.zoomTo(13));
+                Mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(Ubicacion_Repartidor, 17));
 
                 Mapa.addMarker(new MarkerOptions().position(Ubicacion_Repartidor).title("Repartidor").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
 
                 String desde = Latlng_Repartidor[0] + "," + Latlng_Repartidor[1];
-                String[] hastapuntos = GetPedidoFromSharedPreferences("Punto_Geografico").split("/");
+                String[] hastapuntos = Punto_Geografico_Pedido.split("/");
                 String hasta = hastapuntos[0] + "," + hastapuntos[1];
 
                 LatLng Ubicacion_Pedido = new LatLng(Double.parseDouble(hastapuntos[0]), Double.parseDouble(hastapuntos[1]));
 
                 Mapa.addMarker(new MarkerOptions().position(Ubicacion_Pedido).title("Destino").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
-                String url="https://maps.googleapis.com/maps/api/directions/json?origin="+desde+"&destination="+hasta+"&key=API";
+                String url="https://maps.googleapis.com/maps/api/directions/json?origin="+desde+"&destination="+hasta+"&key=AIzaSyAmFU9oHjoNIp2uD8jI4jQlR1TkDcWUcfM";
 
                 RequestQueue queue = Volley.newRequestQueue(getActivity());
                 StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {

@@ -117,7 +117,7 @@ public class RealizarPedido extends Fragment {
     Double Total = 0.0;
     Double Descuento = 0.0;
 
-    String Urls = "https://data.fixer.io/api/latest?access_key=api&base=PEN&symbols=USD&format=1";
+    String Urls = "https://data.fixer.io/api/latest?access_key=a98e284dc0517c6f1bf6993e6ec941e3&base=PEN&symbols=USD&format=1";
     String Json_Result = "";
 
     String Precio_Dolar = "";
@@ -127,6 +127,9 @@ public class RealizarPedido extends Fragment {
     String Descripcion_Pedido = "";
 
     String Fecha_Actual = "";
+
+    String Id_Establecimiento = "";
+    String Id_Cupon_Usuario = "";
 
     String Id_Cliente = "";
     String Nombre_Cliente = "";
@@ -187,6 +190,8 @@ public class RealizarPedido extends Fragment {
         Direccion_Destino = bundle.getString("direcciondestino");
         Punto_Geografico_Destino = bundle.getString("puntogeograficodestino");
         Codigo_Paypal = bundle.getString("codigopaypal");
+        Id_Establecimiento = GetEstablecimientoCuponFromSharedPreferences("ID");
+        Id_Cupon_Usuario = GetEstablecimientoCuponFromSharedPreferences("ID_Cupon_Usuario");
 
         CONFIG = new PayPalConfiguration().environment(PayPalConfiguration.ENVIRONMENT_SANDBOX).clientId(Codigo_Paypal);
 
@@ -734,7 +739,7 @@ public class RealizarPedido extends Fragment {
                 Log.e("Error", e.toString());
             }
 
-            if(GetEstablecimientoCuponFromSharedPreferences("ID").equals(""))
+            if(Id_Establecimiento.equals(""))
             {
                 Alert_Dialog.dismiss();
 
@@ -773,7 +778,7 @@ public class RealizarPedido extends Fragment {
 
 
                 Statement stm = ConectarDB().createStatement();
-                stm.execute("Update Cupon_Usuario set Estado='Inactivo' where ID_Cupon_Usuario=" + GetEstablecimientoCuponFromSharedPreferences("ID_Cupon_Usuario"));
+                stm.execute("Update Cupon_Usuario set Estado='Inactivo' where ID_Cupon_Usuario='" + Id_Cupon_Usuario+"'" );
 
 
 

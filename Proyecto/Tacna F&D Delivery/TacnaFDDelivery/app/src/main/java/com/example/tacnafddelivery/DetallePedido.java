@@ -227,9 +227,8 @@ public class DetallePedido extends Fragment implements OnMapReadyCallback {
 
         String []LatLng = GetPedidoFromSharedPreferences("Punto_Geografico").split("/");
         LatLng lugar = new LatLng(Double.parseDouble(LatLng[0]), Double.parseDouble(LatLng[1]));
-        Mapa.moveCamera(CameraUpdateFactory.newLatLng(lugar));
         Mapa.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        Mapa.moveCamera(CameraUpdateFactory.zoomTo(11));
+        Mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(lugar, 17));
 
         MarkerOptions markerOptions = new MarkerOptions();
 
@@ -405,6 +404,10 @@ public class DetallePedido extends Fragment implements OnMapReadyCallback {
             pedido.setUsuario_Cliente(GetPedidoFromSharedPreferences("nombre_cliente"));
             databaseReference.child("Pedido").child(GetPedidoFromSharedPreferences("ID")).setValue(pedido);
 
+            Seguimiento seguimiento= new Seguimiento();
+            seguimiento.setID_Pedido(Integer.parseInt(GetPedidoFromSharedPreferences("ID")));
+            seguimiento.setPuntoGeografico(GetInfoFromSharedPreferences("puntogeografico_establecimiento"));
+            databaseReference.child("Seguimiento").child(GetPedidoFromSharedPreferences("ID")).setValue(seguimiento);
 
 
             SeguimientoPedido seguimientoPedido = new SeguimientoPedido();

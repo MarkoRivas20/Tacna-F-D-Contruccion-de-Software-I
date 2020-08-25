@@ -92,7 +92,7 @@
                     android:layout_weight="1"
                     android:background="#FFFFFF"
                     android:drawableTop="@drawable/ic_description_black_24dp"
-                    android:text="Descripcion"
+                    android:text="Detalle"
                     android:textColor="#DBDBDB" />
 
                     <ImageView
@@ -165,7 +165,7 @@
                         android:layout_weight="1"
                         android:background="#FFFFFF"
                         android:drawableTop="@drawable/ic_directions"
-                        android:text="Como llegar"
+                        android:text="Ruta"
                         android:textColor="#DBDBDB" />
 
 

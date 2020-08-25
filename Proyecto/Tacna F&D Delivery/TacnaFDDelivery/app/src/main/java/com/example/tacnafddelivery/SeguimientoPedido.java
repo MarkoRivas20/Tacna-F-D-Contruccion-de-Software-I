@@ -244,11 +244,10 @@ public class SeguimientoPedido extends Fragment implements OnMapReadyCallback {
         Mapa = googleMap;
         Mapa.clear();
 
-        LatLng lugar = new LatLng(-18.0038755, -70.225904);
 
-        Mapa.moveCamera(CameraUpdateFactory.newLatLng(lugar));
         Mapa.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        Mapa.moveCamera(CameraUpdateFactory.zoomTo(11));
+
+
 
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
@@ -262,6 +261,8 @@ public class SeguimientoPedido extends Fragment implements OnMapReadyCallback {
             String [] PuntoGeografico_Establecimiento = GetInfoFromSharedPreferences("puntogeografico_establecimiento").split("/");
             String Ltd_Origen = PuntoGeografico_Establecimiento[0];
             String Lng_Origen = PuntoGeografico_Establecimiento[1];
+            LatLng lugar = new LatLng(Double.parseDouble(Ltd_Origen), Double.parseDouble(Lng_Origen));
+            Mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(lugar, 15));
             try {
 
                 String desde = Ltd_Origen + "," + Lng_Origen;
@@ -272,7 +273,7 @@ public class SeguimientoPedido extends Fragment implements OnMapReadyCallback {
 
                 Mapa.addMarker(new MarkerOptions().position(farma1).title("Puntos").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
 
-                String url="https://maps.googleapis.com/maps/api/directions/json?origin="+desde+"&destination="+hasta+"&key=API";
+                String url="https://maps.googleapis.com/maps/api/directions/json?origin="+desde+"&destination="+hasta+"&key=AIzaSyAmFU9oHjoNIp2uD8jI4jQlR1TkDcWUcfM";
 
                 RequestQueue queue = Volley.newRequestQueue(getActivity());
                 StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -311,6 +312,7 @@ public class SeguimientoPedido extends Fragment implements OnMapReadyCallback {
                 int intNumber = Integer.parseInt(str.substring(0, str.indexOf('.')));
                 Lbltiempo.setText(intNumber+" minutos");
 
+                Mapa.setMyLocationEnabled(true);
 
             }catch (Exception ex)
             {

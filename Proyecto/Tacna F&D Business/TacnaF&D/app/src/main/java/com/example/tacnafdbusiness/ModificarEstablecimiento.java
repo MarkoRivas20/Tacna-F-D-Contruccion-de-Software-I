@@ -405,13 +405,12 @@ public class ModificarEstablecimiento extends Fragment implements OnMapReadyCall
         String[] ltdlng = Punto_Geografico.split("/");
 
         LatLng lugar = new LatLng(Double.parseDouble(ltdlng[0]), Double.parseDouble(ltdlng[1]));
-        Mapa.moveCamera(CameraUpdateFactory.newLatLng(lugar));
+        Mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(lugar, 17));
 
         MarkerOptions markerOptions = new MarkerOptions();
 
         markerOptions.position(lugar);
         Mapa.clear();
-        Mapa.animateCamera(CameraUpdateFactory.newLatLng(lugar));
         Mapa.addMarker(markerOptions);
 
         Mapa.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
